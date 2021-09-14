@@ -45,12 +45,12 @@ public class UserController {
     public void updateUser(
             @PathVariable("userId") Long userId,
             @RequestParam(required = false) String email,
-            @RequestParam(required = false) String first_name,
-            @RequestParam(required = false) String last_name,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String address,
             @RequestParam(required = false) int phone,
             @RequestParam(required = false) String password) {
-                userService.updateUser(userId, email, first_name, last_name, address, phone, password);
+                userService.updateUser(userId, email, firstName, lastName, address, phone, password);
     }
 
 //    @PostMapping("/add")
