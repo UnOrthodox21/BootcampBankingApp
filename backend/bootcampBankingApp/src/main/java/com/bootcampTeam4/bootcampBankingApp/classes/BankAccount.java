@@ -12,16 +12,23 @@ public class BankAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="balance")
-    private double balance;
-
     @Column(name="number")
     private String number;
 
     @Column(name="type")
     private String type;
 
+    @Column(name="balance")
+    private double balance;
+
     BankAccount() {};
+
+    public BankAccount(long id, String number, String type, double balance) {
+        this.id = id;
+        this.number = number;
+        this.type = type;
+        this.balance = balance;
+    }
 
 
     public long getId() {
