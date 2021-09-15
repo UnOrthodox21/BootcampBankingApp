@@ -1,7 +1,6 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 import com.bootcampTeam4.bootcampBankingApp.classes.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.classes.TransferAmount;
-import com.bootcampTeam4.bootcampBankingApp.classes.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.bootcampTeam4.bootcampBankingApp.services.BankAccountService;
