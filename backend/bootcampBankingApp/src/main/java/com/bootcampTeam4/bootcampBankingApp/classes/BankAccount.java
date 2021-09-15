@@ -1,6 +1,4 @@
 package com.bootcampTeam4.bootcampBankingApp.classes;
-
-
 import javax.persistence.*;
 
 @Entity
@@ -21,7 +19,7 @@ public class BankAccount {
     @Column(name="balance")
     private double balance;
 
-    BankAccount() {};
+    public BankAccount() {};
 
     public BankAccount(long id, String number, String type, double balance) {
         this.id = id;

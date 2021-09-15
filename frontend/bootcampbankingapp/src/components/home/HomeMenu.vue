@@ -1,7 +1,6 @@
 <template>
     <div class="container" id="home-menu">
         <div class="row">
-
                 <div class="col-6 text-left mt-3 mb-3 pt-2">
                     <div class="card">
                         <div class="card-body">
@@ -28,8 +27,9 @@
                         <div class="card-body">
                     <h2 class="mb-4 home-menu-title">Bank Accounts:</h2>
                     <ul class="home-menu-details"> 
-                        <li>$Number <!-- {{bankaccount.number}} -->$type</li>
-                        <li>Balance: $balance</li>
+                        <li> {{bankAccounts.number}}</li>
+                         <li>Type: {{bankAccounts.type}}</li>
+                        <li>Balance: {{bankAccounts.balance}}</li>
                     </ul>
                     <div class="row">
                      <div class="col-12 text-center">
@@ -54,7 +54,7 @@ export default {
     components: {
 
     },
-    props: ["user"]
+    props: ["user", "bankAccounts"]
 }
 </script>
 
@@ -107,17 +107,5 @@ export default {
     .btn-bankaccount:hover {
           background-color: rgba(21, 166, 223, 0.884);
     }
-
-    .btn-transaction {
-        background-color: rgb(116, 214, 77);
-        font-size: 1.3em;
-        height: 3.5em;
-        width: 40em;
-    }
-
-    .btn-transaction:hover {
-        background-color: rgb(122, 233, 78);
-    }
-
 
 </style>

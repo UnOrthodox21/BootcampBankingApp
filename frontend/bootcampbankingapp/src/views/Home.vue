@@ -1,6 +1,6 @@
 <template>
   <HomeBanner v-bind:user="user"/>
-  <HomeMenu v-bind:user="user"/>
+  <HomeMenu v-bind:user="user" v-bind:bankAccounts="bankAccounts"/>
 </template>
 
 <script>
@@ -13,7 +13,7 @@
       HomeBanner,
       HomeMenu
     },
-    props: ["user"]
+    props: ["user", "bankAccounts"]
   }
 </script>
 

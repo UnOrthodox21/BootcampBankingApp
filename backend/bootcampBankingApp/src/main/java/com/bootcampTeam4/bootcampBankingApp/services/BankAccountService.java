@@ -3,10 +3,12 @@ package com.bootcampTeam4.bootcampBankingApp.services;
 
 import com.bootcampTeam4.bootcampBankingApp.classes.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.classes.TransferAmount;
+import com.bootcampTeam4.bootcampBankingApp.classes.User;
 import com.bootcampTeam4.bootcampBankingApp.repositories.BankAccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BankAccountService {
@@ -26,6 +28,9 @@ public class BankAccountService {
         return bankAccountRepository.findAll();
     }
 
+    public Optional<BankAccount> getBankAccountById(Long id) {
+        return bankAccountRepository.findBankAccountById(id);
+    }
 
     public void changeBalance(TransferAmount amount, Long id){
         List<BankAccount> bankAccountList = getAllBankAccounts();
