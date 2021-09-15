@@ -35,6 +35,14 @@ public class BankAccountService {
 
     }
 
+    public void changeBalanceTest(double amount, Long id){
+        List<BankAccount> bankAccountList = getAllBankAccounts();
+        BankAccount bankAccount = bankAccountList.get(Math.toIntExact(id - 1));
+        bankAccount.setBalance(bankAccount.getBalance()+amount);
+        bankAccountRepository.save(bankAccount);
+
+    }
+
 
     public class Changes {
 
