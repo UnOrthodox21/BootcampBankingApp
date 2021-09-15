@@ -1,6 +1,6 @@
 <template>
   <Header v-bind:user="user"/>
-  <router-view v-bind:user="user"/>
+  <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts"/>
   <Footer/>
 </template>
 
@@ -18,7 +18,7 @@ export default {
     data() {
       return {
         user: [],
-        bankAccount: [],
+        bankAccounts: [],
       }
     },
      methods: {
@@ -26,10 +26,16 @@ export default {
         this.$http.get(process.env.VUE_APP_API_URL + "/users/8")
         .then((response) => { this.user = response.data })
         .catch(err => console.log(err));
+      },
+      setBankAccount() {
+        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/1")
+        .then((response) => { this.bankAccounts = response.data })
+        .catch(err => console.log(err));
       }
     },
     mounted() {
       this.setUser();
+      this.setBankAccount();
     }
   }
 </script>
@@ -59,4 +65,20 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.btn-transaction {
+    color: rgb(248, 248, 248);
+    text-align: center;
+    vertical-align: center;
+    background-color: rgb(111, 201, 76);
+    font-size: 1.3em;
+    height: 3.5em;
+    width: 40em;
+    padding: 1em;
+}
+
+.btn-transaction:hover {
+    background-color: rgb(118, 221, 77);
+    color: rgb(248, 248, 248);
+  }
 </style>
