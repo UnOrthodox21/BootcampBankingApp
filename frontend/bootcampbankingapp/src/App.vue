@@ -32,7 +32,7 @@ export default {
       this.setUser();
     }
   }
-</script>c
+</script>
 
 
 <style>
