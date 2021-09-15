@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import com.bootcampTeam4.bootcampBankingApp.services.BankAccountService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/users/test")
+@RequestMapping("/api/bank-accounts")
 public class BankAccountController {
 
 
@@ -24,6 +25,11 @@ public class BankAccountController {
     public List<BankAccount> getAllBankAccounts() {
 
         return bankAccountService.getAllBankAccounts();
+    }
+
+    @GetMapping(path = "{id}")
+    public Optional<BankAccount> getBankAccountById(@PathVariable("id") Long bankAccountId) {
+        return bankAccountService.getBankAccountById(bankAccountId);
     }
 
 

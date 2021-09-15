@@ -9,7 +9,7 @@
 <form>
   <div class="form-group my-5"  style="width:300px;margin:auto;">
     <label for="emailInput">Email address </label>
-    <input type="email" class="form-control "    id="emailInput" placeholder="name@example.com" >
+    <input type="email" class="form-control "    id="emailInput" >
   </div>
  
    <div class="form-group my-5" style="width:300px;margin:auto;">
@@ -30,9 +30,10 @@
   </div>
 
   <div class="form-group my-5" style="width:300px;margin:auto;">
-    <label for="addressInput">Phone number </label>
+    <label for="addressInput">Address </label>
     <input type="text" class="form-control "    id="addressInput" >
   </div>
+   
    <button class="btn btn-primary" type="submit">Submit form</button>
 </form>
         </div>
