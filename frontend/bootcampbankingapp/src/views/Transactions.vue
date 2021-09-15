@@ -1,14 +1,17 @@
 <template>
- <TransactionsBanner/>
+<TransactionsBanner/>
+ <TransactionsTable/>
 </template>
 
 <script>
 import TransactionsBanner from "../components/transactions/TransactionsBanner.vue";
+import TransactionsTable from "../components/transactions/TransactionsTable.vue";
 
 export default {
   name: "Transactions",
   components: {
-    TransactionsBanner
+    TransactionsBanner,
+    TransactionsTable
   },
   props: ["user"]
 }
