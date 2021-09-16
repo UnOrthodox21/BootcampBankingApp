@@ -52,10 +52,4 @@ public class UserController {
             @RequestParam(required = false) String password) {
                 userService.updateUser(userId, email, firstName, lastName, address, phone, password);
     }
-
-//    @PostMapping("/add")
-//    public User addUser(@RequestBody User user){
-//
-//    }
-
 }
