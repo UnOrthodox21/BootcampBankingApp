@@ -50,15 +50,15 @@ public class UserController {
             List<User> userList = userRepository.findAll();
             User userToPut = userList.get(Math.toIntExact(id - 1));
 
-            if(user.getEmail() != null){
+            if(user.getEmail() != ""){
                 userToPut.setEmail(user.getEmail());
             }
 
-            if(user.getFirstName() != null){
+            if(user.getFirstName() != ""){
                 userToPut.setFirstName(user.getFirstName());
             }
 
-            if(user.getLastName() != null){
+            if(user.getLastName() != ""){
                 userToPut.setLastName(user.getLastName());
             }
 
@@ -66,7 +66,7 @@ public class UserController {
                 userToPut.setPhone(user.getPhone());
             }
 
-            if(user.getAddress() !=null){
+            if(user.getAddress() !=""){
                 userToPut.setAddress(user.getAddress());
             }
 
