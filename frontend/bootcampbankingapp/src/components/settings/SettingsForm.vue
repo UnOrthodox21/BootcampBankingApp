@@ -39,7 +39,7 @@
   </div>
 
  <div class="form-group my-5" style="width:300px;margin:auto;">
-    <label for="passwordInputTwo">New password</label>
+    <label for="passwordInputTwo">Repeate new password</label>
     <input type="password" class="form-control "    id="passwordInputTwo" minlength="8" maxlength="40" >
   </div>
 
@@ -77,13 +77,13 @@ export default {
             lastName : document.getElementById("surnameInput").value,
             phone : document.getElementById("phoneInput").value,
             address : document.getElementById("addressInput").value,
-            password : this.$props.user.password
+            password : pw1
             }
             if(pw1.length != 0){
               newUserData.password = pw1;
             } 
           
-            this.$http.put(process.env.VUE_APP_API_URL + "/users/test/3", newUserData)
+            this.$http.put(process.env.VUE_APP_API_URL + "/users/3", newUserData)
             .then(() => this.$parent.submitChanges())
             .catch(err => console.log(err));
             console.log(newUserData)

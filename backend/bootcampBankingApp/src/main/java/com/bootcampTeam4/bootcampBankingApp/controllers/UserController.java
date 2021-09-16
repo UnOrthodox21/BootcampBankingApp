@@ -2,6 +2,7 @@ package com.bootcampTeam4.bootcampBankingApp.controllers;
 
 
 import com.bootcampTeam4.bootcampBankingApp.classes.User;
+import com.bootcampTeam4.bootcampBankingApp.repositories.UserRepository;
 import com.bootcampTeam4.bootcampBankingApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,10 @@ public class UserController {
 
     private UserService userService;
 
+
     @Autowired
+    private UserRepository userRepository;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -41,15 +45,37 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
-    @PutMapping(path = "{userId}")
-    public void updateUser(
-            @PathVariable("userId") Long userId,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) int phone,
-            @RequestParam(required = false) String password) {
-                userService.updateUser(userId, email, firstName, lastName, address, phone, password);
+        @PutMapping("/{id}")
+        User replaceItem (@RequestBody User user, @PathVariable Long id){
+            List<User> userList = userRepository.findAll();
+            User userToPut = userList.get(Math.toIntExact(id - 1));
+
+            if(user.getEmail() != null){
+                userToPut.setEmail(user.getEmail());
+            }
+
+            if(user.getFirstName() != null){
+                userToPut.setFirstName(user.getFirstName());
+            }
+
+            if(user.getLastName() != null){
+                userToPut.setLastName(user.getLastName());
+            }
+
+            if(user.getPhone() != 0){
+                userToPut.setPhone(user.getPhone());
+            }
+
+            if(user.getAddress() !=null){
+                userToPut.setAddress(user.getAddress());
+            }
+
+            if(user.getPassword() != ""){
+                userToPut.setPassword(user.getPassword());
+            }
+
+            return userRepository.save(userToPut);
+        }
+
+
     }
-}

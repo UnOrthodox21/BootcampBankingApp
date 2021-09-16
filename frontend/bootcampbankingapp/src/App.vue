@@ -28,7 +28,7 @@ export default {
         .catch(err => console.log(err));
       },
       setBankAccount() {
-        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/1")
+        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/2")
         .then((response) => { this.bankAccounts = response.data })
         .catch(err => console.log(err));
       }
