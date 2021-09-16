@@ -23,19 +23,19 @@ export default {
     },
      methods: {
       setUser() {
-        this.$http.get(process.env.VUE_APP_API_URL + "/users/3")
+        this.$http.get(process.env.VUE_APP_API_URL + "/users/8")
         .then((response) => { this.user = response.data })
         .catch(err => console.log(err));
       },
-      setBankAccount() {
-        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/1")
+      setBankAccounts() {
+        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts")
         .then((response) => { this.bankAccounts = response.data })
         .catch(err => console.log(err));
       }
     },
     mounted() {
       this.setUser();
-      this.setBankAccount();
+      this.setBankAccounts();
     }
   }
 </script>
