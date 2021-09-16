@@ -3,37 +3,47 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-<form v-on:submit="getEl"> 
+<form v-on:submit="submitChanges"> 
   <div class="form-group my-5"  style="width:300px;margin:auto;">
     <label for="emailInput">Email address </label>
-    <input type="email" class="form-control "    id="emailInput" v-bind:value="user.email">
+    <input type="email" class="form-control " id="emailInput" v-bind:value="user.email" minlength="9" maxlength="30" required>
   </div>
  
    <div class="form-group my-5" style="width:300px;margin:auto;">
        <!-- ja grib atsevisku margin bottom
     <label class="mb-5" for="exampleFormControlInput2">Name </label> -->
     <label for="nameInput"> Name </label>
-    <input type="text"  class="form-control" id="nameInput"  v-bind:value="user.firstName">
+    <input type="text"  class="form-control" id="nameInput"  v-bind:value="user.firstName" minlength="2" maxlength="20" required>
     
     
   </div>
 
   <div class="form-group my-5" style="width:300px;margin:auto;">
     <label for="surnameInput">Surname </label>
-    <input type="text" class="form-control " id="surnameInput" v-bind:value="user.lastName" >
+    <input type="text" class="form-control " id="surnameInput" v-bind:value="user.lastName" minlength="2" maxlength="20" required>
   </div>
 
   <div class="form-group my-5" style="width:300px;margin:auto;">
     <label for="phoneInput">Phone number </label>
-    <input type="number" class="form-control "    id="phoneInput" v-bind:value="user.phone" >
+    <input type="number" class="form-control "    id="phoneInput" v-bind:value="user.phone" minlength="8"  maxlength="20" required>
   </div>
 
   <div class="form-group my-5" style="width:300px;margin:auto;">
     <label for="addressInput">Address </label>
-    <input type="text" class="form-control "    id="addressInput" v-bind:value="user.address">
+    <input type="text" class="form-control "    id="addressInput" v-bind:value="user.address" minlength="8" maxlength="40" required>
   </div>
-   
-   <button class="btn btn-primary" type="submit">Submit form</button>
+
+  <div class="form-group my-5" style="width:300px;margin:auto;">
+    <label for="passwordInput">New password</label>
+    <input type="password" class="form-control "    id="passwordInput" minlength="8" maxlength="40" >
+  </div>
+
+ <div class="form-group my-5" style="width:300px;margin:auto;">
+    <label for="passwordInputTwo">New password</label>
+    <input type="password" class="form-control "    id="passwordInputTwo" minlength="8" maxlength="40" >
+  </div>
+
+   <button @click="submitChanges()" class="btn btn-primary" type="submit">Submit form</button>
 </form>
         </div>
     </div>
@@ -43,43 +53,46 @@
 </template>
 
 <script>
-// let fname = document.getElementById("nameInput").value;
-// console.log(fname)
-
-
 
 export default {
     name: "Settings Form",
     components: {
     },
     props: ["user"],
-    // data: function() {
-    //     return {
-    //         name: ''
-    //     }
-    // },
     methods: {
-        getEl(e) {
+        submitChanges(e) {
+
+
             e.preventDefault();
-            let email = document.getElementById("emailInput").value;
-            let firstName = document.getElementById("nameInput").value;
-            let lastName = document.getElementById("surnameInput").value;
-            let phone = document.getElementById("phoneInput").value;
-            let address = document.getElementById("addressInput").value;
-            const newProduct = {
-               email: email,
-               firstName: firstName,
-               lastName: lastName,
-               phone:phone,
-               address:address
+
+            const pw1 = document.getElementById("passwordInput").value;
+            const pw2 = document.getElementById("passwordInputTwo").value;
+
+            if(pw1 === pw2){
+  
+            if (window.confirm("Are you sure?")) {
+            const newUserData = {
+            email : document.getElementById("emailInput").value,
+            firstName : document.getElementById("nameInput").value,
+            lastName : document.getElementById("surnameInput").value,
+            phone : document.getElementById("phoneInput").value,
+            address : document.getElementById("addressInput").value,
+            password : this.$props.user.password
             }
-            // Send up to parent
-            // this.$emit('add-product', newProduct);
-            this.$http.put(process.env.VUE_APP_API_URL + "/users/test/3", newProduct)
-            .then(() => this.$parent.getEl())
+            if(pw1.length != 0){
+              newUserData.password = pw1;
+            } 
+          
+            this.$http.put(process.env.VUE_APP_API_URL + "/users/test/3", newUserData)
+            .then(() => this.$parent.submitChanges())
             .catch(err => console.log(err));
-            console.log(newProduct)
-            // this.name='';
+            console.log(newUserData)
+           }
+            
+}
+else{
+  alert("Passwords don't match!!");
+}
 }
     }
 }
