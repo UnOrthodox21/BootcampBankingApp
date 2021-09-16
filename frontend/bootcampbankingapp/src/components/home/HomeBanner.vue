@@ -1,5 +1,5 @@
 <template>
-    <div class="jumbotron jumbotron-fluid bg-none mt-3 mb-2">
+    <div class="jumbotron jumbotron-fluid bg-none my-4 pb-4">
   <div class="container">
     <h1 class="display-3">Hello there, {{user.firstName}} {{user.lastName}}</h1>
     <p class="lead">Nice to see you visiting our Banking application!</p>

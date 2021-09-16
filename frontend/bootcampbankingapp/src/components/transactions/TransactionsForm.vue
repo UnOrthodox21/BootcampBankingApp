@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-12">
     <form>
-  <div class="form-group row my-4">
+  <div class="form-group row mt-0 mb-4">
       <label for="recipientNameInput" class="col-2 col-form-label">Recipient name:</label>
     <div class="col-8">
     <input type="text" class="form-control" id="recipientNameInput" aria-describedby="recipientHelp" placeholder="Enter recipient name">
@@ -18,10 +18,8 @@
      <div class="form-group row my-4">
   <label for="userBankAccountInput" class="col-2 col-form-label">User bank accounts:</label>
       <div class="col-8">
-    <select class="form-control" id="userBankAccountInput" name="userBankAccounts" placeholder="Select bank account">
-      <option value="1">LVHABA5353821</option>
-      <option value="2">LVHABA2424242</option>
-      <option value="3">LVHABA6486645</option>
+    <select class="form-control" id="userBankAccountInput" name="userBankAccounts" placeholder="Select bank account" >
+      <option v-bind:key="bankAccount.id" v-for="bankAccount in bankAccounts" v-bind:value="bankAccount.id" selected>{{bankAccount.number}}</option>
       </select>
   </div>
   </div>
@@ -41,7 +39,7 @@
   </div>
   <div class="form-group row my-5">
     <div class="col-12">
-  <button type="submit" class="btn btn-transaction">Submit</button>
+  <button type="submit" class="btn btn-transaction">Submit:</button>
     </div>
     </div>
     </form>
@@ -54,8 +52,8 @@
 export default {
     name: "TransactionsForm",
     components: {
-
     },
+    props: ["bankAccounts"]
 }
 </script>
 
@@ -66,5 +64,12 @@ export default {
         width: 25em;
         text-align: center;
         vertical-align: center;
+        box-shadow: 7px 7px 5px rgb(59, 50, 50);
+
+    }
+
+    .col-form-label {
+      text-align: right;
+      padding-right: 0em;
     }
 </style>

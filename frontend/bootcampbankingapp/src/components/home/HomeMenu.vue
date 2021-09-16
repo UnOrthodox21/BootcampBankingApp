@@ -5,11 +5,11 @@
                     <div class="card">
                         <div class="card-body">
                     <h2 class="mb-4 home-menu-title">User:</h2>
-                     <ul class="home-menu-details">
-                        <li>Name: {{user.firstName}} {{user.lastName}}</li>
-                        <li>Address: {{user.address}}</li>
-                        <li>Phone: {{user.phone}}</li>
-                        <li>E-mail: {{user.email}}</li>
+                     <ul class="home-menu-details ml-0 pl-0">
+                        <li><b>Name:</b> {{ user.firstName }} {{ user.lastName }}</li>
+                        <li><b>Address:</b> {{ user.address }}</li>
+                        <li><b>Phone:</b> {{ user.phone }}</li>
+                        <li><b>E-mail:</b> {{ user.email }}</li>
                     </ul>
 
                     <div class="row">
@@ -25,12 +25,31 @@
                  <div class="col-6 text-left mt-3 mb-3 pt-2">
                     <div class="card">
                         <div class="card-body">
-                    <h2 class="mb-4 home-menu-title">Bank Accounts:</h2>
-                    <ul class="home-menu-details"> 
-                        <li> {{bankAccounts.number}}</li>
-                         <li>Type: {{bankAccounts.type}}</li>
-                        <li>Balance: {{bankAccounts.balance}}</li>
+
+                    <div class="row">
+                    <div class="col-6">
+                        <h2 class="mb-4 home-menu-title">Bank Accounts:</h2>
+                    </div>
+                    <div class="col-6">
+                         <select class="mt-1" name="bankAccounts"> 
+                        <option v-bind:value="bankAccounts.id" selected>1. {{ bankAccounts.number }}</option>
+                        <option value="2">2. LVHABA33535353</option>
+                        <option value="3">3. LVHABA23232424</option>
+                        </select>
+                     </div>
+                     </div>
+                  
+                    <div class="row">
+                        <div class="col-12">
+                      <ul class="home-menu-details ml-0 pl-0"> 
+                        <li><b>Number:</b> {{ bankAccounts.number }}</li>
+                         <li><b>Type:</b> {{ bankAccounts.type }}</li>
+                        <li><b>Balance:</b> {{ bankAccounts.balance }}</li>
                     </ul>
+                    </div>
+                    </div>
+                   
+        
                     <div class="row">
                      <div class="col-12 text-center">
                         <router-link class="btn btn-bankaccount" to="/bank-accounts">Bank Accounts</router-link>
@@ -41,8 +60,8 @@
                 </div>
         </div>
             <div class="row">
-                     <div class="col-12 my-5">
-                    <router-link class="btn btn-transaction" to="/transactions">Transactions</router-link>
+                     <div class="col-12 my-4">
+                    <router-link class="btn btn-transaction mt-auto" to="/transactions">Transactions</router-link>
                 </div>
             </div>
     </div>
@@ -63,7 +82,7 @@ export default {
     #home-menu {
         border-radius: 15px;
         background: rgb(240, 240, 240);
-        color: black;
+        color: rgb(55, 55, 55);
         box-shadow: 10px 10px 5px rgb(32, 32, 32);
     }
 
@@ -77,7 +96,19 @@ export default {
     }
 
     .card {
+        background: rgb(248, 248, 248);
+        position: relative;
         height: 23em;
+        box-shadow: 7px 7px 5px rgb(220, 220, 220);
+    }
+
+    select {
+        font-size: 1.25em;
+        float: right;
+    }
+
+    ul {
+        list-style: none;
     }
 
     .btn {
@@ -87,25 +118,34 @@ export default {
         height: 3.5em;
         width: 12em;
         text-align: center;
-        vertical-align: center;
+        vertical-align: bottom;
+        box-shadow: 5px 5px 5px rgb(235, 235, 235);
     }
 
     .btn-user {
-        background-color: rgb(235, 168, 45);
-    
+        margin-top: 2em;
+        background-color: rgb(102, 102, 102);
     }
 
     .btn-user:hover {
-        background-color: rgba(247, 174, 38, 0.945);
+        background-color: rgb(124, 124, 124);
     }
 
 
     .btn-bankaccount {
-         background-color: rgb(23, 162, 218);
+         margin-top: 3.85em;
+         background-color: rgb(102, 102, 102);
     }
 
     .btn-bankaccount:hover {
-          background-color: rgba(21, 166, 223, 0.884);
+          background-color: rgb(124, 124, 124);
+    }
+
+    .btn-transaction {
+          font-size: 1.4em;
+          height: 3.5em;
+          width: 45em;
+          padding: 1em;
     }
 
 </style>

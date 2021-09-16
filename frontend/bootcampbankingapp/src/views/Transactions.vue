@@ -1,6 +1,6 @@
 <template>
 <TransactionsBanner/>
-<TransactionsForm/>
+<TransactionsForm v-bind:bankAccounts="bankAccounts"/>
 </template>
 
 <script>
@@ -13,7 +13,7 @@ export default {
     TransactionsBanner,
     TransactionsForm
   },
-  props: ["user"]
+  props: ["user", "bankAccounts"]
 }
 </script>
 
