@@ -16,9 +16,9 @@
   </thead>
   <tbody>
     <tr>
-      <th scope="row"><ul class="transaction-table-details"><li>AccountNumber: {{user.number}}</li></ul></th>
-      <td><ul class="transaction-table-details"><li>AccountType: {{user.type}}</li></ul></td>
-      <td><ul class="transaction-table-details"><li>AccountBalance: {{user.balance}}</li></ul></td>
+      <th scope="row">{{bankAccounts.number}}</th>
+      <td>{{bankAccounts.type}}</td>
+      <td>{{bankAccounts.balance}}</td>
       <td><button type="button" class="btn btn-outline-success">Edit</button>
       <button type="button" class="btn btn-outline-danger">Remove</button></td>
     </tr>
@@ -42,11 +42,11 @@
 
 <script>
 export default {
-    name: "TransactionsTable",
+    name: "BankAccountsTable",
     components: {
       
-
     },
+    props: ["bankAccounts"]
 }
 </script>
 
