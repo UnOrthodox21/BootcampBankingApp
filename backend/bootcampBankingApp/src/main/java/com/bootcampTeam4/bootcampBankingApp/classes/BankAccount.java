@@ -5,20 +5,19 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "bank_accounts")
-
 public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="balance")
+    @Column(name = "balance")
     private double balance;
 
-    @Column(name="number")
+    @Column(name = "number")
     private String number;
 
-    @Column(name="type")
+    @Column(name = "type")
     private String type;
 
     BankAccount() {};

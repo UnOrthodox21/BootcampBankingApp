@@ -1,7 +1,6 @@
 package com.bootcampTeam4.bootcampBankingApp.services;
 
 import com.bootcampTeam4.bootcampBankingApp.classes.Transaction;
-import com.bootcampTeam4.bootcampBankingApp.classes.User;
 import com.bootcampTeam4.bootcampBankingApp.repositories.TransactionRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.util.Optional;
 @Service
 public class TransactionService {
 
-    final TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
 
     public TransactionService(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
@@ -29,10 +28,10 @@ public class TransactionService {
         transactionRepository.save(transaction);
     }
 
-    public void deleteUser(long transactionId) {
+    public void deleteTransaction(long transactionId) {
         boolean exists = transactionRepository.existsById(transactionId);
         if (!exists) {
-            throw new IllegalStateException(("User with id " + transactionId + " does not exist."));
+            throw new IllegalStateException(("Transaction with id " + transactionId + " does not exist."));
         }
         transactionRepository.deleteById(transactionId);
     }

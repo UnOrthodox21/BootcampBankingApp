@@ -1,30 +1,29 @@
 package com.bootcampTeam4.bootcampBankingApp.classes;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "transactions")
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="type")
+    @Column(name = "type")
     private String type;
 
-    @Column(name="date")
+    @Column(name = "date")
     private Date date;
 
-    @Column(name="user_from")
+    @Column(name = "user_from")
     private long userFrom;
 
-    @Column(name="user_to")
+    @Column(name = "user_to")
     private long userTo;
 
-    @Column(name="type")
+    @Column(name = "amount")
     private double amount;
 
     public Transaction() {}

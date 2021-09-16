@@ -3,12 +3,12 @@ package com.bootcampTeam4.bootcampBankingApp.classes;
 import javax.persistence.*;
 
 @Entity
-@Table(name="role")
+@Table(name = "roles")
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "name")
     private String name;

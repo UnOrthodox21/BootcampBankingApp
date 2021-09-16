@@ -1,7 +1,6 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 
 import com.bootcampTeam4.bootcampBankingApp.classes.Transaction;
-import com.bootcampTeam4.bootcampBankingApp.classes.User;
 import com.bootcampTeam4.bootcampBankingApp.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {
-
 
     private final TransactionService transactionService;
 
@@ -38,9 +36,7 @@ public class TransactionController {
 
     @DeleteMapping(path = "{transactionId}")
     public void deleteUser(@PathVariable("transactionId") Long transactionId) {
-        transactionService.deleteUser(transactionId);
+        transactionService.deleteTransaction(transactionId);
     }
-
-
 
 }
