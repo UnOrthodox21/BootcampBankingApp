@@ -23,16 +23,16 @@
       <button type="button" class="btn btn-outline-danger">Remove</button></td>
     </tr>
     <tr>
-     <th scope="row">LV55HABA231584965215</th>
-      <td>Savings</td>
-      <td>int</td>
+     <th scope="row">{{bankAccounts.number}}</th>
+      <td>{{bankAccounts.type}}</td>
+      <td>{{bankAccounts.balance}}</td>
       <td><button type="button" class="btn btn-outline-success">Edit</button>
       <button type="button" class="btn btn-outline-danger">Remove</button></td>
     </tr>
     <tr>
-     <th scope="row">LV55HABA231584965215</th>
-      <td>Main</td>
-      <td>int</td>
+     <th scope="row">{{bankAccounts.number}}</th>
+      <td>{{bankAccounts.type}}</td>
+      <td>{{bankAccounts.balance}}</td>
       <td><button type="button" class="btn btn-outline-success">Edit</button>
       <button type="button" class="btn btn-outline-danger">Remove</button></td>
     </tr>
