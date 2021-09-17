@@ -1,6 +1,6 @@
 package com.bootcampTeam4.bootcampBankingApp.repositories;
 
-import com.bootcampTeam4.bootcampBankingApp.classes.Transaction;
+import com.bootcampTeam4.bootcampBankingApp.models.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

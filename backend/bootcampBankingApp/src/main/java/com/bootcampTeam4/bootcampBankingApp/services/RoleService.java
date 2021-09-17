@@ -1,6 +1,6 @@
 package com.bootcampTeam4.bootcampBankingApp.services;
 
-import com.bootcampTeam4.bootcampBankingApp.classes.Role;
+import com.bootcampTeam4.bootcampBankingApp.models.Role;
 import com.bootcampTeam4.bootcampBankingApp.repositories.RoleRepository;
 import org.springframework.stereotype.Service;
 

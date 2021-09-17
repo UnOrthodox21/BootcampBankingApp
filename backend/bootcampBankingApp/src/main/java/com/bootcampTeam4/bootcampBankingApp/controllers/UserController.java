@@ -1,12 +1,11 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 
 
-import com.bootcampTeam4.bootcampBankingApp.classes.User;
+import com.bootcampTeam4.bootcampBankingApp.models.User;
 import com.bootcampTeam4.bootcampBankingApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,12 +43,15 @@ public class UserController {
     @PutMapping(path = "{userId}")
     public void updateUser(
             @PathVariable("userId") Long userId,
+            @RequestParam(required = false) String userName,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String address,
             @RequestParam(required = false) int phone,
-            @RequestParam(required = false) String password) {
-                userService.updateUser(userId, email, firstName, lastName, address, phone, password);
+            @RequestParam(required = false) String password,
+            @RequestParam(required = false) String roles,
+            @RequestParam(required = false) boolean active) {
+                userService.updateUser(userId, userName, email, firstName, lastName, address, phone, password, roles, active);
     }
 }

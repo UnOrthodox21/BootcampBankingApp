@@ -1,6 +1,6 @@
 package com.bootcampTeam4.bootcampBankingApp.services;
 
-import com.bootcampTeam4.bootcampBankingApp.classes.Transaction;
+import com.bootcampTeam4.bootcampBankingApp.models.Transaction;
 import com.bootcampTeam4.bootcampBankingApp.repositories.TransactionRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.bootcampTeam4.bootcampBankingApp.services;
 
-import com.bootcampTeam4.bootcampBankingApp.classes.BankAccount;
-import com.bootcampTeam4.bootcampBankingApp.classes.TransferAmount;
+import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
+import com.bootcampTeam4.bootcampBankingApp.models.TransferAmount;
 import com.bootcampTeam4.bootcampBankingApp.repositories.BankAccountRepository;
 import org.springframework.stereotype.Service;
 
