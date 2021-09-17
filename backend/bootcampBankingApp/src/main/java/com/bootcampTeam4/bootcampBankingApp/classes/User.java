@@ -11,6 +11,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name="username")
+    private String userName;
+
+    @Column(name="roles")
+    private String roles;
+
     @Column(name = "email")
     private String email;
 
@@ -31,7 +37,7 @@ public class User {
 
     public User() {}
 
-    public User(long id, String email, String firstName, String lastName, String address, int phone, String password) {
+    public User(long id, String email, String firstName, String lastName, String address, int phone, String password, String roles, String userName) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -39,19 +45,13 @@ public class User {
         this.address = address;
         this.phone = phone;
         this.password = password;
+        this.roles = roles;
+        this.userName = userName;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", phone=" + phone +
-                ", password='" + password + '\'' +
-                '}';
+        return super.toString();
     }
 
     public long getId() {
@@ -108,5 +108,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }
