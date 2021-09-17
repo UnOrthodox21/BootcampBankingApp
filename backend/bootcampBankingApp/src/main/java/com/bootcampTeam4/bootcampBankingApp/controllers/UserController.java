@@ -21,14 +21,9 @@ public class UserController {
     }
 
     @GetMapping
-    public Optional<User> getUser() {
-        return userService.getUserById(1L);
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
-
-//    @GetMapping
-//    public List<User> getAllUsers() {
-//        return userService.getAllUsers();
-//    }
 
     @GetMapping(path = "{userId}")
     public Optional<User> getUserById(@PathVariable("userId") Long userId) {
