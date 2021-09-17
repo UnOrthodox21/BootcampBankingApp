@@ -2,6 +2,7 @@ package com.bootcampTeam4.bootcampBankingApp.controllers;
 
 
 import com.bootcampTeam4.bootcampBankingApp.models.User;
+import com.bootcampTeam4.bootcampBankingApp.repositories.UserRepository;
 import com.bootcampTeam4.bootcampBankingApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    UserRepository userRepository;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -40,18 +43,36 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
-    @PutMapping(path = "{userId}")
-    public void updateUser(
-            @PathVariable("userId") Long userId,
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) int phone,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String roles,
-            @RequestParam(required = false) boolean active) {
-                userService.updateUser(userId, userName, email, firstName, lastName, address, phone, password, roles, active);
+    @PutMapping("/{id}")
+    public User replaceItem (@RequestBody User user, @PathVariable Long id){
+        List<User> userList = userRepository.findAll();
+        System.out.println(userList);
+        User userToPut = userList.get(Math.toIntExact(id - 1));
+
+        if(user.getEmail() != ""){
+            userToPut.setEmail(user.getEmail());
+        }
+
+        if(user.getFirstName() != ""){
+            userToPut.setFirstName(user.getFirstName());
+        }
+
+        if(user.getLastName() != ""){
+            userToPut.setLastName(user.getLastName());
+        }
+
+        if(user.getPhone() != 0){
+            userToPut.setPhone(user.getPhone());
+        }
+
+        if(user.getAddress() !=""){
+            userToPut.setAddress(user.getAddress());
+        }
+
+        if(user.getPassword() != ""){
+            userToPut.setPassword(user.getPassword());
+        }
+
+        return userRepository.save(userToPut);
     }
 }
