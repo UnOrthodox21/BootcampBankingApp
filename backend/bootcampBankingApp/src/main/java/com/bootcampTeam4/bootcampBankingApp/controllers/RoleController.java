@@ -1,12 +1,11 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 
 
-import com.bootcampTeam4.bootcampBankingApp.classes.Role;
+import com.bootcampTeam4.bootcampBankingApp.models.Role;
 import com.bootcampTeam4.bootcampBankingApp.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Column;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package com.bootcampTeam4.bootcampBankingApp.classes;
+package com.bootcampTeam4.bootcampBankingApp.models;
 
 
 import javax.persistence.*;
@@ -10,6 +10,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "user_name")
+    private String userName;
 
     @Column(name = "email")
     private String email;
@@ -29,29 +32,25 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "roles")
+    private String roles;
+
+    @Column(name = "active")
+    private boolean active;
+
     public User() {}
 
-    public User(long id, String email, String firstName, String lastName, String address, int phone, String password) {
+    public User(long id, String userName, String email, String firstName, String lastName, String address, int phone, String password, String roles, boolean active) {
         this.id = id;
+        this.userName = userName;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", phone=" + phone +
-                ", password='" + password + '\'' +
-                '}';
+        this.roles = roles;
+        this.active = active;
     }
 
     public long getId() {
@@ -60,6 +59,14 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -108,5 +115,37 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phone=" + phone +
+                ", password='" + password + '\'' +
+                ", roles='" + roles + '\'' +
+                ", active=" + active +
+                '}';
     }
 }

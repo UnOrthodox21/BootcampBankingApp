@@ -1,4 +1,4 @@
-package com.bootcampTeam4.bootcampBankingApp.classes;
+package com.bootcampTeam4.bootcampBankingApp.models;
 import javax.persistence.*;
 
 @Entity

@@ -1,6 +1,6 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 
-import com.bootcampTeam4.bootcampBankingApp.classes.Transaction;
+import com.bootcampTeam4.bootcampBankingApp.models.Transaction;
 import com.bootcampTeam4.bootcampBankingApp.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

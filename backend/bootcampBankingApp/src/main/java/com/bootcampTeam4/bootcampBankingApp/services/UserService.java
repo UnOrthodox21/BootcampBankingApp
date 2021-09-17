@@ -1,12 +1,8 @@
 package com.bootcampTeam4.bootcampBankingApp.services;
 
-import com.bootcampTeam4.bootcampBankingApp.classes.User;
+import com.bootcampTeam4.bootcampBankingApp.models.User;
 import com.bootcampTeam4.bootcampBankingApp.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -42,9 +38,13 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(Long userId, String email, String firstName, String lastName, String address, int phone, String password) {
+    public void updateUser(Long userId, String userName, String email, String firstName, String lastName, String address, int phone, String password, String roles, boolean active) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new IllegalStateException("User with id " + userId + " does not exist."));
+
+        if (userName != null && userName.length() > 0) {
+            user.setUserName(userName);
+        }
 
 
         if (email != null && email.length() > 0) {
@@ -70,6 +70,15 @@ public class UserService {
         if (password != null && password.length() > 0) {
             user.setPassword(password);
         }
+
+
+        if (roles != null && roles.length() > 0) {
+            user.setRoles(roles);
+        }
+
+//        if (active != null && active.length() > 0) {
+//            user.setActive(active);
+//        }
     }
 
 }
