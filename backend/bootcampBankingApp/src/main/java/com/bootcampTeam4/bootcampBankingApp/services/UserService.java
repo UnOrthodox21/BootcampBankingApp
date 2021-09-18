@@ -71,6 +71,13 @@ public class UserService {
         return user;
     }
 
+
+    public void deleteUserByUsername(String username){
+        User userToDelete = findUserByUsername(username);
+        userRepository.delete(userToDelete);
+
+    }
+
     public void addNewUser(User user) {
         userRepository.save(user);
     }
