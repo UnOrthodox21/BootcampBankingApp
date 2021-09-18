@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping(path = "{userId}")
-    public Optional<User> getUserById(@PathVariable("userId") Long userId) {
-        return userService.getUserById(userId);
+    public User getUserById(@PathVariable("userId") String userId) {
+        return userService.findUserByUsername(userId);
     }
 
     @PostMapping
@@ -44,35 +44,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User replaceItem (@RequestBody User user, @PathVariable Long id){
-        List<User> userList = userRepository.findAll();
-        System.out.println(userList);
-        User userToPut = userList.get(Math.toIntExact(id - 1));
+    public void replaceItem (@RequestBody User user, @PathVariable String id){
+        userService.changeUserData(user,id);
 
-        if(user.getEmail() != ""){
-            userToPut.setEmail(user.getEmail());
-        }
-
-        if(user.getFirstName() != ""){
-            userToPut.setFirstName(user.getFirstName());
-        }
-
-        if(user.getLastName() != ""){
-            userToPut.setLastName(user.getLastName());
-        }
-
-        if(user.getPhone() != 0){
-            userToPut.setPhone(user.getPhone());
-        }
-
-        if(user.getAddress() !=""){
-            userToPut.setAddress(user.getAddress());
-        }
-
-        if(user.getPassword() != ""){
-            userToPut.setPassword(user.getPassword());
-        }
-
-        return userRepository.save(userToPut);
     }
 }

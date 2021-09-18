@@ -2,14 +2,38 @@ package com.bootcampTeam4.bootcampBankingApp.models;
 
 public class TransferFromTo {
     public double amount;
-    public Long idFrom;
-    public Long idTo;
+    public String nameFrom;
+    public String nameTo;
 
-    public TransferFromTo(double amount, Long idFrom, Long idTo) {
+
+
+    public TransferFromTo(double amount, String nameFrom, String nameTo) {
         this.amount = amount;
-        this.idFrom = idFrom;
-        this.idTo = idTo;
+        this.nameFrom = nameFrom;
+        this.nameTo = nameTo;
     }
+
+    public TransferFromTo(String nameFrom) {
+        this.nameFrom = nameFrom;
+    }
+
+
+    public String getNameFrom() {
+        return nameFrom;
+    }
+
+    public void setNameFrom(String nameFrom) {
+        this.nameFrom = nameFrom;
+    }
+
+    public String getNameTo() {
+        return nameTo;
+    }
+
+    public void setNameTo(String nameTo) {
+        this.nameTo = nameTo;
+    }
+
 
     public TransferFromTo() {
     }
@@ -22,19 +46,5 @@ public class TransferFromTo {
         this.amount = amount;
     }
 
-    public Long getIdFrom() {
-        return idFrom;
-    }
 
-    public void setIdFrom(Long idFrom) {
-        this.idFrom = idFrom;
-    }
-
-    public Long getIdTo() {
-        return idTo;
-    }
-
-    public void setIdTo(Long idTo) {
-        this.idTo = idTo;
-    }
 }
