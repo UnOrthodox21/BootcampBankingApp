@@ -50,6 +50,12 @@ public class BankAccountController {
         bankAccountService.deleteBankAccount(accountNumber);
     }
 
+    @PutMapping("/edit/{accountNumber}")
+    public void editBankAccount(@RequestBody BankAccount bankAccount, @PathVariable("accountNumber") String accountNumber){
+        bankAccountService.editBankAccountByAccountNumber(bankAccount, accountNumber);
+
+    }
+
 
     @PutMapping("/transfer")
     public void sendFunds(@RequestBody TransferFromTo transferFromTo) {

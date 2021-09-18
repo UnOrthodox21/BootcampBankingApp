@@ -30,6 +30,14 @@ public class BankAccountService {
     }
 
 
+    public void editBankAccountByAccountNumber(BankAccount bankAccount,String name){
+        BankAccount bankAccountToEdit = findByAccountNumber(name);
+        bankAccountToEdit.setBalance(bankAccount.getBalance());
+        bankAccountToEdit.setNumber(bankAccount.getNumber());
+        bankAccountToEdit.setType(bankAccount.getType());
+        bankAccountRepository.save(bankAccountToEdit);
+    }
+
 
 
     public BankAccount findByAccountNumber(String accountToFind){
