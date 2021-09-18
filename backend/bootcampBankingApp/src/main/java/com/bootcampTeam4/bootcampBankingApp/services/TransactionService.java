@@ -6,6 +6,7 @@ import com.bootcampTeam4.bootcampBankingApp.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,20 @@ public class TransactionService {
 
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
+    }
+
+    public List<Transaction> getAllUserTransactions(String name){
+        List<Transaction> allTransactions = transactionRepository.findAll();
+        List<Transaction> userTransactions = new ArrayList<>();
+        String nameForLookup = name;
+        for(int i = 0; i<allTransactions.size(); i++){
+            if(allTransactions.get(i).getUserTo().equals(nameForLookup) || allTransactions.get(i).getUserFrom().equals(nameForLookup)){
+                userTransactions.add(allTransactions.get(i));
+            }
+        }
+
+        return userTransactions;
+
     }
 
     public Optional<Transaction> getTransactionById(long transactionId) {
