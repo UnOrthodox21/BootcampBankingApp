@@ -1,10 +1,13 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
+import com.bootcampTeam4.bootcampBankingApp.models.Transaction;
 import com.bootcampTeam4.bootcampBankingApp.models.TransferFromTo;
+import com.bootcampTeam4.bootcampBankingApp.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.bootcampTeam4.bootcampBankingApp.services.BankAccountService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -13,10 +16,12 @@ public class BankAccountController {
 
 
     private BankAccountService bankAccountService;
+    private TransactionService transactionService;
 
     @Autowired
-    public BankAccountController(BankAccountService bankAccountService) {
+    public BankAccountController(BankAccountService bankAccountService, TransactionService transactionService) {
         this.bankAccountService = bankAccountService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping
@@ -24,32 +29,7 @@ public class BankAccountController {
         return bankAccountService.getAllBankAccounts();
     }
 
-//    @GetMapping("/str")
-//    public BankAccount findByAccountNumber(@RequestBody TransferFromTo accountToFind){
-//        List<BankAccount> newList = bankAccountService.getAllBankAccounts();
-//        BankAccount acc = null;
-//        String name = accountToFind.getInx();
-//        for(int i=0;i< newList.size();i++){
-//            System.out.println("name = " + name);
-//            System.out.println(newList.get(i).getNumber());
-//            if(newList.get(i).getNumber().equals(name)){
-//
-//                acc = newList.get(i);
-//                break;
-//            }
-//
-//        }
-//        System.out.println(accountToFind);
-//        System.out.println(acc.getBalance());
-//        return acc;
-//    }
 
-
-
-//    @GetMapping(path = "{id}")
-//    public Optional<BankAccount> getBankAccountById(@PathVariable("id") Long bankAccountId) {
-//        return bankAccountService.getBankAccountById(bankAccountId);
-//    }
 
     @GetMapping("/{accountNumber}")
     public BankAccount getBankAccountByAccountNumber(@PathVariable("accountNumber") String accountNumber){
@@ -65,14 +45,32 @@ public class BankAccountController {
     }
 
 
-    @DeleteMapping(path = "{bankAccountId}")
-    public void deleteBankAccount(@PathVariable("bankAccountId") String bankAccountId) {
-        bankAccountService.deleteBankAccount(bankAccountId);
+    @DeleteMapping(path = "{accountNumber}")
+    public void deleteBankAccount(@PathVariable("accountNumber") String accountNumber) {
+        bankAccountService.deleteBankAccount(accountNumber);
     }
 
 
     @PutMapping("/transfer")
-    public void sendFunds(@RequestBody TransferFromTo transferFromTo){
+    public void sendFunds(@RequestBody TransferFromTo transferFromTo) {
+
+        transactionService.addNewTransferTransaction(transferFromTo);
+        bankAccountService.sendFunds(transferFromTo);
+
+    }
+
+    @PutMapping("/deposit")
+    public void depositFunds(@RequestBody TransferFromTo transferFromTo){
+
+        transactionService.addNewDepositTransaction(transferFromTo);
+        bankAccountService.sendFunds(transferFromTo);
+
+    }
+
+    @PutMapping("/withdraw")
+    public void withdrawFunds(@RequestBody TransferFromTo transferFromTo){
+
+        transactionService.addNewWithdrawTransaction(transferFromTo);
         bankAccountService.sendFunds(transferFromTo);
 
     }

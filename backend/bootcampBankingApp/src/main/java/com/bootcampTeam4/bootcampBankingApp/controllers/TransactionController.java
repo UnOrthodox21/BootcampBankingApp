@@ -1,6 +1,7 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 
 import com.bootcampTeam4.bootcampBankingApp.models.Transaction;
+import com.bootcampTeam4.bootcampBankingApp.models.TransferFromTo;
 import com.bootcampTeam4.bootcampBankingApp.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,7 @@ public class TransactionController {
     @DeleteMapping(path = "{transactionId}")
     public void deleteUser(@PathVariable("transactionId") Long transactionId) {
         transactionService.deleteTransaction(transactionId);
+
     }
 
 }
