@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,48 +44,70 @@ public class MyUserDetailsService implements UserDetailsService {
         userDetailsRepository.deleteById(userDetailsId);
     }
 
-    @Transactional
-    public void updateUserDetails(Long userDetailsId, String userName, String email, String firstName, String lastName, String address, int phone, String password, String roles, boolean active) {
-        UserDetails userDetails = userDetailsRepository.findById(userDetailsId).orElseThrow(() ->
-                new IllegalStateException("User with id " + userDetailsId + " does not exist."));
 
-        if (userName != null && userName.length() > 0) {
-            userDetails.setUsername(userName);
+    public void changeUserDetailsData(UserDetails userDetails, String id){
+        UserDetails userDetailsToPut = findUserDetailsByUsername(id);
+        if(userDetails.getEmail() != ""){
+            userDetailsToPut.setEmail(userDetails.getEmail());
         }
 
 
-        if (email != null && email.length() > 0) {
-            userDetails.setEmail(email);
+        if(userDetails.getFirstName() != ""){
+            userDetailsToPut.setFirstName(userDetails.getFirstName());
         }
 
-        if (firstName != null && firstName.length() > 0) {
-            userDetails.setFirstName(firstName);
+        if(userDetails.getLastName() != ""){
+            userDetailsToPut.setLastName(userDetails.getLastName());
         }
 
-        if (lastName != null && lastName.length() > 0) {
-            userDetails.setLastName(lastName);
+        if(userDetails.getPhone() != 0){
+            userDetailsToPut.setPhone(userDetails.getPhone());
         }
 
-        if (address != null && address.length() > 0) {
-            userDetails.setAddress(address);
+        if(userDetails.getAddress() !=""){
+            userDetailsToPut.setAddress(userDetails.getAddress());
         }
 
-        if (phone > 0) {
-            userDetails.setPhone(phone);
+        if(userDetails.getPassword() != ""){
+            userDetailsToPut.setPassword(userDetails.getPassword());
         }
 
-        if (password != null && password.length() > 0) {
-            userDetails.setPassword(password);
+        if(userDetails.getRoles() != ""){
+            userDetailsToPut.setRoles(userDetails.getRoles());
         }
 
-
-        if (roles != null && roles.length() > 0) {
-            userDetails.setRoles(roles);
+        if(userDetails.getAuthorities().isEmpty() == false) {
+            userDetailsToPut.setAuthorities(userDetails.getAuthorities());
         }
 
-//        if (active != null && active.length() > 0) {
-//            user.setActive(active);
-//        }
+        if(userDetails.isEnabled() == false || userDetails.isEnabled() == true) {
+            userDetailsToPut.setEnabled(userDetails.isEnabled());
+        }
+
+        userDetailsRepository.save(userDetailsToPut);
+    }
+
+
+    public UserDetails findUserDetailsByUsername(String userToFind){
+        List<UserDetails> newList = getAllUserDetails();
+        UserDetails userDetails = null;
+        String name = userToFind;
+        for(int i=0;i< newList.size();i++){
+            if(newList.get(i).getUsername().equals(name)){
+                userDetails = newList.get(i);
+                System.out.println(userDetails.getUsername());
+                break;
+            }
+
+        }
+        return userDetails;
+    }
+
+
+    public void deleteUserDetailsByUsername(String username){
+        UserDetails userToDelete = findUserDetailsByUsername(username);
+        userDetailsRepository.delete(userToDelete);
+
     }
 
 
