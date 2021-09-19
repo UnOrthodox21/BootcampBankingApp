@@ -31,7 +31,7 @@ public class BankAccountService {
 
 
     public void editBankAccountByAccountNumber(BankAccount bankAccount,String name){
-        BankAccount bankAccountToEdit = findByAccountNumber(name);
+        BankAccount bankAccountToEdit = getBankAccountByAccountNumber(name);
         bankAccountToEdit.setBalance(bankAccount.getBalance());
         bankAccountToEdit.setNumber(bankAccount.getNumber());
         bankAccountToEdit.setType(bankAccount.getType());
@@ -40,7 +40,7 @@ public class BankAccountService {
 
 
 
-    public BankAccount findByAccountNumber(String accountToFind){
+    public BankAccount getBankAccountByAccountNumber(String accountToFind){
         List<BankAccount> newList = getAllBankAccounts();
         BankAccount acc = null;
         String name = accountToFind;
@@ -60,8 +60,8 @@ public class BankAccountService {
     public void sendFunds(TransferFromTo transferFromTo) {
         List<BankAccount> bankAccountList = getAllBankAccounts();
 
-        String nameFrom = transferFromTo.getNameFrom();
-        String nameTo = transferFromTo.getNameTo();
+        String nameFrom = transferFromTo.getAccountNumberFrom();
+        String nameTo = transferFromTo.getAccountNumberTo();
         BankAccount bankAccountFrom = null;
         BankAccount bankAccountTo = null;
 
@@ -85,9 +85,9 @@ public class BankAccountService {
 
 
 
-    public void deleteBankAccount(String bankAccountId) {
+    public void deleteBankAccount(String bankAccountNumber) {
 
-        BankAccount acc = findByAccountNumber(bankAccountId);
+        BankAccount acc = getBankAccountByAccountNumber(bankAccountNumber);
         Long id = acc.getId();
             bankAccountRepository.deleteById(id);
     }

@@ -2,33 +2,33 @@ package com.bootcampTeam4.bootcampBankingApp.models;
 
 public class TransferFromTo {
     public double amount;
-    public String nameFrom;
-    public String nameTo;
+    public String accountNumberFrom;
+    public String accountNumberTo;
     public String type;
 
 
 
-    public TransferFromTo(double amount, String nameFrom, String nameTo) {
+    public TransferFromTo(double amount, String accountNumberFrom, String accountNumberTo) {
         this.amount = amount;
-        this.nameFrom = nameFrom;
-        this.nameTo = nameTo;
+        this.accountNumberFrom = accountNumberFrom;
+        this.accountNumberTo = accountNumberTo;
     }
 
-    public TransferFromTo(double amount, String nameTo) {
+    public TransferFromTo(double amount, String accountNumberTo) {
         this.amount = amount;
-        this.nameTo = nameTo;
+        this.accountNumberTo = accountNumberTo;
     }
 
 
 
-    public TransferFromTo(String nameFrom) {
-        this.nameFrom = nameFrom;
+    public TransferFromTo(String accountNumberFrom) {
+        this.accountNumberFrom = accountNumberFrom;
     }
 
-    public TransferFromTo(double amount, String nameFrom, String nameTo, String type) {
+    public TransferFromTo(double amount, String accountNumberFrom, String accountNumberTo, String type) {
         this.amount = amount;
-        this.nameFrom = nameFrom;
-        this.nameTo = nameTo;
+        this.accountNumberFrom = accountNumberFrom;
+        this.accountNumberTo = accountNumberTo;
         this.type = type;
     }
 
@@ -40,20 +40,20 @@ public class TransferFromTo {
         this.type = type;
     }
 
-    public String getNameFrom() {
-        return nameFrom;
+    public String getAccountNumberFrom() {
+        return accountNumberFrom;
     }
 
-    public void setNameFrom(String nameFrom) {
-        this.nameFrom = nameFrom;
+    public void setAccountNumberFrom(String accountNumberFrom) {
+        this.accountNumberFrom = accountNumberFrom;
     }
 
-    public String getNameTo() {
-        return nameTo;
+    public String getAccountNumberTo() {
+        return accountNumberTo;
     }
 
-    public void setNameTo(String nameTo) {
-        this.nameTo = nameTo;
+    public void setAccountNumberTo(String accountNumberTo) {
+        this.accountNumberTo = accountNumberTo;
     }
 
 

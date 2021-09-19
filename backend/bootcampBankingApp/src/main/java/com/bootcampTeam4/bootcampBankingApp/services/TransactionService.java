@@ -53,8 +53,8 @@ public class TransactionService {
 
     public void addNewTransferTransaction(TransferFromTo transferFromTo){
         Transaction newTransaction = new Transaction();
-        newTransaction.setUserFrom(transferFromTo.getNameFrom());
-        newTransaction.setUserTo(transferFromTo.getNameTo());
+        newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
+        newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
         newTransaction.setAmount(Math.round(transferFromTo.getAmount()*100.0)/100.0);
         newTransaction.setType("Transfer");
         transactionRepository.save(newTransaction);
@@ -63,10 +63,10 @@ public class TransactionService {
 
     public void addNewDepositTransaction(TransferFromTo transferFromTo){
 
-        transferFromTo.setNameFrom("BANK1337");
+        transferFromTo.setAccountNumberFrom("BANK1337");
         Transaction newTransaction = new Transaction();
-        newTransaction.setUserTo(transferFromTo.getNameTo());
-        newTransaction.setUserFrom(transferFromTo.getNameFrom());
+        newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
+        newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
         newTransaction.setAmount(Math.round(transferFromTo.getAmount()*100.0)/100.0);
         newTransaction.setType("Deposit");
         transactionRepository.save(newTransaction);
@@ -74,10 +74,10 @@ public class TransactionService {
     }
 
     public void addNewWithdrawTransaction(TransferFromTo transferFromTo){
-        transferFromTo.setNameTo("BANK1337");
+        transferFromTo.setAccountNumberTo("BANK1337");
         Transaction newTransaction = new Transaction();
-        newTransaction.setUserFrom(transferFromTo.getNameFrom());
-        newTransaction.setUserTo(transferFromTo.getNameTo());
+        newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
+        newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
         newTransaction.setAmount(Math.round(transferFromTo.getAmount()*100.0)/100.0);
         newTransaction.setType("Withdraw");
         transactionRepository.save(newTransaction);

@@ -25,9 +25,9 @@ public class TransactionController {
         return transactionService.getAllTransactions();
     }
 
-    @GetMapping("/find/{name}")
-    public List<Transaction> getAllTransactionsByUser(@PathVariable ("name") String name){
-        return transactionService.getAllUserTransactions(name);
+    @GetMapping("/find/{userName}")
+    public List<Transaction> getAllTransactionsByUser(@PathVariable ("userName") String userName){
+        return transactionService.getAllUserTransactions(userName);
     }
 
     @GetMapping(path = "{transactionId}")

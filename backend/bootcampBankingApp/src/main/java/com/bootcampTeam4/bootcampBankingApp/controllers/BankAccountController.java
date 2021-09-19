@@ -33,7 +33,7 @@ public class BankAccountController {
 
     @GetMapping("/{accountNumber}")
     public BankAccount getBankAccountByAccountNumber(@PathVariable("accountNumber") String accountNumber){
-        return bankAccountService.findByAccountNumber(accountNumber);
+        return bankAccountService.getBankAccountByAccountNumber(accountNumber);
     }
 
 
