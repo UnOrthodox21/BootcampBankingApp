@@ -28,9 +28,9 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping(path = "{userId}")
-    public Optional<User> getUserById(@PathVariable("userId") Long userId) {
-        return userService.getUserById(userId);
+    @GetMapping(path = "{userName}")
+    public User getUserByUsername(@PathVariable("userName") String userName) {
+        return userService.findUserByUsername(userName);
     }
 
     @PostMapping
@@ -38,41 +38,17 @@ public class UserController {
         userService.addNewUser(user);
     }
 
-    @DeleteMapping(path = "{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId) {
-        userService.deleteUser(userId);
+
+
+    @DeleteMapping("/{userName}")
+    public void deleteUser(@PathVariable("userName") String userName){
+        userService.deleteUserByUsername(userName);
     }
 
-    @PutMapping("/{id}")
-    public User replaceItem (@RequestBody User user, @PathVariable Long id){
-        List<User> userList = userRepository.findAll();
-        System.out.println(userList);
-        User userToPut = userList.get(Math.toIntExact(id - 1));
 
-        if(user.getEmail() != ""){
-            userToPut.setEmail(user.getEmail());
-        }
+    @PutMapping("/{userName}")
+    public void replaceItem (@RequestBody User user, @PathVariable String userName){
+        userService.changeUserData(user,userName);
 
-        if(user.getFirstName() != ""){
-            userToPut.setFirstName(user.getFirstName());
-        }
-
-        if(user.getLastName() != ""){
-            userToPut.setLastName(user.getLastName());
-        }
-
-        if(user.getPhone() != 0){
-            userToPut.setPhone(user.getPhone());
-        }
-
-        if(user.getAddress() !=""){
-            userToPut.setAddress(user.getAddress());
-        }
-
-        if(user.getPassword() != ""){
-            userToPut.setPassword(user.getPassword());
-        }
-
-        return userRepository.save(userToPut);
     }
 }
