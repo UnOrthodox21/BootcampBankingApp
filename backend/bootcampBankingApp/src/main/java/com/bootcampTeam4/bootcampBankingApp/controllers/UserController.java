@@ -49,6 +49,15 @@ public class UserController {
     @PutMapping("/{userName}")
     public void replaceItem (@RequestBody User user, @PathVariable String userName){
         userService.changeUserData(user,userName);
-
     }
 }
+
+
+
+
+
+
+
+
+
+

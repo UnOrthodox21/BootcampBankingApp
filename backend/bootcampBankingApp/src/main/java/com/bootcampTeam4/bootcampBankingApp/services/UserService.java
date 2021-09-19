@@ -1,4 +1,4 @@
-package com.bootcampTeam4.bootcampBankingApp.services;
+ package com.bootcampTeam4.bootcampBankingApp.services;
 
 import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.models.User;
@@ -31,6 +31,7 @@ public class UserService {
         if(user.getEmail() != ""){
             userToPut.setEmail(user.getEmail());
         }
+
 
         if(user.getFirstName() != ""){
             userToPut.setFirstName(user.getFirstName());
@@ -81,9 +82,6 @@ public class UserService {
     public void addNewUser(User user) {
         userRepository.save(user);
     }
-
-
-
 
 
 }
