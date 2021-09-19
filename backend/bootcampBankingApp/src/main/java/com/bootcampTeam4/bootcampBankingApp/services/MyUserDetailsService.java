@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +70,18 @@ public class MyUserDetailsService implements UserDetailsService {
 
         if(userDetails.getPassword() != ""){
             userDetailsToPut.setPassword(userDetails.getPassword());
+        }
+
+        if(userDetails.getRoles() != ""){
+            userDetailsToPut.setRoles(userDetails.getRoles());
+        }
+
+        if(userDetails.getAuthorities().isEmpty() == false) {
+            userDetailsToPut.setAuthorities(userDetails.getAuthorities());
+        }
+
+        if(userDetails.isEnabled() == false || userDetails.isEnabled() == true) {
+            userDetailsToPut.setEnabled(userDetails.isEnabled());
         }
 
         userDetailsRepository.save(userDetailsToPut);
