@@ -31,6 +31,11 @@ public class UserDetailsController {
         return userDetailsService.getUserDetailsById(userDetailsId);
     }
 
+    @GetMapping(path = "{userName}")
+    public UserDetails getUserDetailsByUsername(@PathVariable("userName") String userName) {
+        return userDetailsService.findUserDetailsByUsername(userName);
+    }
+
     @PostMapping
     public void addNewUserDetails(@RequestBody UserDetails userDetails) {
         userDetailsService.addNewUserDetails(userDetails);
@@ -41,18 +46,14 @@ public class UserDetailsController {
         userDetailsService.deleteUserDetails(userDetailsId);
     }
 
-    @PutMapping(path = "{userDetailsId}")
-    public void updateUser(
-            @PathVariable("userDetailsId") Long userDetailsId,
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) int phone,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String roles,
-            @RequestParam(required = false) boolean active) {
-                userDetailsService.updateUserDetails(userDetailsId, userName, email, firstName, lastName, address, phone, password, roles, active);
+    @DeleteMapping("/{userName}")
+    public void deleteUser(@PathVariable("userName") String userName){
+        userDetailsService.deleteUserDetailsByUsername(userName);
     }
+
+    @PutMapping("/{userName}")
+    public void replaceItem (@RequestBody UserDetails userDetails, @PathVariable String userName){
+        userDetailsService.changeUserDetailsData(userDetails, userName);
+    }
+
 }
