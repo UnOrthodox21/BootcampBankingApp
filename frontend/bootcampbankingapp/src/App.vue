@@ -1,6 +1,6 @@
 <template>
-  <Header v-bind:user="user"/>
-  <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts"/>
+  <Header v-bind:user="user" v-bind:jwt="jwt"/>
+  <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt"/>
   <Footer/>
 </template>
 
@@ -8,6 +8,7 @@
 <script>
 import Header from "./components/layout/Header.vue"
 import Footer from "./components/layout/Footer.vue"
+import {useRouter} from "vue-router";
 
 export default {
     name: "app",
@@ -19,24 +20,37 @@ export default {
       return {
         user: [],
         bankAccounts: [],
+        jwt: '',
+        router: useRouter()
       }
     },
      methods: {
-      setUser() {
-        this.$http.get(process.env.VUE_APP_API_URL + "/users/2")
+      setUser(username) {
+        this.$http.get(process.env.VUE_APP_API_URL + "/users/" + username + "?Authorization=Bearer " + this.jwt)
         .then((response) => { this.user = response.data })
         .catch(err => console.log(err));
       },
-      setBankAccounts() {
-        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts")
+      setBankAccounts(accountNumber) {
+        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/" + accountNumber + "?Authorization=Bearer " + this.jwt)
         .then((response) => { this.bankAccounts = response.data })
         .catch(err => console.log(err));
+      },
+      setJwt(jwt) {
+        this.jwt = jwt;
+      },
+      login(username, jwt) {
+        // this.setUser(username);
+        // this.setBankAccounts();
+        this.setJwt(jwt);
+        this.router.push({ name: 'Home' });
+      },
+      logout() {
+        this.user = [],
+        this.bankAccounts = [],
+        this.jwt = '';
+        this.router.push({ name: 'Login'});
       }
     },
-    mounted() {
-      this.setUser();
-      this.setBankAccounts();
-    }
   }
 </script>
 
@@ -81,4 +95,21 @@ export default {
     background-color: rgb(118, 221, 77);
     color: rgb(248, 248, 248);
   }
+
+    .btn-login {
+      color: rgb(248, 248, 248);
+      font-size: 1.2em;
+      padding: 1em;
+      height: 3.5em;
+      width: 100%;
+      text-align: center;
+      vertical-align: bottom;
+      margin-top: 3.85em;
+      background-color: rgb(25, 25, 25);
+    }
+
+    .btn-login:hover {
+      color: rgb(248, 248, 248);
+      background-color: rgb(32, 32, 34);
+    }
 </style>

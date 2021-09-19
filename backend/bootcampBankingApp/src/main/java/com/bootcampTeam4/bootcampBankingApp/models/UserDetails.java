@@ -1,18 +1,23 @@
 package com.bootcampTeam4.bootcampBankingApp.models;
 
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "userDetails")
+public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "user_name")
-    private String userName;
+    private String username;
 
     @Column(name = "email")
     private String email;
@@ -35,14 +40,17 @@ public class User {
     @Column(name = "roles")
     private String roles;
 
-    @Column(name = "active")
-    private boolean active;
+    @Column(name = "enabled")
+    private boolean enabled;
 
-    public User() {}
+    @Column(name = "authorities")
+    private GrantedAuthority authorities;
 
-    public User(long id, String userName, String email, String firstName, String lastName, String address, int phone, String password, String roles, boolean active) {
+    public UserDetails() {}
+
+    public UserDetails(long id, String username, String email, String firstName, String lastName, String address, int phone, String password, String roles, GrantedAuthority authorities, boolean enabled) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,7 +58,8 @@ public class User {
         this.phone = phone;
         this.password = password;
         this.roles = roles;
-        this.active = active;
+        this.authorities = authorities;
+        this.enabled = enabled;
     }
 
     public long getId() {
@@ -61,12 +70,27 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -125,19 +149,27 @@ public class User {
         this.roles = roles;
     }
 
-    public boolean isActive() {
-        return active;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return (Collection<? extends GrantedAuthority>) authorities;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = (GrantedAuthority) authorities;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDetails{" +
                 "id=" + id +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -145,7 +177,9 @@ public class User {
                 ", phone=" + phone +
                 ", password='" + password + '\'' +
                 ", roles='" + roles + '\'' +
-                ", active=" + active +
+                ", enabled=" + enabled +
                 '}';
     }
+
+
 }

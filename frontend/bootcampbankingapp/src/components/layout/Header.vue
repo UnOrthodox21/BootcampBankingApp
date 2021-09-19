@@ -1,13 +1,25 @@
 <template>
 <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <router-link class="navbar-brand" to="/">Navbar</router-link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+        <div v-if="jwt === ''" class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav w-100">
+              <li class="nav-item">
+              <router-link class="nav-link active" aria-current="page" to="/login">Login</router-link>
+            </li> 
             <li class="nav-item">
+              <router-link class="nav-link" to="/register">Register</router-link>
+            </li>
+          </ul>
+        </div>
+
+        <div v-else class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav w-100">
+              <li class="nav-item">
               <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
             </li>
             <li class="nav-item">
@@ -23,12 +35,15 @@
                   <router-link class="dropdown-item" to="/bank-accounts">Bank accounts</router-link>
                 </li>
                    <li>
-                  <router-link class="dropdown-item" to="/">Log out</router-link>
+                  <router-link class="dropdown-item" @click="logout" to="/login" >Log out</router-link>
                 </li>
               </ul>
             </li>
           </ul>
         </div>
+
+
+
       </div>
     </nav>
 
@@ -36,9 +51,20 @@
 
 
 <script>
+
 export default {
     name: "Header",
-    props: ["user"]
+    props: ["user", "jwt"],
+    methods: {
+
+      logout(e) {
+        e.preventDefault();
+        console.log("called method");
+        this.$parent.logout();
+      }
+
+    }
+
 }
 </script>
 
