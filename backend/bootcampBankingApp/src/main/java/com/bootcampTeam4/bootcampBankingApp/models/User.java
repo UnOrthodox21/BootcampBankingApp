@@ -13,15 +13,15 @@ import java.util.Collection;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private long id;
 
-        @Column(name = "user_name")
-        private String username;
+        @Column(name = "user_name", unique = true)
+        private String userName;
 
-        @Column(name = "email")
+        @Column(name = "email" , unique = true)
         private String email;
 
         @Column(name = "first_name")
         private String firstName;
-        //
+
         @Column(name = "last_name")
         private String lastName;
 

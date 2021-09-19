@@ -2,6 +2,7 @@ package com.bootcampTeam4.bootcampBankingApp.controllers;
 
 
 import com.bootcampTeam4.bootcampBankingApp.models.User;
+import com.bootcampTeam4.bootcampBankingApp.repositories.UserRepository;
 import com.bootcampTeam4.bootcampBankingApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    UserRepository userRepository;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -25,9 +28,9 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping(path = "{userId}")
-    public Optional<User> getUserById(@PathVariable("userId") Long userId) {
-        return userService.getUserById(userId);
+    @GetMapping(path = "{userName}")
+    public User getUserByUsername(@PathVariable("userName") String userName) {
+        return userService.findUserByUsername(userName);
     }
 
     @PostMapping
@@ -35,22 +38,17 @@ public class UserController {
         userService.addNewUser(user);
     }
 
-    @DeleteMapping(path = "{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId) {
-        userService.deleteUser(userId);
+
+
+    @DeleteMapping("/{userName}")
+    public void deleteUser(@PathVariable("userName") String userName){
+        userService.deleteUserByUsername(userName);
     }
 
-    @PutMapping(path = "{userId}")
-    public void updateUser(
-            @PathVariable("userId") Long userId,
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) int phone,
-            @RequestParam(required = false) String password) {
-        userService.updateUser(userId, userName, email, firstName, lastName, address, phone, password);
+
+    @PutMapping("/{userName}")
+    public void replaceItem (@RequestBody User user, @PathVariable String userName){
+        userService.changeUserData(user,userName);
     }
 }
 

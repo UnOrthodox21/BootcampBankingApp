@@ -1,10 +1,11 @@
  package com.bootcampTeam4.bootcampBankingApp.services;
 
+import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.models.User;
 import com.bootcampTeam4.bootcampBankingApp.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -25,56 +26,62 @@ public class UserService {
         return userRepository.findUserById(userId);
     }
 
+    public void changeUserData(User user,String id){
+        User userToPut = findUserByUsername(id);
+        if(user.getEmail() != ""){
+            userToPut.setEmail(user.getEmail());
+        }
+
+
+        if(user.getFirstName() != ""){
+            userToPut.setFirstName(user.getFirstName());
+        }
+
+        if(user.getLastName() != ""){
+            userToPut.setLastName(user.getLastName());
+        }
+
+        if(user.getPhone() != 0){
+            userToPut.setPhone(user.getPhone());
+        }
+
+        if(user.getAddress() !=""){
+            userToPut.setAddress(user.getAddress());
+        }
+
+        if(user.getPassword() != ""){
+            userToPut.setPassword(user.getPassword());
+        }
+
+        userRepository.save(userToPut);
+    }
+
+
+    public User findUserByUsername(String userToFind){
+        List<User> newList = getAllUsers();
+        User user = null;
+        String name = userToFind;
+        for(int i=0;i< newList.size();i++){
+            if(newList.get(i).getUserName().equals(name)){
+                user = newList.get(i);
+                System.out.println(user.getUserName());
+                break;
+            }
+
+        }
+        return user;
+    }
+
+
+    public void deleteUserByUsername(String username){
+        User userToDelete = findUserByUsername(username);
+        userRepository.delete(userToDelete);
+
+    }
+
     public void addNewUser(User user) {
         userRepository.save(user);
     }
 
-    public void deleteUser(Long userId) {
-        boolean exists = userRepository.existsById(userId);
-        if (!exists) {
-            throw new IllegalStateException(("User with id " + userId + " does not exist."));
-        }
-        userRepository.deleteById(userId);
-    }
-
-    @Transactional
-    public void updateUser(Long userId, String userName, String email, String firstName, String lastName, String address, int phone, String password) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new IllegalStateException("User with id " + userId + " does not exist."));
-
-        if (userName != null && userName.length() > 0) {
-            user.setUsername(userName);
-        }
-
-
-        if (email != null && email.length() > 0) {
-            user.setEmail(email);
-        }
-
-        if (firstName != null && firstName.length() > 0) {
-            user.setFirstName(firstName);
-        }
-
-        if (lastName != null && lastName.length() > 0) {
-            user.setLastName(lastName);
-        }
-
-        if (address != null && address.length() > 0) {
-            user.setAddress(address);
-        }
-
-        if (phone > 0) {
-            user.setPhone(phone);
-        }
-
-        if (password != null && password.length() > 0) {
-            user.setPassword(password);
-        }
-
-
-//        if (active != null && active.length() > 0) {
-//            user.setActive(active);
-//        }
-    }
 
 }

@@ -1,6 +1,9 @@
 package com.bootcampTeam4.bootcampBankingApp.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -15,26 +18,30 @@ public class Transaction {
     private String type;
 
     @Column(name = "date")
-    private Date date;
+    @CreationTimestamp
+    private LocalDateTime date;
+
 
     @Column(name = "user_from")
-    private long userFrom;
+    private String userFrom;
 
     @Column(name = "user_to")
-    private long userTo;
+    private String userTo;
 
     @Column(name = "amount")
     private double amount;
 
     public Transaction() {}
 
-    public Transaction(String type, Date date, long userFrom, long userTo, double amount) {
+    public Transaction(long id, String type, LocalDateTime date, String userFrom, String userTo, double amount) {
+        this.id = id;
         this.type = type;
         this.date = date;
         this.userFrom = userFrom;
         this.userTo = userTo;
         this.amount = amount;
     }
+
 
     public long getId() {
         return id;
@@ -52,27 +59,27 @@ public class Transaction {
         this.type = type;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public long getUserFrom() {
+    public String getUserFrom() {
         return userFrom;
     }
 
-    public void setUserFrom(long userFrom) {
+    public void setUserFrom(String userFrom) {
         this.userFrom = userFrom;
     }
 
-    public long getUserTo() {
+    public String getUserTo() {
         return userTo;
     }
 
-    public void setUserTo(long userTo) {
+    public void setUserTo(String userTo) {
         this.userTo = userTo;
     }
 
