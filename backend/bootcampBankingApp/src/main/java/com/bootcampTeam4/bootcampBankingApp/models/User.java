@@ -2,6 +2,7 @@ package com.bootcampTeam4.bootcampBankingApp.models;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -37,6 +38,10 @@ public class User {
 
     @Column(name = "active")
     private boolean active;
+
+    @OneToMany()
+    @JoinColumn(name = "user_id")
+    private List<BankAccount> bankAccounts;
 
     public User() {}
 
@@ -131,6 +136,14 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
     }
 
     @Override

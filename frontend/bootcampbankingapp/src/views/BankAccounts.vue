@@ -1,10 +1,10 @@
 <template>
   <BankAccountsBanner/>
-  <BankAccountsTable v-bind:bankAccounts="bankAccounts"/>
-
+  <BankAccountsTable v-bind:user="user" v-bind:bankAccounts="bankAccounts"/>
 </template>
 
 <script>
+
 import BankAccountsBanner from '../components/bank-accounts/BankAccountsBanner.vue';
 import BankAccountsTable from "../components/bank-accounts/BankAccountsTable.vue";
 
@@ -12,11 +12,14 @@ export default {
   name: "BankAccounts",
   components: {
     BankAccountsBanner,
-    BankAccountsTable
+    BankAccountsTable,
+    
   },
-  props: ["user", "bankAccounts"]
+  
+   
+  
+  props: ["user","bankAccounts"]
 }
 </script>
-
 <style scoped>
 </style>
