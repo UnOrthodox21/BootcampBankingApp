@@ -83,14 +83,7 @@ export default {
         this.setupHeaderInterceptor();
 
         const newUserData = {
-            username: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            address: "",
-            phone: "",
-            password: "",
-            roles: "",
+
             jwt
         }
 

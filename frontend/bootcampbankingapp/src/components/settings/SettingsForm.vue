@@ -83,7 +83,7 @@ export default {
               newUserData.password = pw1;
             } 
           
-            this.$http.put(process.env.VUE_APP_API_URL + "/users/newuser1", newUserData)
+            this.$http.put(process.env.VUE_APP_API_URL + "/users/" + this.user.username , newUserData)
             .then(() => this.$parent.submitChanges())
             .catch(err => console.log(err));
             console.log(newUserData)
