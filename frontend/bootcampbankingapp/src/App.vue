@@ -20,37 +20,97 @@ export default {
       return {
         user: [],
         bankAccounts: [],
-        jwt: '',
-        router: useRouter()
+        router: useRouter(),
+        jwt: ""
       }
     },
+    created() {
+        this.jwt = this.getCookie("Token");
+        let jwt = this.jwt;
+        this.setupHeaderInterceptor();
+       if (jwt !== undefined && jwt.length) {
+            this.setUser(jwt);
+        }
+    },
      methods: {
-      setUser(username) {
-        this.$http.get(process.env.VUE_APP_API_URL + "/users/" + username + "?Authorization=Bearer " + this.jwt)
-        .then((response) => { this.user = response.data })
+      setUser(jwt) {
+        this.$http.get(process.env.VUE_APP_API_URL + "/users/jwt/" + jwt)
+        .then((response) => { 
+          this.user = response.data;
+        })
         .catch(err => console.log(err));
+
+        
       },
+
+      // setUser(username) {
+      //   this.$http.get(process.env.VUE_APP_API_URL + "/users/" + username)
+      //   .then((response) => { this.user = response.data })
+      //   .catch(err => console.log(err));
+      // },
+
       setBankAccounts(accountNumber) {
-        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/" + accountNumber + "?Authorization=Bearer " + this.jwt)
+        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/" + accountNumber)
         .then((response) => { this.bankAccounts = response.data })
         .catch(err => console.log(err));
       },
+
       setJwt(jwt) {
+        let d = new Date();
+        d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+        let expires = "expires=" + d.toUTCString();
+        document.cookie ="Token=" + jwt + ";" + expires + ";path=/";
         this.jwt = jwt;
+    },
+
+      setupHeaderInterceptor() {
+        this.$http.defaults.headers.common['Authorization'] = "Bearer " + this.getCookie("Token"); // for all requests
       },
+
+      getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      },
+
+      clearCookie() {
+        document.cookie = "Token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      },
+
       login(username, jwt) {
-        // this.setUser(username);
-        // this.setBankAccounts();
+        // Add a request intercepto
         this.setJwt(jwt);
-        this.router.push({ name: 'Home' });
+        this.setupHeaderInterceptor();
+        console.log("jwt to send: " + jwt);
+
+        const newUserData = {
+            username: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            address: "",
+            phone: "",
+            password: "",
+            roles: "",
+            jwt
+        }
+
+        this.$http.put(process.env.VUE_APP_API_URL + "/users/" + username, newUserData)
+        .then(() => {  
+          this.setUser(jwt);
+          this.setBankAccounts(12345);
+          this.router.push({ name: 'Home' });
+         }).catch(err => console.log(err));
       },
+
       logout() {
         this.user = [],
         this.bankAccounts = [],
         this.jwt = '';
+        this.clearCookie();
         this.router.push({ name: 'Login'});
       }
-    },
+    }
   }
 </script>
 

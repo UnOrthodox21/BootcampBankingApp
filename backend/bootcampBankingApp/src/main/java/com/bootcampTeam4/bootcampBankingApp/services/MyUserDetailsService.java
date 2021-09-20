@@ -29,6 +29,10 @@ public class MyUserDetailsService implements UserDetailsService {
         return userDetailsRepository.findUserDetailsByUsername(username);
     }
 
+    public UserDetails findUserDetailsByJwt(String jwt) throws UsernameNotFoundException {
+        return userDetailsRepository.findUserDetailsByJwt(jwt);
+    }
+
     public UserDetails findUserDetailsByUsername(String userToFind){
         List<UserDetails> newList = getAllUserDetails();
         UserDetails userDetails = null;
@@ -63,11 +67,16 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
     public void changeUserDetailsData(UserDetails userDetails, String username){
+
         UserDetails userDetailsToPut = loadUserByUsername(username);
+
         if(userDetails.getEmail() != ""){
             userDetailsToPut.setEmail(userDetails.getEmail());
         }
 
+        if(userDetails.getUsername() != ""){
+            userDetailsToPut.setUsername(userDetails.getUsername());
+        }
 
         if(userDetails.getFirstName() != ""){
             userDetailsToPut.setFirstName(userDetails.getFirstName());
@@ -81,7 +90,7 @@ public class MyUserDetailsService implements UserDetailsService {
             userDetailsToPut.setPhone(userDetails.getPhone());
         }
 
-        if(userDetails.getAddress() !=""){
+        if(userDetails.getAddress() != ""){
             userDetailsToPut.setAddress(userDetails.getAddress());
         }
 

@@ -11,4 +11,5 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails, Long> 
 //    @Query("SELECT u FROM User p WHERE u.id = ?1");
     Optional<UserDetails> findUserDetailsById(Long id);
     UserDetails findUserDetailsByUsername(String username);
+    UserDetails findUserDetailsByJwt(String jwt);
 }

@@ -1,5 +1,5 @@
 <template>
-<div v-if="jwt == ''">
+<div v-if="jwt === undefined || jwt === ''">
   <h1>Hello there</h1>
 </div>
 

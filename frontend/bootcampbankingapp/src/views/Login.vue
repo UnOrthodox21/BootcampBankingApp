@@ -31,7 +31,6 @@ export default {
     },
     methods: {
         authenticate(e) {
-            console.log("input values: " + this.username + " " + this.password);
             e.preventDefault();
 
             const loginUser = {
@@ -39,7 +38,11 @@ export default {
                 password: this.password
             }
 
-            this.$http.post(process.env.VUE_APP_API_URL + "/authenticate", loginUser)
+
+            var instance = this.$http.create();
+            delete instance.defaults.headers.common['Authorization'];
+
+            instance.post(process.env.VUE_APP_API_URL + "/users/authenticate", loginUser)
             .then((response) => {
                 if (response.data.jwt != undefined) {
                     this.$parent.$parent.login(loginUser.username, response.data.jwt);
