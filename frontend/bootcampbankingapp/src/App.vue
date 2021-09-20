@@ -23,7 +23,7 @@ export default {
     },
      methods: {
       setUser() {
-        this.$http.get(process.env.VUE_APP_API_URL + "/users/3")
+        this.$http.get(process.env.VUE_APP_API_URL + "/users/newuser1")
         .then((response) => { this.user = response.data })
         .catch(err => console.log(err));
       },
