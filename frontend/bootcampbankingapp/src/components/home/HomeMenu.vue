@@ -31,10 +31,8 @@
                         <h2 class="mb-4 home-menu-title">Bank Accounts:</h2>
                     </div>
                     <div class="col-6">
-                         <select class="mt-1" name="bankAccounts"> 
-                        <option v-bind:value="bankAccounts.id" selected>1. {{ bankAccounts.number }}</option>
-                        <option value="2">2. LVHABA33535353</option>
-                        <option value="3">3. LVHABA23232424</option>
+                         <select class="mt-1" name="bankAccounts" v-model="bankAccountIndex"> 
+                        <option @select="setCurrentBankAccount" v-bind:key="bankAccount.id" v-for="(bankAccount, index) in bankAccounts" v-bind:value="index" v-bind:selected="index === 0">{{ index + 1 }}. {{ bankAccount.number }}</option>
                         </select>
                      </div>
                      </div>
@@ -42,9 +40,9 @@
                     <div class="row">
                         <div class="col-12">
                       <ul class="home-menu-details ml-0 pl-0"> 
-                        <li><b>Number:</b> {{ bankAccounts.number }}</li>
-                         <li><b>Type:</b> {{ bankAccounts.type }}</li>
-                        <li><b>Balance:</b> {{ bankAccounts.balance }}</li>
+                        <li><b>Number:</b> {{ bankAccounts[bankAccountIndex] }}</li>
+                         <li><b>Type:</b> {{ bankAccounts[bankAccountIndex] }}</li>
+                        <li><b>Balance:</b> {{ bankAccounts[bankAccountIndex] }}</li>
                     </ul>
                     </div>
                     </div>
@@ -70,8 +68,13 @@
 <script>
 export default {
     name: "HomeMenu",
-    components: {
-
+    created() {
+     this.bankAccountIndex = 0
+    },
+    data() {
+      return {
+        bankAccountIndex: 0,
+        }
     },
     props: ["user", "bankAccounts"]
 }

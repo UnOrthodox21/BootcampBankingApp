@@ -30,6 +30,7 @@ export default {
         this.setupHeaderInterceptor();
        if (jwt !== undefined && jwt.length) {
             this.setUser(jwt);
+            this.setBankAccounts();
         }
     },
      methods: {
@@ -47,8 +48,9 @@ export default {
       //   .catch(err => console.log(err));
       // },
 
-      setBankAccounts(accountNumber) {
-        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/" + accountNumber)
+      //setBankAccounts(/*accountNumber */)
+      setBankAccounts() {
+        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts" /*+ accountNumber */)
         .then((response) => { this.bankAccounts = response.data })
         .catch(err => console.log(err));
       },
@@ -81,7 +83,6 @@ export default {
         this.setupHeaderInterceptor();
 
         const newUserData = {
-   
             jwt
         }
 

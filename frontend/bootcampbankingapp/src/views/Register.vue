@@ -5,7 +5,7 @@
      <h1 class="h1 fw-normal my-5 text-center">Please Sign Up</h1>
 <form @submit="register">
   <div class="form-group">
-    <label for="firstNameInput">Email address</label>
+    <label for="firstNameInput">First name</label>
     <input v-model="this.firstName" type="text" class="form-control" id="firstNameInput" placeholder="First name" required>  
     </div>
   <div class="form-group">
@@ -71,13 +71,20 @@ export default {
                 email: this.email,
                 address: this.address,
                 phone: this.phone,
-                password: this.password
+                password: this.password,
+                roles: null,
+                enabled: true,
+                authorities: null,
+                jwt: '',
+                accountNonExpired: true,
+                credentialsNonExpired: true,
+                accountNonLocked: true
             }
 
             this.$http.post(process.env.VUE_APP_API_URL + "/register", newUser).then((response) => {
-                if (response === true) {
+                // if (response === true) {
                     router.push('Login');
-                }
+                // }
             }).catch(err => console.log(err));
 
         }

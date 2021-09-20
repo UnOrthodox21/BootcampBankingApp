@@ -19,7 +19,7 @@
   <label for="userBankAccountInput" class="col-2 col-form-label">User bank accounts:</label>
       <div class="col-8">
     <select class="form-control" id="userBankAccountInput" v-model="userBankAccount" name="usertBankAccount" placeholder="Select your bank account" >
-      <option v-bind:key="bankAccount.id" v-for="bankAccount in bankAccountsLocal" v-bind:value="bankAccount.id" selected="selected">{{bankAccount.number}}</option>
+       <option v-bind:key="bankAccount.id" v-for="(bankAccount, index) in bankAccounts" v-bind:value="bankAccount.number" v-bind:selected="index === 0">{{ index + 1 }}. {{ bankAccount.number }}</option>
       </select>
   </div>
   </div>
@@ -50,56 +50,33 @@
 <script>
 export default {
     name: "TransactionsForm",
-    components: {
-    },
     props: ["bankAccounts"],
     data() {
       return {
-        bankAccountsLocal: this.bankAccounts,
         recipientName: '',
         recipientBankAccount: '',
-        userBankAccount: '',
+        userBankAccount: this.bankAccounts[0].number,
         transferAmount: 0,
         description: ''
       }
     },
-    methods: {
-      sortBankAccounts() {
-      // sort by name
-      this.bankAccountsLocal.sort(function(a, b) {
-      var typeA = a.type.toUpperCase(); // ignore upper and lowercase
-      var typeB = b.type.toUpperCase(); // ignore upper and lowercase
-
-      if (typeA > typeB) {
-        return -1;
-      }
-
-      if (typeA < typeB) {
-        return 1;
-      }
-
-      // names must be equal
-      return 0;
-
-      });
+    mounted() {
+      this.$parent.$parent.$parent.setBankAccounts()
     },
-
+    methods: {
     transferFunds(e) {
         e.preventDefault();
         const newTransfer= {
-            idTo: this.recipientBankAccount,
-            idFrom: this.userBankAccount,
+            accountNumberFrom: this.userBankAccount,
+            accountNumberTo: this.recipientBankAccount,
             amount: this.transferAmount
         }
 
-        this.$http.post(process.env.VUE_APP_API_URL + "/bank-accounts/transfer/test", newTransfer)
+        this.$http.put(process.env.VUE_APP_API_URL + "/bank-accounts/transfer", newTransfer)
         .then(() => this.$parent.$parent.setBankAccounts())
         .catch(err => console.log(err));
     }
-  },
-    mounted() {
-      this.sortBankAccounts();
-    }
+  }
 }
 </script>
 

@@ -18,13 +18,16 @@ public class BankAccount {
     @Column(name="balance")
     private double balance;
 
+    @Column(name="user_id")
+    private Long userId;
+
     public BankAccount() {};
 
-    public BankAccount(long id, String number, String type, double balance) {
-        this.id = id;
+    public BankAccount(String number, String type, double balance, Long userId) {
         this.number = number;
         this.type = type;
         this.balance = balance;
+        this.userId = userId;
     }
 
     public long getId() {

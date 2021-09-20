@@ -4,7 +4,9 @@ package com.bootcampTeam4.bootcampBankingApp.controllers;
 import com.bootcampTeam4.bootcampBankingApp.auth.AuthenticationRequest;
 import com.bootcampTeam4.bootcampBankingApp.auth.AuthenticationResponse;
 import com.bootcampTeam4.bootcampBankingApp.auth.JwtUtil;
+import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.models.UserDetails;
+import com.bootcampTeam4.bootcampBankingApp.services.BankAccountService;
 import com.bootcampTeam4.bootcampBankingApp.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,6 +25,9 @@ public class UserDetailsController {
 
     @Autowired
     private MyUserDetailsService userDetailsService;
+
+    @Autowired
+    private BankAccountService bankAccountService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -53,6 +58,14 @@ public class UserDetailsController {
     @PostMapping
     public void addNewUserDetails(@RequestBody UserDetails userDetails) {
         userDetailsService.addNewUserDetails(userDetails);
+    }
+
+    @PostMapping(path = "/register")
+    public void registerNewUser(@RequestBody UserDetails userDetails) {
+        userDetailsService.addNewUserDetails(userDetails);
+        String newAccountNumber = "RKBNK" + Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+        BankAccount newBankAccount = new BankAccount(newAccountNumber, "Primary", 0, userDetails.getId());
+        bankAccountService.addNewBankAccount(newBankAccount);
     }
 
     @DeleteMapping("/{username}")
