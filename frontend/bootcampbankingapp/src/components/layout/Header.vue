@@ -6,7 +6,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div v-if="jwt === ''" class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div v-if="jwt === undefined || jwt === ''" class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav w-100">
               <li class="nav-item">
               <router-link class="nav-link active" aria-current="page" to="/login">Login</router-link>
@@ -55,11 +55,12 @@
 export default {
     name: "Header",
     props: ["user", "jwt"],
+    mounted() {
+      console.log("jwt from navbar: " + this.jwt);
+    },
     methods: {
-
       logout(e) {
         e.preventDefault();
-        console.log("called method");
         this.$parent.logout();
       }
 

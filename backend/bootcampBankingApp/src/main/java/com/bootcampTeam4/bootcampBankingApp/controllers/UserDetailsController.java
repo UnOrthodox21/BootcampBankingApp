@@ -45,6 +45,11 @@ public class UserDetailsController {
         return userDetailsService.loadUserByUsername(username);
     }
 
+    @GetMapping(path = "/jwt/{jwt}")
+    public UserDetails getUserDetailsByJwt(@PathVariable("jwt") String jwt) {
+        return userDetailsService.findUserDetailsByJwt(jwt);
+    }
+
     @PostMapping
     public void addNewUserDetails(@RequestBody UserDetails userDetails) {
         userDetailsService.addNewUserDetails(userDetails);
