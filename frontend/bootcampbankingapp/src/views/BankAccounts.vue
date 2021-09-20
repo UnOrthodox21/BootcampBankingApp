@@ -1,6 +1,7 @@
 <template>
   <BankAccountsBanner/>
-  <BankAccountsTable/>
+  <BankAccountsTable v-bind:bankAccounts="bankAccounts"/>
+
 </template>
 
 <script>
@@ -13,7 +14,7 @@ export default {
     BankAccountsBanner,
     BankAccountsTable
   },
-  props: ["user"]
+  props: ["user", "bankAccounts"]
 }
 </script>
 

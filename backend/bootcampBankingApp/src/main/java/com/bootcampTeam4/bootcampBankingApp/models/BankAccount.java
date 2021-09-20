@@ -1,19 +1,18 @@
-package com.bootcampTeam4.bootcampBankingApp.classes;
+package com.bootcampTeam4.bootcampBankingApp.models;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "bank_accounts")
-
 public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(name="number")
+  
+    @Column(name="number", unique = true)
     private String number;
 
-    @Column(name="type")
+    @Column(name = "type")
     private String type;
 
     @Column(name="balance")
@@ -27,7 +26,6 @@ public class BankAccount {
         this.type = type;
         this.balance = balance;
     }
-
 
     public long getId() {
         return id;
