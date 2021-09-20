@@ -2,6 +2,7 @@ package com.bootcampTeam4.bootcampBankingApp.services;
 
 import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.models.TransferFromTo;
+import com.bootcampTeam4.bootcampBankingApp.models.UserDetails;
 import com.bootcampTeam4.bootcampBankingApp.repositories.BankAccountRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +31,24 @@ public class BankAccountService {
     }
 
 
-    public void editBankAccountByAccountNumber(BankAccount bankAccount,String name){
-        BankAccount bankAccountToEdit = getBankAccountByAccountNumber(name);
-        bankAccountToEdit.setBalance(bankAccount.getBalance());
-        bankAccountToEdit.setNumber(bankAccount.getNumber());
-        bankAccountToEdit.setType(bankAccount.getType());
-        bankAccountRepository.save(bankAccountToEdit);
+    public void editBankAccountByAccountNumber(BankAccount bankAccount, String accountNumber){
+
+        BankAccount bankAccountToPut = getBankAccountByAccountNumber(accountNumber);
+
+        if(bankAccount.getBalance() != 0){
+            bankAccountToPut.setBalance(bankAccount.getBalance());
+        }
+
+
+        if(bankAccount.getNumber() != ""){
+            bankAccountToPut.setNumber(bankAccount.getNumber());
+        }
+
+        if(bankAccount.getType() != ""){
+            bankAccountToPut.setType(bankAccount.getType());
+        }
+
+        bankAccountRepository.save(bankAccountToPut);
     }
 
 

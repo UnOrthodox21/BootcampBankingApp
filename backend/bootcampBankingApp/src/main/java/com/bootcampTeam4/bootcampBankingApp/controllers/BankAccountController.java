@@ -50,7 +50,7 @@ public class BankAccountController {
         bankAccountService.deleteBankAccount(accountNumber);
     }
 
-    @PutMapping("/edit/{accountNumber}")
+    @PutMapping("/{accountNumber}")
     public void editBankAccount(@RequestBody BankAccount bankAccount, @PathVariable("accountNumber") String accountNumber){
         bankAccountService.editBankAccountByAccountNumber(bankAccount, accountNumber);
 

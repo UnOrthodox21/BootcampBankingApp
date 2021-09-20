@@ -1,20 +1,34 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 
 
+import com.bootcampTeam4.bootcampBankingApp.auth.AuthenticationRequest;
+import com.bootcampTeam4.bootcampBankingApp.auth.AuthenticationResponse;
+import com.bootcampTeam4.bootcampBankingApp.auth.JwtUtil;
 import com.bootcampTeam4.bootcampBankingApp.models.UserDetails;
 import com.bootcampTeam4.bootcampBankingApp.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(value="/api/users")
 public class UserDetailsController {
 
+    @Autowired
     private MyUserDetailsService userDetailsService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtil jwtTokenUtil;
 
     @Autowired
     public UserDetailsController(MyUserDetailsService userDetailsService) {
@@ -26,14 +40,9 @@ public class UserDetailsController {
         return userDetailsService.getAllUserDetails();
     }
 
-    @GetMapping(path = "{userDetailsId}")
-    public Optional<UserDetails> getUserDetailsById(@PathVariable("userDetailsId") Long userDetailsId) {
-        return userDetailsService.getUserDetailsById(userDetailsId);
-    }
-
-    @GetMapping(path = "{userName}")
-    public UserDetails getUserDetailsByUsername(@PathVariable("userName") String userName) {
-        return userDetailsService.findUserDetailsByUsername(userName);
+    @GetMapping(path = "{username}")
+    public UserDetails getUserDetailsByUsername(@PathVariable("username") String username) {
+        return userDetailsService.loadUserByUsername(username);
     }
 
     @PostMapping
@@ -41,19 +50,31 @@ public class UserDetailsController {
         userDetailsService.addNewUserDetails(userDetails);
     }
 
-    @DeleteMapping(path = "{userDetailsId}")
-    public void deleteUserDetails(@PathVariable("userDetailsId") Long userDetailsId) {
-        userDetailsService.deleteUserDetails(userDetailsId);
+    @DeleteMapping("/{username}")
+    public void deleteUser(@PathVariable("username") String username){
+        userDetailsService.deleteUserDetailsByUsername(username);
     }
 
-    @DeleteMapping("/{userName}")
-    public void deleteUser(@PathVariable("userName") String userName){
-        userDetailsService.deleteUserDetailsByUsername(userName);
+    @PutMapping(value="/{username}")
+    public void replaceItem (@RequestBody UserDetails userDetails, @PathVariable String username){
+        userDetailsService.changeUserDetailsData(userDetails, username);
     }
 
-    @PutMapping("/{userName}")
-    public void replaceItem (@RequestBody UserDetails userDetails, @PathVariable String userName){
-        userDetailsService.changeUserDetailsData(userDetails, userName);
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect username or password", e);
+        }
+
+        final org.springframework.security.core.userdetails.UserDetails userDetails = userDetailsService
+                .loadUserByUsername(authenticationRequest.getUsername());
+
+        final String jwt = jwtTokenUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
 }

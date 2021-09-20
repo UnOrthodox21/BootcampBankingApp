@@ -46,6 +46,9 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Column(name = "authorities")
     private GrantedAuthority authorities;
 
+    @Column(name = "jwt")
+    private String jwt;
+
     public UserDetails() {}
 
     public UserDetails(long id, String username, String email, String firstName, String lastName, String address, int phone, String password, String roles, GrantedAuthority authorities, boolean enabled) {
@@ -60,6 +63,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
         this.roles = roles;
         this.authorities = authorities;
         this.enabled = enabled;
+        this.jwt = "";
     }
 
     public long getId() {
@@ -165,6 +169,14 @@ public class UserDetails implements org.springframework.security.core.userdetail
         this.enabled = enabled;
     }
 
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
+    }
+
     @Override
     public String toString() {
         return "UserDetails{" +
@@ -180,6 +192,5 @@ public class UserDetails implements org.springframework.security.core.userdetail
                 ", enabled=" + enabled +
                 '}';
     }
-
 
 }

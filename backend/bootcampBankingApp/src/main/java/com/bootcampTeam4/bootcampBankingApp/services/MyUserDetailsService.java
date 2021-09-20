@@ -24,29 +24,46 @@ public class MyUserDetailsService implements UserDetailsService {
         return userDetailsRepository.findAll();
     }
 
-    public Optional<UserDetails> getUserDetailsById(Long userDetailsId) {
-        return userDetailsRepository.findUserDetailsById(userDetailsId);
-    }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDetailsRepository.findUserDetailsByUsername(username);
     }
 
+    public UserDetails findUserDetailsByUsername(String userToFind){
+        List<UserDetails> newList = getAllUserDetails();
+        UserDetails userDetails = null;
+        String name = userToFind;
+        for(int i=0;i< newList.size();i++){
+            if(newList.get(i).getUsername().equals(name)){
+                userDetails = newList.get(i);
+                System.out.println(userDetails.getUsername());
+                break;
+            }
+        }
+        return userDetails;
+    }
+
+    public void deleteUserDetailsByUsername(String username){
+        UserDetails userToDelete = loadUserByUsername(username);
+        userDetailsRepository.delete(userToDelete);
+    }
+
+
     public void addNewUserDetails(UserDetails userDetails) {
         userDetailsRepository.save(userDetails);
     }
 
-    public void deleteUserDetails(Long userDetailsId) {
-        boolean exists = userDetailsRepository.existsById(userDetailsId);
-        if (!exists) {
-            throw new IllegalStateException(("User with id " + userDetailsId + " does not exist."));
-        }
-        userDetailsRepository.deleteById(userDetailsId);
-    }
+//    public void deleteUserDetails(Long userDetailsId) {
+//        boolean exists = userDetailsRepository.existsById(userDetailsId);
+//        if (!exists) {
+//            throw new IllegalStateException(("User with id " + userDetailsId + " does not exist."));
+//        }
+//        userDetailsRepository.deleteById(userDetailsId);
+//    }
 
 
-    public void changeUserDetailsData(UserDetails userDetails, String id){
-        UserDetails userDetailsToPut = findUserDetailsByUsername(id);
+    public void changeUserDetailsData(UserDetails userDetails, String username){
+        UserDetails userDetailsToPut = loadUserByUsername(username);
         if(userDetails.getEmail() != ""){
             userDetailsToPut.setEmail(userDetails.getEmail());
         }
@@ -76,39 +93,19 @@ public class MyUserDetailsService implements UserDetailsService {
             userDetailsToPut.setRoles(userDetails.getRoles());
         }
 
-        if(userDetails.getAuthorities().isEmpty() == false) {
-            userDetailsToPut.setAuthorities(userDetails.getAuthorities());
+        if(userDetails.getJwt() != ""){
+            userDetailsToPut.setJwt(userDetails.getJwt());
         }
-
-        if(userDetails.isEnabled() == false || userDetails.isEnabled() == true) {
-            userDetailsToPut.setEnabled(userDetails.isEnabled());
-        }
+//
+//        if(userDetails.getAuthorities().isEmpty() == false) {
+//            userDetailsToPut.setAuthorities(userDetails.getAuthorities());
+//        }
+//
+//        if(userDetails.isEnabled() == false || userDetails.isEnabled() == true) {
+//            userDetailsToPut.setEnabled(userDetails.isEnabled());
+//        }
 
         userDetailsRepository.save(userDetailsToPut);
     }
-
-
-    public UserDetails findUserDetailsByUsername(String userToFind){
-        List<UserDetails> newList = getAllUserDetails();
-        UserDetails userDetails = null;
-        String name = userToFind;
-        for(int i=0;i< newList.size();i++){
-            if(newList.get(i).getUsername().equals(name)){
-                userDetails = newList.get(i);
-                System.out.println(userDetails.getUsername());
-                break;
-            }
-
-        }
-        return userDetails;
-    }
-
-
-    public void deleteUserDetailsByUsername(String username){
-        UserDetails userToDelete = findUserDetailsByUsername(username);
-        userDetailsRepository.delete(userToDelete);
-
-    }
-
 
 }
