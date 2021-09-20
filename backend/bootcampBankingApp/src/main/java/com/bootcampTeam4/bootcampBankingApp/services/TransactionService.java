@@ -74,7 +74,6 @@ public class TransactionService {
     }
 
     public void addNewWithdrawTransaction(TransferFromTo transferFromTo){
-        transferFromTo.setAccountNumberTo("BANK1337");
         Transaction newTransaction = new Transaction();
         newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
         newTransaction.setUserTo(transferFromTo.getAccountNumberTo());

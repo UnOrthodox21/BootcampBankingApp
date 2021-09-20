@@ -74,13 +74,10 @@ public class BankAccountService {
     public boolean sendFunds(TransferFromTo transferFromTo) {
         List<BankAccount> bankAccountList = getAllBankAccounts();
 
-        String transferResult = "";
         String nameFrom = transferFromTo.getAccountNumberFrom();
         String nameTo = transferFromTo.getAccountNumberTo();
         BankAccount bankAccountFrom = null;
         BankAccount bankAccountTo = null;
-
-
 
         for (int i = 0; i < bankAccountList.size(); i++) {
             if (bankAccountList.get(i).getNumber().equals(nameFrom)) {
@@ -107,7 +104,61 @@ public class BankAccountService {
 
     }
 
+    public boolean withdrawFunds(TransferFromTo transferFromTo){
+        List<BankAccount> bankAccountList = getAllBankAccounts();
 
+        String nameFrom = transferFromTo.getAccountNumberFrom();
+        BankAccount bankAccountFrom = null;
+
+        for (int i = 0; i < bankAccountList.size(); i++) {
+            if (bankAccountList.get(i).getNumber().equals(nameFrom)) {
+                bankAccountFrom = bankAccountList.get(i);
+
+            }
+        }
+        if(bankAccountFrom.getBalance()>=transferFromTo.getAmount()){
+            bankAccountFrom.setBalance(Math.round((bankAccountFrom.getBalance() - transferFromTo.getAmount()) * 100.0) / 100.0);
+            bankAccountRepository.save(bankAccountFrom);
+            return true;
+        }
+        else{
+            return false;
+
+        }
+
+
+    }
+
+    public boolean depositFunds(TransferFromTo transferFromTo) {
+        List<BankAccount> bankAccountList = getAllBankAccounts();
+
+        String nameFrom = "BANK1337";
+        String nameTo = transferFromTo.getAccountNumberTo();
+        BankAccount bankAccountFrom = null;
+        BankAccount bankAccountTo = null;
+
+        for (int i = 0; i < bankAccountList.size(); i++) {
+            if (bankAccountList.get(i).getNumber().equals(nameFrom)) {
+                bankAccountFrom = bankAccountList.get(i);
+
+            }
+            if (bankAccountList.get(i).getNumber().equals(nameTo)) {
+                bankAccountTo = bankAccountList.get(i);
+
+            }
+        }
+        if (bankAccountFrom.getBalance() >= transferFromTo.getAmount()) {
+            bankAccountFrom.setBalance(Math.round((bankAccountFrom.getBalance() - transferFromTo.getAmount()) * 100.0) / 100.0);
+            bankAccountTo.setBalance(Math.round((bankAccountTo.getBalance() + transferFromTo.getAmount()) * 100.0) / 100.0);
+            bankAccountRepository.save(bankAccountFrom);
+            bankAccountRepository.save(bankAccountTo);
+            return true;
+        } else {
+            return false;
+
+        }
+
+    }
 
     public void deleteBankAccount(String bankAccountNumber) {
 
