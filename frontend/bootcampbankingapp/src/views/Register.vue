@@ -74,17 +74,12 @@ export default {
                 password: this.password
             }
 
-
-    
             this.$http.post(process.env.VUE_APP_API_URL + "/register", newUser).then((response) => {
                 if (response === true) {
                     router.push('Login');
                 }
-            })
-            .catch(err => console.log(err));
+            }).catch(err => console.log(err));
 
-
-            
         }
     }
   

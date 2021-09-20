@@ -29,6 +29,10 @@ public class MyUserDetailsService implements UserDetailsService {
         return userDetailsRepository.findUserDetailsByUsername(username);
     }
 
+    public UserDetails findUserDetailsByJwt(String jwt) throws UsernameNotFoundException {
+        return userDetailsRepository.findUserDetailsByJwt(jwt);
+    }
+
     public UserDetails findUserDetailsByUsername(String userToFind){
         List<UserDetails> newList = getAllUserDetails();
         UserDetails userDetails = null;
@@ -55,11 +59,16 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
     public void changeUserDetailsData(UserDetails userDetails, String username){
+      
         UserDetails userDetailsToPut = loadUserByUsername(username);
+  
         if(userDetails.getEmail() != null){
             userDetailsToPut.setEmail(userDetails.getEmail());
         }
 
+        if(userDetails.getUsername() != null){
+            userDetailsToPut.setUsername(userDetails.getUsername());
+        }
 
         if(userDetails.getFirstName() != null){
             userDetailsToPut.setFirstName(userDetails.getFirstName());
@@ -73,7 +82,7 @@ public class MyUserDetailsService implements UserDetailsService {
             userDetailsToPut.setPhone(userDetails.getPhone());
         }
 
-        if(userDetails.getAddress() !=null){
+        if(userDetails.getAddress() != null){
             userDetailsToPut.setAddress(userDetails.getAddress());
         }
 
@@ -88,7 +97,6 @@ public class MyUserDetailsService implements UserDetailsService {
         if(userDetails.getJwt() != null){
             userDetailsToPut.setJwt(userDetails.getJwt());
         }
-
 
         userDetailsRepository.save(userDetailsToPut);
     }
