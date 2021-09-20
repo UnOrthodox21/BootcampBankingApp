@@ -39,8 +39,6 @@ export default {
           this.user = response.data;
         })
         .catch(err => console.log(err));
-
-        
       },
 
       // setUser(username) {
@@ -81,7 +79,6 @@ export default {
         // Add a request intercepto
         this.setJwt(jwt);
         this.setupHeaderInterceptor();
-        console.log("jwt to send: " + jwt);
 
         const newUserData = {
             username: "",

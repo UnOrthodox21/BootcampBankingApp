@@ -38,7 +38,6 @@ export default {
                 password: this.password
             }
 
-
             var instance = this.$http.create();
             delete instance.defaults.headers.common['Authorization'];
 
@@ -47,8 +46,7 @@ export default {
                 if (response.data.jwt != undefined) {
                     this.$parent.$parent.login(loginUser.username, response.data.jwt);
                 }
-            })
-            .catch(err => console.log(err));
+            }).catch(err => console.log(err));
         },
 
     }
