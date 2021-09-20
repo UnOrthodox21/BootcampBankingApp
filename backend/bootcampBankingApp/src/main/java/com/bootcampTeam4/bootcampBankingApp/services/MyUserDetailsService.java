@@ -53,27 +53,19 @@ public class MyUserDetailsService implements UserDetailsService {
         userDetailsRepository.save(userDetails);
     }
 
-//    public void deleteUserDetails(Long userDetailsId) {
-//        boolean exists = userDetailsRepository.existsById(userDetailsId);
-//        if (!exists) {
-//            throw new IllegalStateException(("User with id " + userDetailsId + " does not exist."));
-//        }
-//        userDetailsRepository.deleteById(userDetailsId);
-//    }
-
 
     public void changeUserDetailsData(UserDetails userDetails, String username){
         UserDetails userDetailsToPut = loadUserByUsername(username);
-        if(userDetails.getEmail() != ""){
+        if(userDetails.getEmail() != null){
             userDetailsToPut.setEmail(userDetails.getEmail());
         }
 
 
-        if(userDetails.getFirstName() != ""){
+        if(userDetails.getFirstName() != null){
             userDetailsToPut.setFirstName(userDetails.getFirstName());
         }
 
-        if(userDetails.getLastName() != ""){
+        if(userDetails.getLastName() != null){
             userDetailsToPut.setLastName(userDetails.getLastName());
         }
 
@@ -81,29 +73,22 @@ public class MyUserDetailsService implements UserDetailsService {
             userDetailsToPut.setPhone(userDetails.getPhone());
         }
 
-        if(userDetails.getAddress() !=""){
+        if(userDetails.getAddress() !=null){
             userDetailsToPut.setAddress(userDetails.getAddress());
         }
 
-        if(userDetails.getPassword() != ""){
+        if(userDetails.getPassword() != null){
             userDetailsToPut.setPassword(userDetails.getPassword());
         }
 
-        if(userDetails.getRoles() != ""){
+        if(userDetails.getRoles() != null){
             userDetailsToPut.setRoles(userDetails.getRoles());
         }
 
-        if(userDetails.getJwt() != ""){
+        if(userDetails.getJwt() != null){
             userDetailsToPut.setJwt(userDetails.getJwt());
         }
-//
-//        if(userDetails.getAuthorities().isEmpty() == false) {
-//            userDetailsToPut.setAuthorities(userDetails.getAuthorities());
-//        }
-//
-//        if(userDetails.isEnabled() == false || userDetails.isEnabled() == true) {
-//            userDetailsToPut.setEnabled(userDetails.isEnabled());
-//        }
+
 
         userDetailsRepository.save(userDetailsToPut);
     }
