@@ -59,25 +59,38 @@ public class BankAccountController {
 
     @PutMapping("/transfer")
     public void sendFunds(@RequestBody TransferFromTo transferFromTo) {
+        boolean success = bankAccountService.sendFunds(transferFromTo);
+        if(success){
+            transactionService.addNewTransferTransaction(transferFromTo);
+        }
+        else{
+            transactionService.addNewFailedTransaction(transferFromTo);
+        }
 
-        transactionService.addNewTransferTransaction(transferFromTo);
-        bankAccountService.sendFunds(transferFromTo);
 
     }
 
     @PutMapping("/deposit")
     public void depositFunds(@RequestBody TransferFromTo transferFromTo){
-
-        transactionService.addNewDepositTransaction(transferFromTo);
-        bankAccountService.sendFunds(transferFromTo);
+        boolean success = bankAccountService.sendFunds(transferFromTo);
+        if(success){
+            transactionService.addNewDepositTransaction(transferFromTo);
+        }
+        else{
+            transactionService.addNewFailedTransaction(transferFromTo);
+        }
 
     }
 
     @PutMapping("/withdraw")
     public void withdrawFunds(@RequestBody TransferFromTo transferFromTo){
-
-        transactionService.addNewWithdrawTransaction(transferFromTo);
-        bankAccountService.sendFunds(transferFromTo);
+        boolean success = bankAccountService.sendFunds(transferFromTo);
+        if(success){
+            transactionService.addNewWithdrawTransaction(transferFromTo);
+        }
+        else{
+            transactionService.addNewFailedTransaction(transferFromTo);
+        }
 
     }
 

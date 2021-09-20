@@ -2,7 +2,6 @@ package com.bootcampTeam4.bootcampBankingApp.services;
 
 import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.models.TransferFromTo;
-import com.bootcampTeam4.bootcampBankingApp.models.UserDetails;
 import com.bootcampTeam4.bootcampBankingApp.repositories.BankAccountRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +12,11 @@ import java.util.Optional;
 public class BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
+    private final TransactionService transactionService;
 
-    public BankAccountService(BankAccountRepository bankAccountRepository) {
+    public BankAccountService(BankAccountRepository bankAccountRepository, TransactionService transactionService) {
         this.bankAccountRepository = bankAccountRepository;
+        this.transactionService = transactionService;
     }
 
     public void addNewBankAccount(BankAccount bankAccount) {
@@ -70,9 +71,10 @@ public class BankAccountService {
 
 
 
-    public void sendFunds(TransferFromTo transferFromTo) {
+    public boolean sendFunds(TransferFromTo transferFromTo) {
         List<BankAccount> bankAccountList = getAllBankAccounts();
 
+        String transferResult = "";
         String nameFrom = transferFromTo.getAccountNumberFrom();
         String nameTo = transferFromTo.getAccountNumberTo();
         BankAccount bankAccountFrom = null;
@@ -90,10 +92,19 @@ public class BankAccountService {
 
             }
         }
-        bankAccountFrom.setBalance(Math.round((bankAccountFrom.getBalance() - transferFromTo.getAmount()) * 100.0) / 100.0);
-        bankAccountTo.setBalance(Math.round((bankAccountTo.getBalance() + transferFromTo.getAmount()) * 100.0) / 100.0);
-        bankAccountRepository.save(bankAccountFrom);
-        bankAccountRepository.save(bankAccountTo);
+        if(bankAccountFrom.getBalance()>=transferFromTo.getAmount()){
+            bankAccountFrom.setBalance(Math.round((bankAccountFrom.getBalance() - transferFromTo.getAmount()) * 100.0) / 100.0);
+            bankAccountTo.setBalance(Math.round((bankAccountTo.getBalance() + transferFromTo.getAmount()) * 100.0) / 100.0);
+            bankAccountRepository.save(bankAccountFrom);
+            bankAccountRepository.save(bankAccountTo);
+            return true;
+        }
+        else{
+            return false;
+
+        }
+
+
     }
 
 
