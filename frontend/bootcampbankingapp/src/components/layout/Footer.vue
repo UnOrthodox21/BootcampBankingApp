@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid text-center py-5" id="footer-container">
+    <div class="container-fluid footer text-center py-5" id="footer-container">
         <div class="row">
             <div class="col-12">
                 ©2021 Team 4 Accenture Bootcamp LLC.
@@ -18,7 +18,6 @@ export default {
 
 <style scoped>
     #footer-container {
-        margin-top: 7.5em;
         background-color: rgb(240, 240, 240);
         color: black;
     }

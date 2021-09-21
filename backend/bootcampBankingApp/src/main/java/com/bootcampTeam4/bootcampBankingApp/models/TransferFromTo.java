@@ -6,8 +6,6 @@ public class TransferFromTo {
     public String accountNumberTo;
     public String type;
 
-
-
     public TransferFromTo(double amount, String accountNumberFrom, String accountNumberTo) {
         this.amount = amount;
         this.accountNumberFrom = accountNumberFrom;
@@ -18,8 +16,6 @@ public class TransferFromTo {
         this.amount = amount;
         this.accountNumberTo = accountNumberTo;
     }
-
-
 
     public TransferFromTo(String accountNumberFrom) {
         this.accountNumberFrom = accountNumberFrom;

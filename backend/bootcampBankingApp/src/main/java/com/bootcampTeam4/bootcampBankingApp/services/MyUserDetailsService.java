@@ -52,11 +52,9 @@ public class MyUserDetailsService implements UserDetailsService {
         userDetailsRepository.delete(userToDelete);
     }
 
-
     public void addNewUserDetails(UserDetails userDetails) {
         userDetailsRepository.save(userDetails);
     }
-
 
     public void changeUserDetailsData(UserDetails userDetails, String username){
       

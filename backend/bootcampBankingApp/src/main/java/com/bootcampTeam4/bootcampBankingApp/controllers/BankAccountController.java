@@ -36,7 +36,10 @@ public class BankAccountController {
         return bankAccountService.getBankAccountByAccountNumber(accountNumber);
     }
 
-
+    @GetMapping("/getByUserId/{userId}")
+    public List<BankAccount> getBankAccountByAccountNumber(@PathVariable("userId") Long userId){
+        return bankAccountService.getBankAccountsByUserId(userId);
+    }
 
     @PostMapping
     public void addNewBankAccount(@RequestBody BankAccount bankAccount) {

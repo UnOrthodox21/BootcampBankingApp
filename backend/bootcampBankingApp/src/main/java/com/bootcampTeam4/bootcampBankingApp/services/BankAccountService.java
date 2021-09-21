@@ -32,6 +32,7 @@ public class BankAccountService {
     }
 
 
+
     public void editBankAccountByAccountNumber(BankAccount bankAccount, String accountNumber){
 
         BankAccount bankAccountToPut = getBankAccountByAccountNumber(accountNumber);
@@ -69,7 +70,9 @@ public class BankAccountService {
         return acc;
     }
 
-
+    public List<BankAccount> getBankAccountsByUserId(Long userId) {
+        return bankAccountRepository.getBankAccountsByUserId(userId);
+    }
 
     public boolean sendFunds(TransferFromTo transferFromTo) {
         List<BankAccount> bankAccountList = getAllBankAccounts();
