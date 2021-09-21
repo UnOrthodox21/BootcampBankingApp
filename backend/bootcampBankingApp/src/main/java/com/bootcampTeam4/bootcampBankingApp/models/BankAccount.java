@@ -1,4 +1,6 @@
 package com.bootcampTeam4.bootcampBankingApp.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,19 @@ public class BankAccount {
 
     @Column(name="balance")
     private double balance;
+
+    @JoinColumn
+    @ManyToOne
+    @JsonIgnore // lai response nesatur info par useri
+    private UserDetails user;
+
+    public UserDetails getUser() {
+        return user;
+    }
+
+    public void setUser(UserDetails user) {
+        this.user = user;
+    }
 
     public BankAccount() {};
 
