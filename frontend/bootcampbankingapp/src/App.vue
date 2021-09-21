@@ -32,14 +32,14 @@ export default {
         this.setupHeaderInterceptor();
        if (jwt !== undefined && jwt.length) {
             this.setUser(jwt);
-            this.setBankAccounts();
         }
     },
      methods: {
       setUser(jwt) {
-        this.$http.get(process.env.VUE_APP_API_URL + "/users/jwt/" + jwt)
+        this.$http.get(process.env.VUE_APP_API_URL + "/users/getUserByJwt/" + jwt)
         .then((response) => { 
           this.user = response.data;
+          this.setBankAccounts(this.user.id);
         })
         .catch(err => console.log(err));
       },
@@ -52,7 +52,7 @@ export default {
 
       //setBankAccounts(/*accountNumber */)
       setBankAccounts() {
-        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts" /*+ accountNumber */)
+        this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/getByUserId/" + this.user.id)
         .then((response) => { this.bankAccounts = response.data })
         .catch(err => console.log(err));
       },
@@ -110,7 +110,7 @@ export default {
 
 <style>
 html, body {
-  height: 100%;
+  min-height: 100%;
 }
 
 .content {
@@ -133,7 +133,7 @@ html, body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }

@@ -1,28 +1,28 @@
 <template>
-
-<button type="button" class="btn btn-top-menu">Add new adress</button>
+<button type="button" class="btn btn-top-menu">Create a new account</button>
 <button type="button" class="btn btn-top-menu">Show transaction history</button>
-<router-link class="btn btn-top-menu" to="/transactions">Send money</router-link>
+<button type="button" class="btn btn-top-menu">Send money</button>
 
 
-  <table class="table" >
+   <table class="table my-5 mx-auto">
   <thead>
     <tr>
-      <th scope="col">Account adress</th>
+      <th scope="col">#</th>
+      <th scope="col">Account number</th>
       <th scope="col">Account type</th>
       <th scope="col">Balance</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr v-bind:for="(bankAccount,index) in bankAccounts"> 
-      <th scope="row">{{ bankAccount.number }}</th>
-      <td>{{ bankAccount.type }}</td>
-      <td>{{ bankAccount.balance }}</td>
-      <td><button type="button" class="btn btn-outline-success" @click="() => TogglePopup('buttonTrgger')">Edit</button>
-      <button type="button" class="btn btn-outline-danger" @click="deleteBankAccount(bankAccount.id)" >Remove</button></td>
+    <tr v-bind:key="bankAccount.id" v-for="(bankAccount, index) in bankAccounts">
+      <td>{{ index + 1 }}</td>
+      <td>{{ bankAccount.number }}</td>
+      <td>{{ bankAccount.type}} </td>
+      <td>{{ $filters.formatCurrency(bankAccount.balance) }}</td>
+      <td><button  @click="editBankAccountPopUp(bankAccount.id)" type="button" class="btn btn-outline-success mx-2">Edit</button>
+      <button v-if="bankAccount.type === 'Secondary'" @click="deleteBankAccount(bankAccount.id)" type="button" class="btn btn-outline-danger mx-2">Remove</button></td>
     </tr>
-    
   </tbody>
 </table>
 </template>
@@ -34,18 +34,16 @@ export default {
       
     },
     props: ["user","bankAccounts"],
+
      methods: {
-      
-    
       deleteBankAccount(id){
         if(window.confirm("Are You sure?")){
           this.$http.delete(process.env.VUE_APP_API_URL + "/bank-accounts/" + id)
-          .then(() => this.$parent.$parent.setUser())
+          .then(() => this.$parent.$parent.setBankAccount())
           .catch(err => console.log(err));
         }
       }
      }
-
 }
 </script>
 
@@ -68,8 +66,6 @@ export default {
     .btn-top-menu:hover {
           background-color: rgba(46, 46, 46, 0.884);
     }
-
-    
 
     .table {
         background: rgb(240, 240, 240);
