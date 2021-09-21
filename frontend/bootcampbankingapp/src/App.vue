@@ -1,6 +1,8 @@
 <template>
+<div class="content">
   <Header v-bind:user="user" v-bind:jwt="jwt"/>
   <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt"/>
+  </div>
   <Footer/>
 </template>
 
@@ -107,6 +109,18 @@ export default {
 
 
 <style>
+html, body {
+  height: 100%;
+}
+
+.content {
+  flex: 1 0 auto;
+  margin-bottom: 5rem;
+}
+.footer {
+  flex-shrink: 0;
+}
+
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   /* font-family: 'Lato', sans-serif; */
@@ -116,6 +130,12 @@ export default {
   text-align: center;
   color: rgb(248, 248, 248);
   background-image: url("assets/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #nav {

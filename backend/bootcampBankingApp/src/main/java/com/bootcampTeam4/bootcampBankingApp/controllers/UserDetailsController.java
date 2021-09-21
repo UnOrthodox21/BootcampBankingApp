@@ -60,13 +60,6 @@ public class UserDetailsController {
         userDetailsService.addNewUserDetails(userDetails);
     }
 
-    @PostMapping(path = "/register")
-    public void registerNewUser(@RequestBody UserDetails userDetails) {
-        userDetailsService.addNewUserDetails(userDetails);
-        String newAccountNumber = "RKBNK" + Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
-        BankAccount newBankAccount = new BankAccount(newAccountNumber, "Primary", 0, userDetails.getId());
-        bankAccountService.addNewBankAccount(newBankAccount);
-    }
 
     @DeleteMapping("/{username}")
     public void deleteUser(@PathVariable("username") String username){
@@ -76,6 +69,14 @@ public class UserDetailsController {
     @PutMapping(value="/{username}")
     public void replaceItem (@RequestBody UserDetails userDetails, @PathVariable String username){
         userDetailsService.changeUserDetailsData(userDetails, username);
+    }
+
+    @PostMapping(path = "/register")
+    public void registerNewUser(@RequestBody UserDetails userDetails) {
+        userDetailsService.addNewUserDetails(userDetails);
+        String newAccountNumber = "RKBNK" + Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+        BankAccount newBankAccount = new BankAccount(newAccountNumber, "Primary", 0, userDetails.getId());
+        bankAccountService.addNewBankAccount(newBankAccount);
     }
 
     @PostMapping("/authenticate")

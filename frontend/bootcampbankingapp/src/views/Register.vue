@@ -52,22 +52,21 @@ export default {
             firstName: '',
             lastName: '',
             email: '',
-            userName: '',
+            username: '',
             address: '',
             phone: '',
-            password: ''
+            password: '',
+            router: useRouter()
         }
     },
     methods: {
         register(e) {
             e.preventDefault();
 
-            const router = useRouter();
-
             const newUser = {
                 firstName: this.firstName,
                 lastName: this.lastName,
-                userName: this.userName,
+                username: this.username,
                 email: this.email,
                 address: this.address,
                 phone: this.phone,
@@ -80,14 +79,13 @@ export default {
                 credentialsNonExpired: true,
                 accountNonLocked: true
             }
+            
+            var instance = this.$http.create();
+            delete instance.defaults.headers.common['Authorization'];
 
-            this.$http.post(process.env.VUE_APP_API_URL + "/register", newUser)
-             .catch((err) => {
-             console.log(err);
-                if (!err) {
-                  router.push('Login');
-                }
-             });
+            instance.post(process.env.VUE_APP_API_URL + "/users/register", newUser)
+            .then(() => { this.router.push('Login'); })
+             .catch((err) => console.log(err));
         }
     }
   

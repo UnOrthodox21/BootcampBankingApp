@@ -39,10 +39,10 @@
                   
                     <div class="row">
                         <div class="col-12">
-                      <ul class="home-menu-details ml-0 pl-0"> 
-                        <li><b>Number:</b> {{ bankAccounts[bankAccountIndex] }}</li>
-                         <li><b>Type:</b> {{ bankAccounts[bankAccountIndex] }}</li>
-                        <li><b>Balance:</b> {{ bankAccounts[bankAccountIndex] }}</li>
+                      <ul class="home-menu-details ml-0 pl-0" v-if="bankAccounts[bankAccountIndex] !== undefined"> 
+                        <li><b>Number:</b> {{ bankAccounts[bankAccountIndex].number }}</li>
+                         <li><b>Type:</b> {{ bankAccounts[bankAccountIndex].type }}</li>
+                        <li><b>Balance:</b> {{ $filters.formatNumber(bankAccounts[bankAccountIndex].balance) }}</li>
                     </ul>
                     </div>
                     </div>
@@ -68,9 +68,6 @@
 <script>
 export default {
     name: "HomeMenu",
-    created() {
-     this.bankAccountIndex = 0
-    },
     data() {
       return {
         bankAccountIndex: 0,
