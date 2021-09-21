@@ -81,12 +81,13 @@ export default {
                 accountNonLocked: true
             }
 
-            this.$http.post(process.env.VUE_APP_API_URL + "/register", newUser).then((response) => {
-                // if (response === true) {
-                    router.push('Login');
-                // }
-            }).catch(err => console.log(err));
-
+            this.$http.post(process.env.VUE_APP_API_URL + "/register", newUser)
+             .catch((err) => {
+             console.log(err);
+                if (!err) {
+                  router.push('Login');
+                }
+             });
         }
     }
   
