@@ -1,5 +1,6 @@
 package com.bootcampTeam4.bootcampBankingApp.models;
 
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -38,7 +39,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     @Column(name = "roles")
     private String roles;
-  
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -48,10 +49,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Column(name = "jwt")
     private String jwt;
 
-    @OneToMany()
-    @JoinColumn(name = "user_id")
-    private List<BankAccount> bankAccounts;
-  
     public UserDetails() {}
 
     public UserDetails(long id, String username, String email, String firstName, String lastName, String address, int phone, String password, String roles, GrantedAuthority authorities, boolean enabled) {
@@ -81,8 +78,23 @@ public class UserDetails implements org.springframework.security.core.userdetail
         return username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
     public void setUsername(String username) {
-       this.username = username;
+        this.username = username;
     }
 
     public String getEmail() {
@@ -140,29 +152,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
     public void setRoles(String roles) {
         this.roles = roles;
     }
-  
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-  
-
-    public List<BankAccount> getBankAccounts() {
-        return bankAccounts;
-    }
-
-    public void setBankAccounts(List<BankAccount> bankAccounts) {
-        this.bankAccounts = bankAccounts;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return (Collection<? extends GrantedAuthority>) authorities;
@@ -203,4 +192,5 @@ public class UserDetails implements org.springframework.security.core.userdetail
                 ", enabled=" + enabled +
                 '}';
     }
+
 }

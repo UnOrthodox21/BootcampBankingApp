@@ -1,10 +1,11 @@
 <template>
-<button type="button" class="btn btn-top-menu">Add secondary account</button>
+<button type="button" class="btn btn-top-menu">Add savings account</button>
+<button type="button" class="btn btn-top-menu">Add new adress</button>
 <button type="button" class="btn btn-top-menu">Show transaction history</button>
-<router-link class="btn btn-top-menu" to="/transactions">Send money</router-link>
- 
+<button type="button" class="btn btn-top-menu">Send money</button>
 
-   <table class="table">
+
+   <table class="table" >
   <thead>
     <tr>
       <th scope="col">Account adress</th>
@@ -13,45 +14,39 @@
       <th scope="col">Actions</th>
     </tr>
   </thead>
-  <tbody><p>suka{{user}}</p>
-    <tr v-bind:for="(bankAccount,index) in bankAccounts"> 
-      <th scope="row">{{ bankAccount.number }}</th>
-      <td>{{ bankAccount.type }}</td>
-      <td>{{ bankAccount.balance }}</td>
-      <td><button type="button" class="btn btn-outline-success" @click="() => TogglePopup('buttonTrgger')">Edit</button>
-      <button type="button" class="btn btn-outline-danger" @click="deleteBankAccount(user.bankAccounts[0].id)" >Remove</button></td>
+  <tbody>
+    <tr>
+      <th scope="row">{{bankAccounts.number}}</th>
+      <td>{{bankAccounts.type}}</td>
+      <td>{{bankAccounts.balance}}</td>
+      <td><button type="button" class="btn btn-outline-success">Edit</button>
+      <button type="button" class="btn btn-outline-danger">Remove</button></td>
     </tr>
-   
+    <tr>
+     <th scope="row">{{bankAccounts.number}}</th>
+      <td>{{bankAccounts.type}}</td>
+      <td>{{bankAccounts.balance}}</td>
+      <td><button type="button" class="btn btn-outline-success">Edit</button>
+      <button type="button" class="btn btn-outline-danger">Remove</button></td>
+    </tr>
+    <tr>
+     <th scope="row">{{bankAccounts.number}}</th>
+      <td>{{bankAccounts.type}}</td>
+      <td>{{bankAccounts.balance}}</td>
+      <td><button type="button" class="btn btn-outline-success">Edit</button>
+      <button type="button" class="btn btn-outline-danger">Remove</button></td>
+    </tr>
   </tbody>
 </table>
 </template>
 
 <script>
-
 export default {
     name: "BankAccountsTable",
     components: {
       
     },
-    props: ["user","bankAccounts"],
-    methods: {
-      
-    
-
-
-
-
-
-      deleteBankAccount(id){
-        if(window.confirm("Are You sure?")){
-          this.$http.delete(process.env.VUE_APP_API_URL + "/bank-accounts/" + id)
-          .then(() => this.$parent.$parent.setUser())
-          .catch(err => console.log(err));
-        }
-
-      }
-
-    }
+    props: ["bankAccounts"]
 }
 </script>
 
