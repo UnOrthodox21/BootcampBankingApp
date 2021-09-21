@@ -92,6 +92,10 @@ public class MyUserDetailsService implements UserDetailsService {
             userDetailsToPut.setRoles(userDetails.getRoles());
         }
 
+        if(userDetails.getImage() != null){
+            userDetailsToPut.setImage(userDetails.getImage());
+        }
+
         if(userDetails.getJwt() != null){
             userDetailsToPut.setJwt(userDetails.getJwt());
         }

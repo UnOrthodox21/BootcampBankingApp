@@ -9,7 +9,7 @@ app.config.globalProperties.$http = axios;
 
 
 app.config.globalProperties.$filters = {
-    formatNumber(number) {
+    formatCurrency(number) {
         return Intl.NumberFormat('lv-LV', { style: 'currency', currency: 'EUR' }).format(number);
     }
 }

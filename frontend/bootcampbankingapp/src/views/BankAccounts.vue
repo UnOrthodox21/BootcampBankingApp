@@ -1,6 +1,13 @@
 <template>
-  <BankAccountsBanner/>
-  <BankAccountsTable v-bind:bankAccounts="bankAccounts"/>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+        <BankAccountsBanner/>
+        <BankAccountsTable v-bind:bankAccounts="bankAccounts"/>
+      </div>
+    </div>
+</div>
 
 </template>
 

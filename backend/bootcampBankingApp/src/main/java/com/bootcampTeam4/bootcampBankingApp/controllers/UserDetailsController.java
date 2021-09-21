@@ -50,7 +50,7 @@ public class UserDetailsController {
         return userDetailsService.loadUserByUsername(username);
     }
 
-    @GetMapping(path = "/jwt/{jwt}")
+    @GetMapping(path = "/getUserByJwt/{jwt}")
     public UserDetails getUserDetailsByJwt(@PathVariable("jwt") String jwt) {
         return userDetailsService.findUserDetailsByJwt(jwt);
     }
@@ -74,7 +74,7 @@ public class UserDetailsController {
     @PostMapping(path = "/register")
     public void registerNewUser(@RequestBody UserDetails userDetails) {
         userDetailsService.addNewUserDetails(userDetails);
-        String newAccountNumber = "RKBNK" + Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+        String newAccountNumber = "RKBNK" + Math.round(Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000);
         BankAccount newBankAccount = new BankAccount(newAccountNumber, "Primary", 0, userDetails.getId());
         bankAccountService.addNewBankAccount(newBankAccount);
     }

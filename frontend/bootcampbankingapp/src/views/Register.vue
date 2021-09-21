@@ -75,6 +75,7 @@ export default {
                 enabled: true,
                 authorities: null,
                 jwt: '',
+                image: '',
                 accountNonExpired: true,
                 credentialsNonExpired: true,
                 accountNonLocked: true

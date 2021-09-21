@@ -46,6 +46,9 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Column(name = "authorities")
     private GrantedAuthority authorities;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "jwt")
     private String jwt;
 
@@ -64,6 +67,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
         this.authorities = authorities;
         this.enabled = enabled;
         this.jwt = "";
+        this.image = "";
     }
 
     public long getId() {
@@ -175,6 +179,14 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     public void setJwt(String jwt) {
         this.jwt = jwt;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
