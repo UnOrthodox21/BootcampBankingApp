@@ -1,21 +1,27 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
-import com.bootcampTeam4.bootcampBankingApp.models.TransferAmount;
+import com.bootcampTeam4.bootcampBankingApp.models.Transaction;
+import com.bootcampTeam4.bootcampBankingApp.models.TransferFromTo;
+import com.bootcampTeam4.bootcampBankingApp.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.bootcampTeam4.bootcampBankingApp.services.BankAccountService;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bank-accounts")
 public class BankAccountController {
+
+
     private BankAccountService bankAccountService;
+    private TransactionService transactionService;
 
     @Autowired
-    public BankAccountController(BankAccountService bankAccountService) {
+    public BankAccountController(BankAccountService bankAccountService, TransactionService transactionService) {
         this.bankAccountService = bankAccountService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping
@@ -23,10 +29,14 @@ public class BankAccountController {
         return bankAccountService.getAllBankAccounts();
     }
 
-    @GetMapping(path = "{id}")
-    public Optional<BankAccount> getBankAccountById(@PathVariable("id") Long bankAccountId) {
-        return bankAccountService.getBankAccountById(bankAccountId);
+
+
+    @GetMapping("/{accountNumber}")
+    public BankAccount getBankAccountByAccountNumber(@PathVariable("accountNumber") String accountNumber){
+        return bankAccountService.getBankAccountByAccountNumber(accountNumber);
     }
+
+
 
     @PostMapping
     public void addNewBankAccount(@RequestBody BankAccount bankAccount) {
@@ -34,18 +44,53 @@ public class BankAccountController {
 
     }
 
-    @PutMapping("/{id}")
-    public void replaceItem(@RequestBody TransferAmount changes, @PathVariable Long id) {
-        bankAccountService.changeBalance(changes, id);
+
+    @DeleteMapping(path = "{accountNumber}")
+    public void deleteBankAccount(@PathVariable("accountNumber") String accountNumber) {
+        bankAccountService.deleteBankAccount(accountNumber);
+    }
+
+    @PutMapping("/{accountNumber}")
+    public void editBankAccount(@RequestBody BankAccount bankAccount, @PathVariable("accountNumber") String accountNumber){
+        bankAccountService.editBankAccountByAccountNumber(bankAccount, accountNumber);
 
     }
 
-    @PutMapping("/test/{id}")
-    @ResponseBody
-    public void replaceItemTest(@RequestParam double changes, @PathVariable Long id) {
-        bankAccountService.changeBalanceTest(changes, id);
+
+    @PutMapping("/transfer")
+    public void sendFunds(@RequestBody TransferFromTo transferFromTo) {
+        boolean success = bankAccountService.sendFunds(transferFromTo);
+        if(success){
+            transactionService.addNewTransferTransaction(transferFromTo);
+        }
+        else{
+            transactionService.addNewFailedTransaction(transferFromTo);
+        }
 
 
+    }
+
+    @PutMapping("/deposit")
+    public void depositFunds(@RequestBody TransferFromTo transferFromTo){
+        boolean success = bankAccountService.depositFunds(transferFromTo);
+        if(success){
+            transactionService.addNewDepositTransaction(transferFromTo);
+        }
+        else{
+            transactionService.addNewFailedTransaction(transferFromTo);
+        }
+
+    }
+
+    @PutMapping("/withdraw")
+    public void withdrawFunds(@RequestBody TransferFromTo transferFromTo){
+        boolean success = bankAccountService.withdrawFunds(transferFromTo);
+        if(success){
+            transactionService.addNewWithdrawTransaction(transferFromTo);
+        }
+        else{
+            transactionService.addNewFailedTransaction(transferFromTo);
+        }
 
     }
 

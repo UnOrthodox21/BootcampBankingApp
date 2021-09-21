@@ -1,19 +1,22 @@
 package com.bootcampTeam4.bootcampBankingApp.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "userDetails")
+public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "email")
     private String email;
@@ -35,19 +38,25 @@ public class User {
 
     @Column(name = "roles")
     private String roles;
+  
+    @Column(name = "enabled")
+    private boolean enabled;
 
-    @Column(name = "active")
-    private boolean active;
+    @Column(name = "authorities")
+    private GrantedAuthority authorities;
+
+    @Column(name = "jwt")
+    private String jwt;
 
     @OneToMany()
     @JoinColumn(name = "user_id")
     private List<BankAccount> bankAccounts;
+  
+    public UserDetails() {}
 
-    public User() {}
-
-    public User(long id, String userName, String email, String firstName, String lastName, String address, int phone, String password, String roles, boolean active) {
+    public UserDetails(long id, String username, String email, String firstName, String lastName, String address, int phone, String password, String roles, GrantedAuthority authorities, boolean enabled) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,7 +64,9 @@ public class User {
         this.phone = phone;
         this.password = password;
         this.roles = roles;
-        this.active = active;
+        this.authorities = authorities;
+        this.enabled = enabled;
+        this.jwt = "";
     }
 
     public long getId() {
@@ -66,12 +77,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+       this.username = username;
     }
 
     public String getEmail() {
@@ -129,14 +140,22 @@ public class User {
     public void setRoles(String roles) {
         this.roles = roles;
     }
-
-    public boolean isActive() {
-        return active;
+  
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+  
 
     public List<BankAccount> getBankAccounts() {
         return bankAccounts;
@@ -144,13 +163,36 @@ public class User {
 
     public void setBankAccounts(List<BankAccount> bankAccounts) {
         this.bankAccounts = bankAccounts;
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return (Collection<? extends GrantedAuthority>) authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = (GrantedAuthority) authorities;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDetails{" +
                 "id=" + id +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -158,7 +200,7 @@ public class User {
                 ", phone=" + phone +
                 ", password='" + password + '\'' +
                 ", roles='" + roles + '\'' +
-                ", active=" + active +
+                ", enabled=" + enabled +
                 '}';
     }
 }
