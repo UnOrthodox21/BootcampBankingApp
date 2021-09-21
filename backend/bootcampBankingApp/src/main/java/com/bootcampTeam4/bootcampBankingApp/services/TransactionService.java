@@ -17,12 +17,12 @@ public class TransactionService {
 
 
     public TransactionRepository transactionRepository;
-    public BankAccountService bankAccountService;
 
 
-    public TransactionService(TransactionRepository transactionRepository, BankAccountService bankAccountService) {
+
+    public TransactionService(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
-        this.bankAccountService = bankAccountService;
+
     }
 
     public List<Transaction> getAllTransactions() {
@@ -74,7 +74,6 @@ public class TransactionService {
     }
 
     public void addNewWithdrawTransaction(TransferFromTo transferFromTo){
-        transferFromTo.setAccountNumberTo("BANK1337");
         Transaction newTransaction = new Transaction();
         newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
         newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
@@ -84,6 +83,15 @@ public class TransactionService {
 
     }
 
+    public void addNewFailedTransaction(TransferFromTo transferFromTo){
+        Transaction newTransaction = new Transaction();
+        newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
+        newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
+        newTransaction.setAmount(Math.round(transferFromTo.getAmount()*100.0)/100.0);
+        newTransaction.setType("Failed");
+        transactionRepository.save(newTransaction);
+
+    }
 
 
     public void deleteTransaction(long transactionId) {
@@ -93,5 +101,7 @@ public class TransactionService {
         }
         transactionRepository.deleteById(transactionId);
     }
+
+
 
 }
