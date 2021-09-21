@@ -25,13 +25,6 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping(path = "{userId}")
-    public Optional<User> getUserById(@PathVariable("userId") Long userId) {
-        Optional<User> user =  userService.getUserById(userId);
-        System.out.println(user);
-        return user;
-    }
-
     @PostMapping
     public void addNewUser(@RequestBody User user) {
         userService.addNewUser(user);
