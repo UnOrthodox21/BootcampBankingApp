@@ -1,6 +1,5 @@
 package com.bootcampTeam4.bootcampBankingApp.controllers;
 
-
 import com.bootcampTeam4.bootcampBankingApp.auth.AuthenticationRequest;
 import com.bootcampTeam4.bootcampBankingApp.auth.AuthenticationResponse;
 import com.bootcampTeam4.bootcampBankingApp.auth.JwtUtil;
@@ -17,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping(value="/api/users")
+@RequestMapping("/api/users")
 public class UserDetailsController {
 
     @Autowired
@@ -81,5 +79,4 @@ public class UserDetailsController {
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
-
 }
