@@ -1,12 +1,15 @@
 package com.bootcampTeam4.bootcampBankingApp.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "userDetails")
@@ -16,6 +19,10 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "id")
+    private Set<BankAccount> bankAccountSet = new HashSet<>();
+
     @Column(name = "username")
     private String username;
 
@@ -24,7 +31,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     @Column(name = "first_name")
     private String firstName;
-//
+
     @Column(name = "last_name")
     private String lastName;
 
@@ -48,6 +55,8 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     @Column(name = "jwt")
     private String jwt;
+
+
 
     public UserDetails() {}
 
@@ -151,6 +160,14 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public Set<BankAccount> getBankAccountSet() {
+        return bankAccountSet;
+    }
+
+    public void setBankAccountSet(Set<BankAccount> bankAccountSet) {
+        this.bankAccountSet = bankAccountSet;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

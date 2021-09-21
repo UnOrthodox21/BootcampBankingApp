@@ -4,6 +4,7 @@ package com.bootcampTeam4.bootcampBankingApp.controllers;
 import com.bootcampTeam4.bootcampBankingApp.auth.AuthenticationRequest;
 import com.bootcampTeam4.bootcampBankingApp.auth.AuthenticationResponse;
 import com.bootcampTeam4.bootcampBankingApp.auth.JwtUtil;
+import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.models.UserDetails;
 import com.bootcampTeam4.bootcampBankingApp.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class UserDetailsController {
     public UserDetails getUserDetailsByUsername(@PathVariable("username") String username) {
         return userDetailsService.loadUserByUsername(username);
     }
+
 
     @GetMapping(path = "/jwt/{jwt}")
     public UserDetails getUserDetailsByJwt(@PathVariable("jwt") String jwt) {

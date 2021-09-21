@@ -18,6 +18,12 @@ public class BankAccount {
     @Column(name="balance")
     private double balance;
 
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_details_id", referencedColumnName = "id")
+    private UserDetails userDetails;
+
     public BankAccount() {};
 
     public BankAccount(long id, String number, String type, double balance) {
@@ -26,6 +32,7 @@ public class BankAccount {
         this.type = type;
         this.balance = balance;
     }
+
 
     public long getId() {
         return id;
@@ -58,4 +65,18 @@ public class BankAccount {
     public void setType(String type) {
         this.type = type;
     }
+
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+
+
+
+    public void assignUser(UserDetails userDetails) {
+        this.userDetails = userDetails;
+    }
+
+
+
 }
