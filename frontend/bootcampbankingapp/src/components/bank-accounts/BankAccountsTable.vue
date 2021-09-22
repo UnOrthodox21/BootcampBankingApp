@@ -74,10 +74,7 @@ export default {
       
     },
     props: ["user","bankAccounts"],
-
-          // this.setTransactions();
-
-
+    
      methods: {
       deleteBankAccount(number){
         if(window.confirm("Are You sure?")) {
