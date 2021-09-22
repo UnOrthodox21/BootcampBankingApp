@@ -16,39 +16,42 @@
   <tbody>
     <tr v-bind:key="bankAccount.id" v-for="(bankAccount, index) in bankAccounts">
       <td>{{ index + 1 }}</td>
-      <td>{{ bankAccount.number }}</td>
-      <td>{{ bankAccount.type}} </td>
+      <td> {{ bankAccount.number }}</td>
+      <td>{{ bankAccount.type}}</td>
       <td>{{ $filters.formatCurrency(bankAccount.balance) }}</td>
-      <td><button  type="button" class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"> Edit </button>
+      <td><button @click="setSelectedBankAccount(index)" type="button" class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#bankAccountEditModal"> Edit </button>
       <button v-if="bankAccount.type === 'Secondary'" @click="deleteBankAccount(bankAccount.number)" type="button" class="btn btn-outline-danger mx-2"> Remove </button></td>
     </tr>
   </tbody>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="bankAccountEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="exampleModalLabel">Edit bank accounts</h5>
+        <button type="button" class="close" id="closeModalButton" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form @submit="editBankAccount">
       <div class="modal-body">
-        <form>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
+            <label for="accountNumberInput" class="col-form-label">Account number:</label>
+          <input type="text" class="form-control" id="accountNumberInput" v-model="selectedBankAccount.number" required>
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <label for="message-text" class="col-form-label">Account type:</label>
+          <select class="form-control" id="accountTypeInput" v-model="selectedBankAccount.type"  name="usertBankAccount" placeholder="Select your bank account" >
+            <option value="Primary" v-bind:selected="selectedBankAccount.type == 'Primary'">Primary</option>
+            <option value="Secondary" v-bind:selected="selectedBankAccount.type == 'Secondary'">Secondary</option>
+         </select>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -60,6 +63,12 @@
 <script>
 export default {
     name: "BankAccountsTable",
+    data() {
+      return {
+        selectedBankAccount: [],
+        selectedBankAccountNumber: ''
+      }
+    },
     components: {
       
     },
@@ -78,6 +87,28 @@ export default {
           this.$http.post(process.env.VUE_APP_API_URL + "/bank-accounts/createForUser/" + this.user.id)
           .then(() => this.$parent.$parent.$parent.setBankAccounts())
           .catch(err => console.log(err));
+      },
+      
+        editBankAccount(e) {
+         e.preventDefault();
+
+        this.$http.put(process.env.VUE_APP_API_URL + "/bank-accounts/" + this.selectedBankAccountNumber, this.selectedBankAccount)
+          .then(() => { 
+            this.$parent.$parent.$parent.setBankAccounts() ;
+            document.getElementById("closeModalButton").click();
+          })
+          .catch(err => console.log(err));
+         },
+
+      setSelectedBankAccount(index) {
+        this.selectedBankAccountNumber = this.bankAccounts[index].number;
+
+        this.selectedBankAccount = {
+            "id": this.bankAccounts[index].id,
+            "number": this.bankAccounts[index].number,
+            "type": this.bankAccounts[index].type,
+            "balance": this.bankAccounts[index].balance
+        }
       }
      }
 }
