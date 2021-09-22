@@ -108,5 +108,4 @@ export default {
         font-weight: bold;
     }
 
-    .modal
 </style>
