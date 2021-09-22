@@ -1,7 +1,7 @@
 <template>
 <div class="content">
   <Header v-bind:user="user" v-bind:jwt="jwt"/>
-  <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt"/>
+  <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt" v-bind:transactions="transactions"/>
   </div>
   <Footer/>
 </template>
@@ -23,7 +23,8 @@ export default {
         user: [],
         bankAccounts: [],
         router: useRouter(),
-        jwt: ""
+        jwt: "",
+        transactions: []
       }
     },
     created() {
@@ -40,6 +41,7 @@ export default {
         .then((response) => { 
           this.user = response.data;
           this.setBankAccounts(this.user.id);
+          this.setTransactions();
         })
         .catch(err => console.log(err));
       },
@@ -64,6 +66,12 @@ export default {
         document.cookie ="Token=" + jwt + ";" + expires + ";path=/";
         this.jwt = jwt;
     },
+
+    setTransactions() {
+          this.$http.get(process.env.VUE_APP_API_URL + "/transactions/find/42")
+        .then((response) => { this.transactions = response.data })
+        .catch(err => console.log(err));
+      },
 
       setupHeaderInterceptor() {
         this.$http.defaults.headers.common['Authorization'] = "Bearer " + this.getCookie("Token"); // for all requests
@@ -95,6 +103,8 @@ export default {
           this.router.push({ name: 'Home' });
          }).catch(err => console.log(err));
       },
+
+
 
       logout() {
         this.user = [],
