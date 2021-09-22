@@ -69,11 +69,13 @@ export default {
         const newTransfer= {
             accountNumberFrom: this.userBankAccount,
             accountNumberTo: this.recipientBankAccount,
-            amount: this.transferAmount
+            amount: this.transferAmount,
+            description: this.description,
+            recipientName: this.recipientName
         }
 
         this.$http.put(process.env.VUE_APP_API_URL + "/bank-accounts/transfer", newTransfer)
-        .then(() => this.$parent.$parent.setBankAccounts())
+        .then(() => this.$parent.$parent.$parent.setBankAccounts())
         .catch(err => console.log(err));
     }
   }

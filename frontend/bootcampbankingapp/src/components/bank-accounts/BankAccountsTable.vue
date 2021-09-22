@@ -20,6 +20,7 @@
       <td>{{ bankAccount.type}}</td>
       <td>{{ $filters.formatCurrency(bankAccount.balance) }}</td>
       <td><button @click="setSelectedBankAccount(index)" type="button" class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#bankAccountEditModal"> Edit </button>
+      <router-link @click="this.$parent.$parent.$parent.setTransactions(bankAccount.number)" to="/TransactionsHistory" type="button" class="btn btn-outline-success mx-2"> Transaction history </router-link>
       <button v-if="bankAccount.type === 'Secondary'" @click="deleteBankAccount(bankAccount.number)" type="button" class="btn btn-outline-danger mx-2"> Remove </button></td>
     </tr>
   </tbody>
@@ -73,7 +74,7 @@ export default {
       
     },
     props: ["user","bankAccounts"],
-
+    
      methods: {
       deleteBankAccount(number){
         if(window.confirm("Are You sure?")) {
