@@ -5,27 +5,21 @@ public class TransferFromTo {
     public String accountNumberFrom;
     public String accountNumberTo;
     public String type;
+    public String recipientName;
+    public String description;
 
-    public TransferFromTo(double amount, String accountNumberFrom, String accountNumberTo) {
-        this.amount = amount;
-        this.accountNumberFrom = accountNumberFrom;
-        this.accountNumberTo = accountNumberTo;
-    }
 
-    public TransferFromTo(double amount, String accountNumberTo) {
-        this.amount = amount;
-        this.accountNumberTo = accountNumberTo;
-    }
-
-    public TransferFromTo(String accountNumberFrom) {
-        this.accountNumberFrom = accountNumberFrom;
-    }
-
-    public TransferFromTo(double amount, String accountNumberFrom, String accountNumberTo, String type) {
+    public TransferFromTo(double amount, String accountNumberFrom, String accountNumberTo, String type, String recipientName, String description) {
         this.amount = amount;
         this.accountNumberFrom = accountNumberFrom;
         this.accountNumberTo = accountNumberTo;
         this.type = type;
+        this.recipientName = recipientName;
+        this.description = description;
+    }
+
+    public TransferFromTo(String accountNumberFrom) {
+        this.accountNumberFrom = accountNumberFrom;
     }
 
     public String getType() {
@@ -52,6 +46,21 @@ public class TransferFromTo {
         this.accountNumberTo = accountNumberTo;
     }
 
+    public String getRecipientName() {
+        return recipientName;
+    }
+
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public TransferFromTo() {
     }

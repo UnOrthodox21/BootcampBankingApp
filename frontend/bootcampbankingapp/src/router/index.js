@@ -33,7 +33,7 @@ const routes = [
     component: () => import( '../views/BankAccounts.vue')
   },
   {
-    path: '/transactions-history',
+    path: '/TransactionsHistory',
     name: 'TransactionsHistory',
     component: () => import( '../views/TransactionsHistory.vue')
   }
