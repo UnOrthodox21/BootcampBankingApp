@@ -29,6 +29,8 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
+
+    //edit
     public List<Transaction> getAllUserTransactions(String name){
         List<Transaction> allTransactions = transactionRepository.findAll();
         List<Transaction> userTransactions = new ArrayList<>();
