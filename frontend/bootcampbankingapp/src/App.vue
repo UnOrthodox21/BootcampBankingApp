@@ -111,11 +111,13 @@ export default {
 <style>
 html, body {
   min-height: 100%;
+  background-color:  rgb(240, 240, 240);
+  background-size: cover;
 }
 
 .content {
   flex: 1 0 auto;
-  margin-bottom: 5rem;
+  margin-bottom: 10rem;
 }
 .footer {
   flex-shrink: 0;
