@@ -13,18 +13,20 @@
       <th scope="col">Account From</th>
       <th scope="col">Account To</th>
       <th scope="col">Amount</th>
+      <th scope="col">Recipient name</th>
+      <th scope="col">Description</th>
     </tr>
   </thead>
   <tbody>
     <tr v-bind:key="transaction.id" v-for="(transaction, index) in transactions">
       <td>{{ index + 1 }}</td>
-      <td>{{ transaction.type}} </td>
+      <td>{{ transaction.type}}</td>
       <td>{{ transaction.date }}</td>
       <td>{{ transaction.userFrom }}</td>
       <td>{{ transaction.userTo }}</td>
       <td>{{ $filters.formatCurrency(transaction.amount) }}</td>
-      <!-- <td><button  @click="editBankAccountPopUp(bankAccount.id)" type="button" class="btn btn-outline-success mx-2">Edit</button>
-      <button v-if="bankAccount.type === 'Secondary'" @click="deleteBankAccount(bankAccount.id)" type="button" class="btn btn-outline-danger mx-2">Remove</button></td> -->
+      <td>{{ transaction.recipientName }}</td>
+      <td>{{ transaction.description }}</td>
     </tr>
   </tbody>
 </table>

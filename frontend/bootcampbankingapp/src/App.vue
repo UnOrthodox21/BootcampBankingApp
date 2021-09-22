@@ -24,7 +24,7 @@ export default {
         bankAccounts: [],
         router: useRouter(),
         jwt: "",
-        transactions: []
+        transactions: [],
       }
     },
     created() {
@@ -41,7 +41,6 @@ export default {
         .then((response) => { 
           this.user = response.data;
           this.setBankAccounts(this.user.id);
-          this.setTransactions();
         })
         .catch(err => console.log(err));
       },
@@ -67,8 +66,8 @@ export default {
         this.jwt = jwt;
     },
 
-    setTransactions() {
-          this.$http.get(process.env.VUE_APP_API_URL + "/transactions/find/a42")
+      setTransactions(number) {
+          this.$http.get(process.env.VUE_APP_API_URL + "/transactions/find/" + number)
         .then((response) => { this.transactions = response.data })
         .catch(err => console.log(err));
       },
