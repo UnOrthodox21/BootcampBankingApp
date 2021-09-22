@@ -34,7 +34,6 @@ public class BankAccountService {
 
 
     public void editBankAccountByAccountNumber(BankAccount bankAccount, String accountNumber){
-
         BankAccount bankAccountToPut = getBankAccountByAccountNumber(accountNumber);
 
         if(bankAccount.getBalance() != 0){

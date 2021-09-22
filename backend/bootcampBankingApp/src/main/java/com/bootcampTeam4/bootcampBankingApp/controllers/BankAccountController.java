@@ -29,8 +29,6 @@ public class BankAccountController {
         return bankAccountService.getAllBankAccounts();
     }
 
-
-
     @GetMapping("/{accountNumber}")
     public BankAccount getBankAccountByAccountNumber(@PathVariable("accountNumber") String accountNumber){
         return bankAccountService.getBankAccountByAccountNumber(accountNumber);
@@ -44,9 +42,14 @@ public class BankAccountController {
     @PostMapping
     public void addNewBankAccount(@RequestBody BankAccount bankAccount) {
         bankAccountService.addNewBankAccount(bankAccount);
-
     }
 
+    @PostMapping("/createForUser/{userId}")
+    public void createNewBankAccountForUser(@PathVariable("userId") Long userId) {
+        String newAccountNumber = "RKBNK" + Math.round(Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000);
+        BankAccount newBankAccount = new BankAccount(newAccountNumber, "Secondary", 0, userId);
+        bankAccountService.addNewBankAccount(newBankAccount);
+    }
 
     @DeleteMapping(path = "{accountNumber}")
     public void deleteBankAccount(@PathVariable("accountNumber") String accountNumber) {
@@ -69,8 +72,6 @@ public class BankAccountController {
         else{
             transactionService.addNewFailedTransaction(transferFromTo);
         }
-
-
     }
 
     @PutMapping("/deposit")

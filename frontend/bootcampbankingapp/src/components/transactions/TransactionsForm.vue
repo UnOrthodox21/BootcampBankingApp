@@ -33,10 +33,10 @@
      <div class="form-group row my-4">
     <label for="descriptionInput" class="col-2 col-form-label">Description</label>
     <div class="col-8">
-    <input type="text" class="form-control" id="descriptionInput" v-model="description" name="description" placeholder="Enter description">
+    <input type="text" class="form-control mb-2" id="descriptionInput" v-model="description" name="description" placeholder="Enter description">
   </div>
   </div>
-  <div class="form-group row my-5">
+  <div class="form-group row mt-5 mb-0">
     <div class="col-12">
   <button type="submit" class="btn btn-transaction">Submit:</button>
     </div>

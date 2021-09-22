@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-12">
         <BankAccountsBanner/>
-        <BankAccountsTable v-bind:bankAccounts="bankAccounts"/>
+        <BankAccountsTable v-bind:user="user" v-bind:bankAccounts="bankAccounts"/>
       </div>
     </div>
 </div>
