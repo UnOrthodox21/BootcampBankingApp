@@ -31,6 +31,13 @@ public class Transaction {
     @Column(name = "amount")
     private double amount;
 
+    @Column(name = "recipient_name")
+    private String recipientName;
+
+    @Column(name = "description")
+    private String description;
+
+
     public Transaction() {}
 
     public Transaction(long id, String type, LocalDateTime date, String userFrom, String userTo, double amount) {
@@ -42,6 +49,16 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public Transaction(long id, String type, LocalDateTime date, String userFrom, String userTo, double amount, String recipientName, String description) {
+        this.id = id;
+        this.type = type;
+        this.date = date;
+        this.userFrom = userFrom;
+        this.userTo = userTo;
+        this.amount = amount;
+        this.recipientName = recipientName;
+        this.description = description;
+    }
 
     public long getId() {
         return id;
@@ -89,6 +106,22 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String getRecipientName() {
+        return recipientName;
+    }
+
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

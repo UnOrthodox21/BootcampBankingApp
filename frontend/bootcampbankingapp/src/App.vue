@@ -68,7 +68,7 @@ export default {
     },
 
     setTransactions() {
-          this.$http.get(process.env.VUE_APP_API_URL + "/transactions/find/42")
+          this.$http.get(process.env.VUE_APP_API_URL + "/transactions/find/a42")
         .then((response) => { this.transactions = response.data })
         .catch(err => console.log(err));
       },

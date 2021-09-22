@@ -55,6 +55,19 @@ public class TransactionService {
 
     public void addNewTransferTransaction(TransferFromTo transferFromTo){
         Transaction newTransaction = new Transaction();
+        if(transferFromTo.getDescription() != null){
+            newTransaction.setDescription(transferFromTo.getDescription());
+        }
+        else{
+            newTransaction.setDescription("");
+        }
+        if(transferFromTo.getRecipientName() != null){
+            newTransaction.setRecipientName(transferFromTo.getRecipientName());
+        }
+        else{
+            newTransaction.setRecipientName("");
+        }
+
         newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
         newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
         newTransaction.setAmount(Math.round(transferFromTo.getAmount()*100.0)/100.0);
@@ -67,6 +80,18 @@ public class TransactionService {
 
         transferFromTo.setAccountNumberFrom("BANK1337");
         Transaction newTransaction = new Transaction();
+        if(transferFromTo.getDescription() != null){
+            newTransaction.setDescription(transferFromTo.getDescription());
+        }
+        else{
+            newTransaction.setDescription("Deposit to " + transferFromTo.getAccountNumberTo());
+        }
+        if(transferFromTo.getRecipientName() != null){
+            newTransaction.setRecipientName(transferFromTo.getRecipientName());
+        }
+        else{
+            newTransaction.setRecipientName(transferFromTo.getAccountNumberTo() + " Account");
+        }
         newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
         newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
         newTransaction.setAmount(Math.round(transferFromTo.getAmount()*100.0)/100.0);
@@ -77,8 +102,27 @@ public class TransactionService {
 
     public void addNewWithdrawTransaction(TransferFromTo transferFromTo){
         Transaction newTransaction = new Transaction();
+
         newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
-        newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
+        if(transferFromTo.getAccountNumberTo() != null){
+            newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
+        }
+        else{
+            newTransaction.setUserTo("");
+        }
+        if(transferFromTo.getDescription() != null){
+            newTransaction.setDescription(transferFromTo.getDescription());
+        }
+        else{
+            newTransaction.setDescription("Withdraw from " + transferFromTo.getAccountNumberFrom());
+        }
+        if(transferFromTo.getRecipientName() != null){
+            newTransaction.setRecipientName(transferFromTo.getRecipientName());
+        }
+        else{
+            newTransaction.setRecipientName("");
+        }
+
         newTransaction.setAmount(Math.round(transferFromTo.getAmount()*100.0)/100.0);
         newTransaction.setType("Withdraw");
         transactionRepository.save(newTransaction);
@@ -87,10 +131,32 @@ public class TransactionService {
 
     public void addNewFailedTransaction(TransferFromTo transferFromTo){
         Transaction newTransaction = new Transaction();
-        newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
-        newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
+        if(transferFromTo.getAccountNumberFrom() != null){
+            newTransaction.setUserFrom(transferFromTo.getAccountNumberFrom());
+        }
+        else{
+            newTransaction.setUserFrom("");
+        }
+        if(transferFromTo.getAccountNumberTo() != null){
+            newTransaction.setUserTo(transferFromTo.getAccountNumberTo());
+        }
+        else{
+            newTransaction.setUserTo("");
+        }
+        if(transferFromTo.getDescription() != null){
+            newTransaction.setDescription(transferFromTo.getDescription());
+        }
+        else{
+            newTransaction.setDescription("");
+        }
+        if(transferFromTo.getRecipientName() != null){
+            newTransaction.setRecipientName(transferFromTo.getRecipientName());
+        }
+        else{
+            newTransaction.setRecipientName("");
+        }
         newTransaction.setAmount(Math.round(transferFromTo.getAmount()*100.0)/100.0);
-        newTransaction.setType("Failed");
+        newTransaction.setType("Failed - not enough funds");
         transactionRepository.save(newTransaction);
 
     }
