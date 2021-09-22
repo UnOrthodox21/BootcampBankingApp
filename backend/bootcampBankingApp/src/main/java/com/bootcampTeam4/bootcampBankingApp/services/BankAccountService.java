@@ -31,8 +31,6 @@ public class BankAccountService {
         return bankAccountRepository.findBankAccountById(id);
     }
 
-
-
     public void editBankAccountByAccountNumber(BankAccount bankAccount, String accountNumber){
         BankAccount bankAccountToPut = getBankAccountByAccountNumber(accountNumber);
 
@@ -54,19 +52,8 @@ public class BankAccountService {
 
 
 
-    public BankAccount getBankAccountByAccountNumber(String accountToFind){
-        List<BankAccount> newList = getAllBankAccounts();
-        BankAccount acc = null;
-        String name = accountToFind;
-        for(int i=0;i< newList.size();i++){
-            if(newList.get(i).getNumber().equals(name)){
-                acc = newList.get(i);
-                System.out.println(acc.getNumber());
-                break;
-            }
-
-        }
-        return acc;
+    public BankAccount getBankAccountByAccountNumber(String accountNumber){
+        return bankAccountRepository.getBankAccountByNumber(accountNumber);
     }
 
     public List<BankAccount> getBankAccountsByUserId(Long userId) {

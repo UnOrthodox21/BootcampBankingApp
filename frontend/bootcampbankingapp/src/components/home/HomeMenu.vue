@@ -1,6 +1,47 @@
 <template>
+
+    <div v-if="jwt === undefined || jwt === ''">
     <div class="container" id="home-menu">
-        <div class="row">
+        <div class="row">             
+                <div class="col-6 text-left mt-3 mb-3 pt-2">
+                    <div class="card">
+                        <div class="card-body">
+                    <h2 class="mb-4 login-register-title text-center mt-4 py-1">Login:</h2>
+            
+            <div class="row">
+                <div class="col-12 text-center">
+                    <router-link class="btn btn-login text-center " to="/login">Login</router-link>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                 <div class="col-6 text-left mt-3 mb-3 pt-2">
+                    <div class="card">
+                        <div class="card-body">
+                    <div class="row">
+                    <div class="col-12 text-center">
+                        <h2 class="mb-4 login-register-title text-center mt-4 py-1">Register:</h2>
+                    </div>
+                     </div>
+        
+                    <div class="row">
+                     <div class="col-12 text-center">
+                        <router-link class="btn btn-register" to="/register">Register</router-link>
+                     </div>
+                     </div>
+                </div>
+                </div>
+                </div>
+        </div>
+    </div>
+    </div>
+
+
+  <div v-else>
+    <div class="container" id="home-menu">
+        <div class="row">             
                 <div class="col-6 text-left mt-3 mb-3 pt-2">
                     <div class="card">
                         <div class="card-body">
@@ -63,6 +104,7 @@
                 </div>
             </div>
     </div>
+    </div>
 </template>
 
 <script>
@@ -73,7 +115,7 @@ export default {
         bankAccountIndex: 0,
         }
     },
-    props: ["user", "bankAccounts"]
+    props: ["user", "bankAccounts", "jwt"]
 }
 </script>
 
@@ -88,6 +130,11 @@ export default {
 
     .home-menu-title {
         font-size: 1.75em;
+        font-weight: bold;
+    }
+
+      .login-register-title {
+        font-size: 3em;
         font-weight: bold;
     }
 
@@ -121,6 +168,36 @@ export default {
         vertical-align: bottom;
         box-shadow: 5px 5px 5px rgb(235, 235, 235);
     }
+
+    .btn-register {
+        margin-top: 2em;
+        height: 4em;
+         vertical-align: middle;
+         width: 12em;
+         font-size: 2em;
+         text-align: center;
+         align-items: center;
+        background-color: rgb(102, 102, 102);
+    }
+
+    .btn-register:hover {
+        background-color: rgb(124, 124, 124);
+    }
+
+
+    .btn-login {
+         margin-top: 2em;
+         vertical-align: middle;
+         font-size: 2em;        
+         height: 4em;
+         width: 12em;
+         background-color: rgb(102, 102, 102);
+    }
+
+    .btn-login:hover {
+          background-color: rgb(124, 124, 124);
+    }
+
 
     .btn-user {
         margin-top: 2em;

@@ -1,12 +1,6 @@
 <template>
-<div v-if="jwt === undefined || jwt === ''">
-  <h1>Hello there</h1>
-</div>
-
-<div v-else>
   <HomeBanner v-bind:user="user"/>
-  <HomeMenu v-bind:user="user" v-bind:bankAccounts="bankAccounts"/>
-</div>
+  <HomeMenu v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt"/>
 </template>
 
 <script>
