@@ -31,9 +31,8 @@
 <script>
 
 export default {
-    name: "TransactionsHistoryTable",
-    props: ["transactions"],
-        
+    name: "AdminTransactionsHistoryTable",
+    props: ["selectedBankAccountsTransactions"]
 }
 </script>
 
@@ -48,7 +47,6 @@ export default {
         text-align: center;
         vertical-align: center;
         margin-bottom: 30px;
-        margin-inline: 10px;
     }
 
     .btn-top-menu:hover {

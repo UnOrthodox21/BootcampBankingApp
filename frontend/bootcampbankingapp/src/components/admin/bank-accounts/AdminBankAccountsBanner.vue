@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: "BankAccountsBanner"
+    name: "AdminBankAccountsBanner"
 }
 </script>
 

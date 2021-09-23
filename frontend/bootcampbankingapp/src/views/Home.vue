@@ -1,5 +1,5 @@
 <template>
-  <HomeBanner v-bind:user="user"/>
+  <HomeBanner v-bind:user="user" v-bind:jwt="jwt"/>
   <HomeMenu v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt"/>
 </template>
 

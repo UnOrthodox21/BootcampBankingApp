@@ -103,8 +103,20 @@
                     <router-link class="btn btn-transaction mt-auto" to="/transactions">Transactions</router-link>
                 </div>
             </div>
+
+
+             <div v-if="this.user.roles === 'Admin'" class="row">
+                     <div class="col-12 my-4">
+                    <router-link class="btn btn-transaction btn-users mt-auto" to="/admin/users">Manage Users</router-link>
+                </div>
+            </div>
+
+
     </div>
     </div>
+
+   
+        
 </template>
 
 <script>
@@ -223,6 +235,14 @@ export default {
           height: 3.5em;
           width: 45em;
           padding: 1em;
+    }
+
+    .btn-users {
+        background-color: rgb(219, 159, 30);
+    }
+
+    .btn-users:hover {
+        background-color: rgb(241, 176, 35);
     }
 
 </style>

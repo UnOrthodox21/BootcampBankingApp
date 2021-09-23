@@ -1,7 +1,7 @@
 <template>
 <div class="content">
   <Header v-bind:user="user" v-bind:jwt="jwt"/>
-  <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt" v-bind:transactions="transactions"/>
+  <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt" v-bind:transactions="transactions" v-bind:selectedUsersBankAccounts="selectedUsersBankAccounts"/>
   </div>
   <Footer/>
 </template>
@@ -22,11 +22,14 @@ export default {
       return {
         user: [],
         bankAccounts: [],
+        users: [],
         router: useRouter(),
         jwt: "",
         transactions: [],
+        selectedUsersBankAccounts: []
       }
     },
+  
     created() {
         this.jwt = this.getCookie("Token");
         let jwt = this.jwt;
@@ -45,16 +48,15 @@ export default {
         .catch(err => console.log(err));
       },
 
-      // setUser(username) {
-      //   this.$http.get(process.env.VUE_APP_API_URL + "/users/" + username)
-      //   .then((response) => { this.user = response.data })
-      //   .catch(err => console.log(err));
-      // },
-
-      //setBankAccounts(/*accountNumber */)
       setBankAccounts() {
         this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/getByUserId/" + this.user.id)
         .then((response) => { this.bankAccounts = response.data })
+        .catch(err => console.log(err));
+      },
+
+      setSelectedUsersBankAccounts(userId) {
+         this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/getByUserId/" + userId)
+        .then((response) => { this.selectedUsersBankAccounts = response.data })
         .catch(err => console.log(err));
       },
 
@@ -64,10 +66,10 @@ export default {
         let expires = "expires=" + d.toUTCString();
         document.cookie ="Token=" + jwt + ";" + expires + ";path=/";
         this.jwt = jwt;
-    },
+      },
 
-      setTransactions(number) {
-          this.$http.get(process.env.VUE_APP_API_URL + "/transactions/find/" + number)
+      setTransactions(bankAccountNumber) {
+          this.$http.get(process.env.VUE_APP_API_URL + "/transactions/find/" + bankAccountNumber)
         .then((response) => { this.transactions = response.data })
         .catch(err => console.log(err));
       },

@@ -71,7 +71,7 @@ export default {
                 address: this.address,
                 phone: this.phone,
                 password: this.password,
-                roles: null,
+                roles: "User",
                 enabled: true,
                 authorities: null,
                 jwt: '',

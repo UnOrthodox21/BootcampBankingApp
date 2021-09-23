@@ -61,4 +61,12 @@ public class BankAccount {
     public void setType(String type) {
         this.type = type;
     }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

@@ -6,19 +6,19 @@
   <div class="form-group row mt-0 mb-4">
       <label for="recipientNameInput" class="col-2 col-form-label">Recipient name:</label>
     <div class="col-8">
-    <input type="text" class="form-control" id="recipientNameInput" v-model="recipientName" name="recipientName" aria-describedby="recipientHelp" placeholder="Enter recipient name">
+    <input type="text" class="form-control" id="recipientNameInput" v-model="recipientName" name="recipientName" aria-describedby="recipientHelp" placeholder="Enter recipient name" required>
   </div>
   </div>
   <div class="form-group row my-4">
         <label for="recipientAccountInput" class="col-2 col-form-label">Recipient account:</label>
         <div class="col-8">
-    <input type="text" class="form-control" id="recipientAccountInput" v-model="recipientBankAccount" name="recipientBankAccount" placeholder="Enter recipient bank account">
+    <input type="text" class="form-control" id="recipientAccountInput" v-model="recipientBankAccount" name="recipientBankAccount" placeholder="Enter recipient bank account" required>
   </div>
   </div>
      <div class="form-group row my-4">
   <label for="userBankAccountInput" class="col-2 col-form-label">User bank accounts:</label>
       <div class="col-8">
-    <select class="form-control" id="userBankAccountInput" v-model="userBankAccount" name="usertBankAccount" placeholder="Select your bank account" >
+    <select class="form-control" id="userBankAccountInput" v-model="userBankAccount" name="usertBankAccount" placeholder="Select your bank account" required >
        <option v-bind:key="bankAccount.id" v-for="(bankAccount, index) in bankAccounts" v-bind:value="bankAccount.number" v-bind:selected="index === 0">{{ index + 1 }}. {{ bankAccount.number }}</option>
       </select>
   </div>
@@ -27,13 +27,13 @@
     <label for="transferAmountInput" class="col-2 col-form-label">Transfer amount:</label>
     <div class="col-8">
       <!-- Ielikt Max no DB! Nevar būt vairāk nekā ir kontā -->
-    <input type="number" step="0.01" min="0" max="99999999" mi class="form-control" id="transferAmountInput" v-model="transferAmount" name="transferAmount" placeholder="Enter transfer amount">
+    <input type="number" step="0.01" min="0" max="99999999" mi class="form-control" id="transferAmountInput" v-model="transferAmount" name="transferAmount" placeholder="Enter transfer amount" required>
   </div>
   </div>
      <div class="form-group row my-4">
     <label for="descriptionInput" class="col-2 col-form-label">Description</label>
     <div class="col-8">
-    <input type="text" class="form-control mb-2" id="descriptionInput" v-model="description" name="description" placeholder="Enter description">
+    <input type="text" class="form-control mb-2" id="descriptionInput" v-model="description" name="description" placeholder="Enter description" required>
   </div>
   </div>
   <div class="form-group row mt-5 mb-0">
