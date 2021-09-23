@@ -26,6 +26,7 @@ public class BankAccountController {
 
     @GetMapping
     public List<BankAccount> getAllBankAccounts() {
+
         return bankAccountService.getAllBankAccounts();
     }
 
@@ -46,7 +47,7 @@ public class BankAccountController {
 
     @PostMapping("/createForUser/{userId}")
     public void createNewBankAccountForUser(@PathVariable("userId") Long userId) {
-        String newAccountNumber = "RKBNK" + Math.round(Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000);
+        String newAccountNumber = "RKBNK" + Math.round(Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000); // better use UUID(Unique string value)
         BankAccount newBankAccount = new BankAccount(newAccountNumber, "Secondary", 0, userId);
         bankAccountService.addNewBankAccount(newBankAccount);
     }
