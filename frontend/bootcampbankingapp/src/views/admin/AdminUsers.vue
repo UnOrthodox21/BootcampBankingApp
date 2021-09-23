@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-12">
         <AdminUsersBanner/>
-        <AdminUsersTable v-bind:selectedUsersBankAccounts="selecetedUsersBankAccounts"/>
+        <AdminUsersTable v-bind:user="user" v-bind:selectedUsersBankAccounts="selecetedUsersBankAccounts"/>
       </div>
     </div>
     </div>
@@ -11,6 +11,7 @@
 
 <script>
 
+import {useRouter} from "vue-router";
 import AdminUsersBanner from '../../components/admin/users/AdminUsersBanner.vue';
 import AdminUsersTable from '../../components/admin/users/AdminUsersTable.vue';
 
@@ -20,7 +21,13 @@ export default {
       AdminUsersBanner,
       AdminUsersTable
   },
-  props: ["selectedUsersBankAccounts"]
+  mounted() {
+      if (this.user.roles != "Admin") {
+        let router = useRouter();
+        router.push({ name: 'Home'});
+      } 
+  },
+  props: ["user", "selectedUsersBankAccounts"]
 }
 </script>
 

@@ -1,17 +1,17 @@
 <template>
 <div class="content">
   <Header v-bind:user="user" v-bind:jwt="jwt"/>
-  <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt" v-bind:transactions="transactions" v-bind:selectedUsersBankAccounts="selectedUsersBankAccounts"/>
+  <router-view v-bind:user="user" v-bind:bankAccounts="bankAccounts" v-bind:jwt="jwt" 
+  v-bind:transactions="transactions" v-bind:selectedUsersBankAccounts="selectedUsersBankAccounts" 
+  v-bind:selectedBankAccountsTransactions="selectedBankAccountsTransactions"/>
   </div>
   <Footer/>
 </template>
-
 
 <script>
 import Header from "./components/layout/Header.vue"
 import Footer from "./components/layout/Footer.vue"
 import {useRouter} from "vue-router";
-
 export default {
     name: "app",
     components: {
@@ -26,7 +26,8 @@ export default {
         router: useRouter(),
         jwt: "",
         transactions: [],
-        selectedUsersBankAccounts: []
+        selectedUsersBankAccounts: [],
+        selectedBankAccountsTransactions: []
       }
     },
   
@@ -47,19 +48,16 @@ export default {
         })
         .catch(err => console.log(err));
       },
-
       setBankAccounts() {
         this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/getByUserId/" + this.user.id)
         .then((response) => { this.bankAccounts = response.data })
         .catch(err => console.log(err));
       },
-
       setSelectedUsersBankAccounts(userId) {
          this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/getByUserId/" + userId)
         .then((response) => { this.selectedUsersBankAccounts = response.data })
         .catch(err => console.log(err));
       },
-
       setJwt(jwt) {
         let d = new Date();
         d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
@@ -67,36 +65,34 @@ export default {
         document.cookie ="Token=" + jwt + ";" + expires + ";path=/";
         this.jwt = jwt;
       },
-
       setTransactions(bankAccountNumber) {
           this.$http.get(process.env.VUE_APP_API_URL + "/transactions/find/" + bankAccountNumber)
         .then((response) => { this.transactions = response.data })
         .catch(err => console.log(err));
       },
-
+       setSelectedBankAccountsTransactions(bankAccountNumber) {
+          this.$http.get(process.env.VUE_APP_API_URL + "/transactions/find/" + bankAccountNumber)
+        .then((response) => { this.selectedBankAccountsTransactions = response.data })
+        .catch(err => console.log(err));
+      },
       setupHeaderInterceptor() {
         this.$http.defaults.headers.common['Authorization'] = "Bearer " + this.getCookie("Token"); // for all requests
       },
-
       getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(';').shift();
       },
-
       clearCookie() {
         document.cookie = "Token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       },
-
       login(username, jwt) {
         // Add a request intercepto
         this.setJwt(jwt);
         this.setupHeaderInterceptor();
-
         const newUserData = {
             jwt
         }
-
         this.$http.put(process.env.VUE_APP_API_URL + "/users/" + username, newUserData)
         .then(() => {  
           this.setUser(jwt);
@@ -104,9 +100,6 @@ export default {
           this.router.push({ name: 'Home' });
          }).catch(err => console.log(err));
       },
-
-
-
       logout() {
         this.user = [],
         this.bankAccounts = [],
@@ -114,6 +107,7 @@ export default {
         this.clearCookie();
         this.router.push({ name: 'Login'});
       }
+
     }
   }
 </script>
@@ -125,7 +119,6 @@ html, body {
   background-color:  rgb(240, 240, 240);
   background-size: cover;
 }
-
 .content {
   flex: 1 0 auto;
   margin-bottom: 10rem;
@@ -133,7 +126,6 @@ html, body {
 .footer {
   flex-shrink: 0;
 }
-
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   /* font-family: 'Lato', sans-serif; */
@@ -150,20 +142,16 @@ html, body {
   display: flex;
   flex-direction: column;
 }
-
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
 .btn-transaction {
     color: rgb(248, 248, 248);
     text-align: center;
@@ -174,12 +162,10 @@ html, body {
     width: 40em;
     padding: 1em;
 }
-
 .btn-transaction:hover {
     background-color: rgb(118, 221, 77);
     color: rgb(248, 248, 248);
   }
-
     .btn-login {
       color: rgb(248, 248, 248);
       font-size: 1.2em;
@@ -191,7 +177,6 @@ html, body {
       margin-top: 3.85em;
       background-color: rgb(25, 25, 25);
     }
-
     .btn-login:hover {
       color: rgb(248, 248, 248);
       background-color: rgb(32, 32, 34);

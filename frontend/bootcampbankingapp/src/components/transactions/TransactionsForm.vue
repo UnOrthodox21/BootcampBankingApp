@@ -18,7 +18,7 @@
      <div class="form-group row my-4">
   <label for="userBankAccountInput" class="col-2 col-form-label">User bank accounts:</label>
       <div class="col-8">
-    <select class="form-control" id="userBankAccountInput" v-model="userBankAccount" name="usertBankAccount" placeholder="Select your bank account" required >
+    <select class="form-control" id="userBankAccountInput" v-if="this.bankAccounts[0].number !== undefined" v-model="userBankAccount" name="usertBankAccount" placeholder="Select your bank account" required >
        <option v-bind:key="bankAccount.id" v-for="(bankAccount, index) in bankAccounts" v-bind:value="bankAccount.number" v-bind:selected="index === 0">{{ index + 1 }}. {{ bankAccount.number }}</option>
       </select>
   </div>
@@ -26,7 +26,6 @@
     <div class="form-group row my-4">
     <label for="transferAmountInput" class="col-2 col-form-label">Transfer amount:</label>
     <div class="col-8">
-      <!-- Ielikt Max no DB! Nevar būt vairāk nekā ir kontā -->
     <input type="number" step="0.01" min="0" max="99999999" mi class="form-control" id="transferAmountInput" v-model="transferAmount" name="transferAmount" placeholder="Enter transfer amount" required>
   </div>
   </div>
@@ -39,8 +38,13 @@
   <div class="form-group row mt-5 mb-0">
     <div class="col-12">
   <button type="submit" class="btn btn-transaction">Submit:</button>
+
+
+  <div class="alert mt-5" id="transaction-alert" style="display: none;" role="alert"></div>
+
     </div>
     </div>
+
     </form>
     </div>
   </div>
@@ -50,20 +54,33 @@
 <script>
 export default {
     name: "TransactionsForm",
-    props: ["bankAccounts"],
-    data() {
+    
+    created() {
+      this.$parent.$parent.$parent.setBankAccounts();
+    },
+
+    mounted() {
+      this.setUserBankAccount();
+    },
+
+      data() {
       return {
         recipientName: '',
         recipientBankAccount: '',
-        userBankAccount: this.bankAccounts[0].number,
+        userBankAccount: '',
         transferAmount: 0,
         description: ''
       }
     },
-    mounted() {
-      this.$parent.$parent.$parent.setBankAccounts()
-    },
+    props: ["bankAccounts"],
     methods: {
+
+    setUserBankAccount() {
+       if(this.bankAccounts[0].number !== undefined) {
+          this.userBankAccount = this.bankAccounts[0].number;
+      }
+     },
+
     transferFunds(e) {
         e.preventDefault();
         const newTransfer= {
@@ -74,9 +91,29 @@ export default {
             recipientName: this.recipientName
         }
 
+        let alert = document.getElementById('transaction-alert');
+
         this.$http.put(process.env.VUE_APP_API_URL + "/bank-accounts/transfer", newTransfer)
-        .then(() => this.$parent.$parent.$parent.setBankAccounts())
-        .catch(err => console.log(err));
+        .then(() => { this.$parent.$parent.$parent.setBankAccounts(); 
+               this.recipientName = '';
+               this.recipientBankAccount = '';
+               this.transferAmount = 0;
+               this.description = '';
+              alert.classList.remove("alert-danger");
+              alert.classList.add("alert-success");
+              alert.innerHTML = "Successfully transfered funds!";
+              alert.style.display = "block";
+      
+
+        })
+        .catch((err) => { 
+          alert.classList.remove("alert-success");
+          alert.classList.add("alert-danger");
+          alert.innerHTML = "Transfer of funds failed!";
+          alert.style.display = "block";
+          console.log(err);
+        },
+      );
     }
   }
 }
