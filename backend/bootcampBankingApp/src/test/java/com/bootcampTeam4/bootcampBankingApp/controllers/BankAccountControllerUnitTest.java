@@ -3,6 +3,7 @@ package com.bootcampTeam4.bootcampBankingApp.controllers;
 import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.models.TransferFromTo;
 import com.bootcampTeam4.bootcampBankingApp.services.BankAccountService;
+import com.bootcampTeam4.bootcampBankingApp.services.MyUserDetailsService;
 import com.bootcampTeam4.bootcampBankingApp.services.TransactionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,8 @@ public class BankAccountControllerUnitTest {
 
     @Mock
     private BankAccountService mockBankAccountService;
-
+    @Mock
+    private MyUserDetailsService mockMyUserDetailService;
     @Mock
     private TransactionService mockTransactionService;
 
@@ -29,7 +31,7 @@ public class BankAccountControllerUnitTest {
     @BeforeEach
     public void setup(){
         openMocks(this);
-        controller = new BankAccountController(mockBankAccountService, mockTransactionService);
+        controller = new BankAccountController(mockBankAccountService, mockTransactionService, mockMyUserDetailService);
     }
 
     @Test
@@ -37,9 +39,9 @@ public class BankAccountControllerUnitTest {
         //Given
         List<BankAccount> bankAccountList = new ArrayList<>();
         when(mockBankAccountService.getAllBankAccounts()).thenReturn(bankAccountList);
-
+        when(mockMyUserDetailService.checkAdminPassword("123")).thenReturn(true);
         //When
-        List<BankAccount> actualList = controller.getAllBankAccounts();
+        List<BankAccount> actualList = controller.getAllBankAccounts("123");
 
         //Then
         verify(mockBankAccountService,times(1)).getAllBankAccounts();

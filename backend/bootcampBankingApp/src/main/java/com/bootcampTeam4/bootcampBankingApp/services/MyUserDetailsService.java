@@ -1,10 +1,13 @@
 package com.bootcampTeam4.bootcampBankingApp.services;
 
+import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.models.UserDetails;
 import com.bootcampTeam4.bootcampBankingApp.repositories.UserDetailsRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -24,13 +27,22 @@ public class MyUserDetailsService implements UserDetailsService {
         return userDetailsRepository.findAll();
     }
 
-
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDetailsRepository.findUserDetailsByUsername(username);
     }
 
     public UserDetails findUserDetailsByJwt(String jwt) throws UsernameNotFoundException {
         return userDetailsRepository.findUserDetailsByJwt(jwt);
+    }
+
+    public boolean checkAdminPassword(String password){
+        String adminPassword=("gillbates");
+        if(password.equals(adminPassword)){
+            return true;
+        }
+        else {
+            return  false;
+        }
     }
 
     public UserDetails findUserDetailsByUsername(String userToFind){

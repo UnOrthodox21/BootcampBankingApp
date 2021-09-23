@@ -2,6 +2,8 @@ package com.bootcampTeam4.bootcampBankingApp.controllers;
 import com.bootcampTeam4.bootcampBankingApp.models.BankAccount;
 import com.bootcampTeam4.bootcampBankingApp.models.Transaction;
 import com.bootcampTeam4.bootcampBankingApp.models.TransferFromTo;
+import com.bootcampTeam4.bootcampBankingApp.models.UserDetails;
+import com.bootcampTeam4.bootcampBankingApp.services.MyUserDetailsService;
 import com.bootcampTeam4.bootcampBankingApp.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +19,22 @@ public class BankAccountController {
 
     private BankAccountService bankAccountService;
     private TransactionService transactionService;
+    private MyUserDetailsService myUserDetailsService;
 
     @Autowired
-    public BankAccountController(BankAccountService bankAccountService, TransactionService transactionService) {
+    public BankAccountController(BankAccountService bankAccountService, TransactionService transactionService, MyUserDetailsService myUserDetailsService) {
         this.bankAccountService = bankAccountService;
         this.transactionService = transactionService;
+        this.myUserDetailsService = myUserDetailsService;
     }
 
-    @GetMapping
-    public List<BankAccount> getAllBankAccounts() {
+    @GetMapping("/getAllAccounts/{password}")
+    public List<BankAccount> getAllBankAccounts(@PathVariable("password") String password) {
+        if (myUserDetailsService.checkAdminPassword(password)) {
+            return bankAccountService.getAllBankAccounts();
+        }
+        return null;
 
-        return bankAccountService.getAllBankAccounts();
     }
 
     @GetMapping("/{accountNumber}")
@@ -52,9 +59,9 @@ public class BankAccountController {
         bankAccountService.addNewBankAccount(newBankAccount);
     }
 
-    @DeleteMapping(path = "{accountNumber}")
+    @DeleteMapping("/{accountNumber}")
     public void deleteBankAccount(@PathVariable("accountNumber") String accountNumber) {
-        bankAccountService.deleteBankAccount(accountNumber);
+            bankAccountService.deleteBankAccount(accountNumber);
     }
 
     @PutMapping("/{accountNumber}")

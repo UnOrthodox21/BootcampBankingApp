@@ -42,9 +42,12 @@ public class UserDetailsController {
     }
      */
 
-    @GetMapping
-    public List<UserDetails> getAllUsers() {
-        return userDetailsService.getAllUserDetails();
+    @GetMapping("/getAllUsers/{password}")
+    public List<UserDetails> getAllUsers(@PathVariable("password") String password) {
+        if (userDetailsService.checkAdminPassword(password)) {
+            return userDetailsService.getAllUserDetails();
+        }
+        return null;
     }
 
     @GetMapping(path = "{username}")
