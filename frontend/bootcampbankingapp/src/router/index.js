@@ -33,9 +33,24 @@ const routes = [
     component: () => import( '../views/BankAccounts.vue')
   },
   {
-    path: '/TransactionsHistory',
+    path: '/transactions-history',
     name: 'TransactionsHistory',
     component: () => import( '../views/TransactionsHistory.vue')
+  },
+  {
+    path: '/admin/users',
+    name: 'AdminUsers',
+    component: () => import( '../views/admin/AdminUsers.vue')
+  },
+  {
+    path: '/admin/users/bank-accounts',
+    name: 'AdminBankAccounts',
+    component: () => import( '../views/admin/AdminBankAccounts.vue')
+  },
+  {
+    path: '/admin/users/bank-accounts/transactions-history',
+    name: 'AdminTransactionsHistory',
+    component: () => import( '../views/admin/AdminTransactionsHistory.vue')
   }
 
 ]

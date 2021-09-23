@@ -1,6 +1,5 @@
 <template>
-<button @click="createNewBankAccount()" class="btn btn-top-menu">Create a new account</button>
-<router-link to="/transactions"  class="btn btn-top-menu">Send money</router-link>
+<button @click="createNewBankAccount(selectedUsersBankAccounts[0].userId)" class="btn btn-top-menu">Create a new account</button>
 
    <table class="table my-5 mx-auto">
   <thead>
@@ -13,13 +12,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-bind:key="bankAccount.id" v-for="(bankAccount, index) in bankAccounts">
+    <tr v-bind:key="bankAccount.id" v-for="(bankAccount, index) in selectedUsersBankAccounts">
       <td>{{ index + 1 }}</td>
       <td> {{ bankAccount.number }}</td>
       <td>{{ bankAccount.type}}</td>
       <td>{{ $filters.formatCurrency(bankAccount.balance) }}</td>
       <td><button @click="setSelectedBankAccount(index)" type="button" class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#bankAccountEditModal"> Edit </button>
-      <router-link @click="this.$parent.$parent.$parent.setTransactions(bankAccount.number)" to="/transactions-history" type="button" class="btn btn-outline-success mx-2"> Transaction history </router-link>
+      <router-link @click="this.$parent.$parent.$parent.setTransactions(bankAccount.number)" to="/admin/users/bank-accounts/transactions-history" type="button" class="btn btn-outline-success mx-2"> Transaction history </router-link>
       <button v-if="bankAccount.type === 'Secondary'" @click="deleteBankAccount(bankAccount)" type="button" class="btn btn-outline-danger mx-2"> Delete </button></td>
     </tr>
   </tbody>
@@ -62,7 +61,7 @@
 
 <script>
 export default {
-    name: "BankAccountsTable",
+    name: "AdminBankAccountsTable",
     data() {
       return {
         selectedBankAccount: [],
@@ -72,7 +71,7 @@ export default {
     components: {
       
     },
-    props: ["user","bankAccounts"],
+    props: ["user","selectedUsersBankAccounts"],
     
      methods: {
       deleteBankAccount(bankAccount){
@@ -80,7 +79,7 @@ export default {
     
         if(window.confirm("Are You sure?")) {
           this.$http.delete(process.env.VUE_APP_API_URL + "/bank-accounts/" + bankAccount.number)
-          .then(() => this.$parent.$parent.$parent.setBankAccounts())
+          .then(() => this.$parent.$parent.$parent.setSelectedUsersBankAccounts(this.selectedUsersBankAccounts[0].userId))
           .catch(err => console.log(err));
         }
 
@@ -89,31 +88,31 @@ export default {
        }
       },
 
-      createNewBankAccount() {
-          this.$http.post(process.env.VUE_APP_API_URL + "/bank-accounts/createForUser/" + this.user.id)
-          .then(() => this.$parent.$parent.$parent.setBankAccounts())
+      createNewBankAccount(userId) {
+          this.$http.post(process.env.VUE_APP_API_URL + "/bank-accounts/createForUser/" + userId)
+          .then(() => this.$parent.$parent.$parent.setSelectedUsersBankAccounts(userId))
           .catch(err => console.log(err));
       },
       
-        editBankAccount(e) {
+    editBankAccount(e) {
          e.preventDefault();
 
         this.$http.put(process.env.VUE_APP_API_URL + "/bank-accounts/" + this.selectedBankAccountNumber, this.selectedBankAccount)
           .then(() => { 
-            this.$parent.$parent.$parent.setBankAccounts() ;
+            this.$parent.$parent.$parent.setSelectedUsersBankAccounts(this.selectedUsersBankAccounts[0].userId);
             document.getElementById("closeModalButton").click();
           })
           .catch(err => console.log(err));
          },
 
       setSelectedBankAccount(index) {
-        this.selectedBankAccountNumber = this.bankAccounts[index].number;
+        this.selectedBankAccountNumber = this.selectedUsersBankAccounts[index].number;
 
         this.selectedBankAccount = {
-            "id": this.bankAccounts[index].id,
-            "number": this.bankAccounts[index].number,
-            "type": this.bankAccounts[index].type,
-            "balance": this.bankAccounts[index].balance
+            "id": this.selectedUsersBankAccounts[index].id,
+            "number": this.selectedUsersBankAccounts[index].number,
+            "type": this.selectedUsersBankAccounts[index].type,
+            "balance": this.selectedUsersBankAccounts[index].balance
         }
       }
      }

@@ -10,7 +10,7 @@
 
 
 export default {
-  name: "TransactionsHistoryBanner"
+  name: "AdminTransactionsHistoryBanner"
 }
 </script>
 

@@ -61,7 +61,7 @@ public class UserDetailsController {
     }
 
 
-    @DeleteMapping("/{username}")
+    @DeleteMapping("/delete/{username}")
     public void deleteUser(@PathVariable("username") String username){
         userDetailsService.deleteUserDetailsByUsername(username);
     }

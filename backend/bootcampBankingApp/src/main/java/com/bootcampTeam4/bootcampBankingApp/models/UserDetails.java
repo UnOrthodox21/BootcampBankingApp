@@ -6,7 +6,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "userDetails")
@@ -44,7 +47,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
     private boolean enabled;
 
     @Column(name = "authorities")
-    private GrantedAuthority authorities;
+    private GrantedAuthority authorities; // ROLE_USER, ROLE_ADMIN
 
     @Column(name = "image")
     private String image;
@@ -54,7 +57,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     public UserDetails() {}
 
-    public UserDetails(long id, String username, String email, String firstName, String lastName, String address, int phone, String password, String roles, GrantedAuthority authorities, boolean enabled) {
+    public UserDetails(long id, String username, String email, String firstName, String lastName, String address, int phone, String password, String roles, boolean enabled) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -64,7 +67,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
         this.phone = phone;
         this.password = password;
         this.roles = roles;
-        this.authorities = authorities;
         this.enabled = enabled;
         this.jwt = "";
         this.image = "";
