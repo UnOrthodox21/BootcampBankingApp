@@ -132,6 +132,19 @@ export default {
         }
       },
 
+      editUser(e) {
+         e.preventDefault();
+
+        this.$http.put(process.env.VUE_APP_API_URL + "/users/" + this.selectedUserUsername, this.selectedUser)
+          .then(() => { 
+            this.setAllUsers();
+            this.$parent.$parent.$parent.setUser(this.user.jwt) ;
+            document.getElementById("closeModalButton").click();
+          })
+          .catch(err => console.log(err));
+         },
+
+
         setSelectedUser(index) {
         this.selectedUserUsername = this.allUsers[index].username;
 

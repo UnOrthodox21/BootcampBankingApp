@@ -45,7 +45,8 @@
                 <div class="col-6 text-left mt-3 mb-3 pt-2">
                     <div class="card">
                         <div class="card-body">
-                    <h2 class="mb-4 home-menu-title">User:</h2>
+                    <h2 v-if="this.user.roles === 'User'"  class="mb-4 home-menu-title">User:</h2>
+                    <h2 v-else class="mb-4 home-menu-title">Admin:</h2>
                      <ul class="home-menu-details ml-0 pl-0">
                         <li><b>Name:</b> {{ user.firstName }} {{ user.lastName }}</li>
                         <li><b>Address:</b> {{ user.address }}</li>
@@ -183,9 +184,9 @@ export default {
 
     .btn-register {
         margin-top: 2em;
-        height: 4em;
+        height: 3.5em;
+        width: 11em;
          vertical-align: middle;
-         width: 12em;
          font-size: 2em;
          text-align: center;
          align-items: center;
@@ -201,8 +202,8 @@ export default {
          margin-top: 2em;
          vertical-align: middle;
          font-size: 2em;        
-         height: 4em;
-         width: 12em;
+         height: 3.5em;
+         width: 11em;
          background-color: rgb(102, 102, 102);
     }
 

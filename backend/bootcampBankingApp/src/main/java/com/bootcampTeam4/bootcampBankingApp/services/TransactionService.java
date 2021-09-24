@@ -31,17 +31,17 @@ public class TransactionService {
 
 
     //edit
-    public List<Transaction> getAllUserTransactions(String name){
+    public List<Transaction> getAllBankAccountTransactions(String accountNumber){
         List<Transaction> allTransactions = transactionRepository.findAll();
-        List<Transaction> userTransactions = new ArrayList<>();
-        String nameForLookup = name;
+        List<Transaction> bankAccountTransactions = new ArrayList<>();
+        String nameForLookup = accountNumber;
         for(int i = 0; i<allTransactions.size(); i++){
             if(allTransactions.get(i).getUserTo().equals(nameForLookup) || allTransactions.get(i).getUserFrom().equals(nameForLookup)){
-                userTransactions.add(allTransactions.get(i));
+                bankAccountTransactions.add(allTransactions.get(i));
             }
         }
 
-        return userTransactions;
+        return bankAccountTransactions;
 
     }
 

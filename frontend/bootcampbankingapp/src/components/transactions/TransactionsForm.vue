@@ -94,7 +94,13 @@ export default {
         let alert = document.getElementById('transaction-alert');
 
         this.$http.put(process.env.VUE_APP_API_URL + "/bank-accounts/transfer", newTransfer)
-        .then(() => { this.$parent.$parent.$parent.setBankAccounts(); 
+        .then((response) => { 
+          
+          let transactionSuccessful = response.data;
+              
+
+        if (transactionSuccessful) {
+                this.$parent.$parent.$parent.setBankAccounts(); 
                this.recipientName = '';
                this.recipientBankAccount = '';
                this.transferAmount = 0;
@@ -103,19 +109,21 @@ export default {
               alert.classList.add("alert-success");
               alert.innerHTML = "Successfully transfered funds!";
               alert.style.display = "block";
-      
-
-        })
-        .catch((err) => { 
+        } else {
           alert.classList.remove("alert-success");
           alert.classList.add("alert-danger");
-          alert.innerHTML = "Transfer of funds failed!";
+          alert.innerHTML = "Transfer of funds failed - Insufficient funds!";
+          alert.style.display = "block";
+        }
+        }).catch((err) => {
+          alert.classList.remove("alert-success");
+          alert.classList.add("alert-danger");
+          alert.innerHTML = "Transfer of funds failed! - Invalid recipient.";
           alert.style.display = "block";
           console.log(err);
+        })
         },
-      );
     }
-  }
 }
 </script>
 

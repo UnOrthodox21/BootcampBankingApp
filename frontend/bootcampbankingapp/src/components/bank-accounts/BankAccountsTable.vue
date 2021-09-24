@@ -41,7 +41,7 @@
           </div>
           <div class="form-group">
             <label for="accountTypeInput" class="col-form-label">Account type:</label>
-          <select class="form-control" id="accountTypeInput" v-model="selectedBankAccount.type"  name="accountType" placeholder="Select your accountType" >
+          <select class="form-control" id="accountTypeInput" v-model="selectedBankAccount.type"  name="accountType" placeholder="Select your accountType" disabled>
             <option value="Primary" v-bind:selected="selectedBankAccount.type == 'Primary'">Primary</option>
             <option value="Secondary" v-bind:selected="selectedBankAccount.type == 'Secondary'">Secondary</option>
          </select>
