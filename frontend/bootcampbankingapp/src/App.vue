@@ -91,7 +91,8 @@ export default {
         this.setJwt(jwt);
         this.setupHeaderInterceptor();
         const newUserData = {
-            jwt
+            jwt,
+            enabled: true
         }
         this.$http.put(process.env.VUE_APP_API_URL + "/users/" + username, newUserData)
         .then(() => {  
