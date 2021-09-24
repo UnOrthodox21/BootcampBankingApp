@@ -27,7 +27,7 @@
       <td>{{ user.enabled }}</td>
       <td><router-link @click="this.$parent.$parent.$parent.setSelectedUsersBankAccounts(user.id)" to="/admin/users/bank-accounts" type="button" class="btn btn-outline-info mx-2"> Bank Accounts </router-link>
       <button @click="setSelectedUser(index)" type="button" class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#userEditModal"> Edit </button>
-      <button @click="deleteUser(user.username)" type="button" class="btn btn-outline-danger mx-2"> Delete </button></td>
+      <button @click="deleteUser(user)" type="button" class="btn btn-outline-danger mx-2"> Delete </button></td>
     </tr>
   </tbody>
 </table>
@@ -106,18 +106,29 @@ export default {
             selectedUserUsername: ''
         }
       },
+
+    props: ["user"],
     methods: {
         setAllUsers() {
-            this.$http.get(process.env.VUE_APP_API_URL + "/users")
+            this.$http.get(process.env.VUE_APP_API_URL + "/users/getAllUsers/" + this.user.password)
             .then((response) => { this.allUsers = response.data })
             .catch(err => console.log(err));
         },
 
-        deleteUser(username){
+        deleteUser(user){
         if(window.confirm("Are You sure?")) {
-          this.$http.delete(process.env.VUE_APP_API_URL + "/users/delete/" + username)
-          .then(() => this.setAllUsers())
-          .catch(err => console.log(err));
+          this.$http.delete(process.env.VUE_APP_API_URL + "/users/delete/" + user.username)
+          .then(() => { 
+            this.setAllUsers();
+            this.$http.get(process.env.VUE_APP_API_URL + "/bank-accounts/getByUserId/" + user.id).
+            then((response) => {
+                  let usersBankAccounts = response.data;
+                  for (const usersBankAccount of usersBankAccounts) {
+                    this.$http.delete(process.env.VUE_APP_API_URL + "/bank-accounts/" + usersBankAccount.number)
+                    .catch(e => console.log(e));
+                  }
+                }).catch(err => console.log(err));
+          })
         }
       },
 

@@ -13,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-bind:key="transaction.id" v-for="(transaction, index) in transactions">
+    <tr v-bind:key="transaction.id" v-for="(transaction, index) in selectedBankAccountsTransactions">
       <td>{{ index + 1 }}</td>
       <td>{{ transaction.type}}</td>
       <td>{{ transaction.date }}</td>
