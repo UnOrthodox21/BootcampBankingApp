@@ -71,7 +71,7 @@ public class BankAccountController {
 
 
     @PutMapping("/transfer")
-    public void sendFunds(@RequestBody TransferFromTo transferFromTo) {
+    public boolean sendFunds(@RequestBody TransferFromTo transferFromTo) {
         boolean success = bankAccountService.sendFunds(transferFromTo);
         if(success){
             transactionService.addNewTransferTransaction(transferFromTo);
@@ -79,6 +79,7 @@ public class BankAccountController {
         else{
             transactionService.addNewFailedTransaction(transferFromTo);
         }
+        return success;
     }
 
     @PutMapping("/deposit")

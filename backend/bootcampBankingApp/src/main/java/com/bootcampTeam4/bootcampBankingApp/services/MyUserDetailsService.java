@@ -112,6 +112,8 @@ public class MyUserDetailsService implements UserDetailsService {
             userDetailsToPut.setJwt(userDetails.getJwt());
         }
 
+        userDetailsToPut.setEnabled(userDetails.isEnabled());
+
         userDetailsRepository.save(userDetailsToPut);
     }
 

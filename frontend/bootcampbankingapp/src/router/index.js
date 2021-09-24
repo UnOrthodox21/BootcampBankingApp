@@ -51,6 +51,11 @@ const routes = [
     path: '/admin/users/bank-accounts/transactions-history',
     name: 'AdminTransactionsHistory',
     component: () => import( '../views/admin/AdminTransactionsHistory.vue')
+  },
+  {
+    path: '/thank-you',
+    name: 'ThankYou',
+    component: () => import( '../views/ThankYou.vue')
   }
 
 ]

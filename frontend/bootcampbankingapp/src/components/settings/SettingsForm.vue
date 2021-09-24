@@ -9,8 +9,6 @@
   </div>
 
    <div class="form-group my-5" style="width:300px;margin:auto;">
-       <!-- ja grib atsevisku margin bottom
-    <label class="mb-5" for="exampleFormControlInput2">Name </label> -->
     <label for="nameInput">Name:</label>
     <input type="text"  class="form-control" v-model="firstName" id="nameInput" minlength="2" maxlength="20" required>
   </div>
@@ -55,28 +53,34 @@
 </template>
 
 <script>
+import {useRouter} from "vue-router";
 export default {
     name: "Settings Form",
     data() {
       return {
+          router: useRouter(),
           email: this.user.email,
           firstName: this.user.firstName,
           lastName: this.user.lastName,
           phone: this.user.phone,
           address: this.user.address,
           image: this.user.image,
+          enabled: this.user.enabled,
           passwordFirst: '',
           passwordSecond: ''
       }
     },
+    created() {
+      this.$parent.$parent.$parent.setUser(this.user.jwt);
+    },
     props: ["user"],
     methods: {
         submitChanges(e) {
+
             e.preventDefault();
             
             if(this.passwordFirst === this.passwordSecond) {
 
-    
             if (window.confirm("Are you sure?")) {
             const newUserData = {
             email : this.email,
@@ -85,26 +89,31 @@ export default {
             phone : this.phone,
             address : this.address,
             password : this.passwordFirst,
-            image: this.image
+            image: this.image,
+            enabled: this.enabled
             }
+
 
             if (this.passwordFirst === "") {
                 newUserData.password = this.user.password;
             }
-            
-
           
             this.$http.put(process.env.VUE_APP_API_URL + "/users/" + this.user.username , newUserData)
-            .then(() => this.$parent.$parent.$parent.setUser(this.user.jwt))
-            .catch(err => console.log(err));
-            console.log(newUserData)
-           }
-            
+            .then(() => {
+                 this.$parent.$parent.$parent.setUser(this.user.jwt);
+                 this.router.push({ name: 'Home'});
+            }).catch(err => console.log(err));
+
+            }
+        
+      
+
     } else {
       alert("Passwords don't match!!");
     }
-        }
-        }
+
+  }
+}
 }
 </script>
 

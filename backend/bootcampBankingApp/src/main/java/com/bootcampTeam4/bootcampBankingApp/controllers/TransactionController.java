@@ -6,6 +6,7 @@ import com.bootcampTeam4.bootcampBankingApp.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +26,9 @@ public class TransactionController {
         return transactionService.getAllTransactions();
     }
 
-    @GetMapping("/find/{userName}")
-    public List<Transaction> getAllTransactionsByUser(@PathVariable ("userName") String userName){
-        return transactionService.getAllUserTransactions(userName);
+    @GetMapping("/find/{accountNumber}")
+    public List<Transaction> getAllTransactionsByAccountNumber(@PathVariable ("accountNumber") String accountNumber) {
+        return transactionService.getAllBankAccountTransactions(accountNumber);
     }
 
     @GetMapping(path = "{transactionId}")
