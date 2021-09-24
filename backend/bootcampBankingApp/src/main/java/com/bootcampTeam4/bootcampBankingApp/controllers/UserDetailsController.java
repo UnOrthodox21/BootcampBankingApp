@@ -35,10 +35,12 @@ public class UserDetailsController {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
+    /*
     @Autowired
     public UserDetailsController(MyUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
+     */
 
     @GetMapping("/getAllUsers/{password}")
     public List<UserDetails> getAllUsers(@PathVariable("password") String password) {
